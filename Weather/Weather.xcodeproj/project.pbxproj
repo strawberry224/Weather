@@ -15,6 +15,7 @@
 		C6504C511C5DBF64008938A1 /* WeatherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6504C501C5DBF64008938A1 /* WeatherTests.swift */; };
 		C6504C5C1C5DBF64008938A1 /* WeatherUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6504C5B1C5DBF64008938A1 /* WeatherUITests.swift */; };
 		C6504C6A1C5E3485008938A1 /* WeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6504C691C5E3485008938A1 /* WeatherData.swift */; };
+		C6504C6E1C5F6F3B008938A1 /* GetMemberValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6504C6D1C5F6F3B008938A1 /* GetMemberValue.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		C6504C5B1C5DBF64008938A1 /* WeatherUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherUITests.swift; sourceTree = "<group>"; };
 		C6504C5D1C5DBF64008938A1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C6504C691C5E3485008938A1 /* WeatherData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherData.swift; sourceTree = "<group>"; };
+		C6504C6D1C5F6F3B008938A1 /* GetMemberValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetMemberValue.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +103,7 @@
 			children = (
 				C6504C3B1C5DBF64008938A1 /* AppDelegate.swift */,
 				C6504C3D1C5DBF64008938A1 /* ViewController.swift */,
+				C6504C6D1C5F6F3B008938A1 /* GetMemberValue.swift */,
 				C6504C691C5E3485008938A1 /* WeatherData.swift */,
 				C6504C3F1C5DBF64008938A1 /* Main.storyboard */,
 				C6504C421C5DBF64008938A1 /* Assets.xcassets */,
@@ -262,6 +265,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C6504C6E1C5F6F3B008938A1 /* GetMemberValue.swift in Sources */,
 				C6504C3E1C5DBF64008938A1 /* ViewController.swift in Sources */,
 				C6504C6A1C5E3485008938A1 /* WeatherData.swift in Sources */,
 				C6504C3C1C5DBF64008938A1 /* AppDelegate.swift in Sources */,

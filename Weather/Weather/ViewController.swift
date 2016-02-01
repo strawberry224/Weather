@@ -38,8 +38,6 @@ class ViewController: UIViewController {
                 print("请求失败")
             }
             if let _ = data {
-//                let content = NSString(data: d, encoding: NSUTF8StringEncoding)
-//                print(content)
                 self.testJson(data!)
             }
         })
@@ -50,12 +48,19 @@ class ViewController: UIViewController {
         let jsonObject: AnyObject! = try? NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments)
         let weatherInfo = jsonObject.objectForKey("HeWeather data service 3.0")!
         
-        print(weatherInfo)
         if let statusesArray = weatherInfo as? NSArray {
             if let aStatus = statusesArray[0] as? NSDictionary {
                 if let aqi = aStatus["aqi"] as? NSDictionary {
                     if let city = aqi["city"] as? NSDictionary {
-                        getCityAqi(city)
+                        //getMemberValue.getCityAQI(city)
+                    }
+                }
+                if let basic = aStatus["basic"] as? NSDictionary {
+                    //getMemberValue.getBasic(basic)
+                }
+                if let DailyForecastArray = aStatus["daily_forecast"] as? NSArray {
+                    if let DailyForecast = DailyForecastArray[0] as? NSDictionary {
+                        getMemberValue.getDailyForecast(DailyForecast)
                     }
                 }
             }
@@ -64,19 +69,11 @@ class ViewController: UIViewController {
     
     var weatherData = WeatherData()
     var cityAQI = WeatherData.CityAQI()
+    var cityBasic = WeatherData.Basic()
+    var cityDailyForecast = WeatherData.DailyForecast()
+    var getMemberValue = GetMemberValue()
     
-    func getCityAqi(city: NSDictionary) {
-        cityAQI.aqi = Int(city["aqi"]!.integerValue)
-        cityAQI.co = Int(city["co"]!.integerValue)
-        cityAQI.no2 = Int(city["no2"]!.integerValue)
-        cityAQI.o3 = Int(city["o3"]!.integerValue)
-        cityAQI.pm10 = Int(city["pm10"]!.integerValue)
-        cityAQI.pm25 = Int(city["pm25"]!.integerValue)
-        cityAQI.qlty = String(city["qlty"]!)
-        cityAQI.so2 = Int(city["so2"]!.integerValue)
-    }
-
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         getWeatherData()

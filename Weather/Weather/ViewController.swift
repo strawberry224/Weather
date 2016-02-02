@@ -52,16 +52,33 @@ class ViewController: UIViewController {
             if let aStatus = statusesArray[0] as? NSDictionary {
                 if let aqi = aStatus["aqi"] as? NSDictionary {
                     if let city = aqi["city"] as? NSDictionary {
-                        //getMemberValue.getCityAQI(city)
+                       cityAQI = getMemberValue.getCityAQI(city)
                     }
                 }
                 if let basic = aStatus["basic"] as? NSDictionary {
-                    //getMemberValue.getBasic(basic)
+                    cityBasic = getMemberValue.getBasic(basic)
                 }
                 if let DailyForecastArray = aStatus["daily_forecast"] as? NSArray {
-                    if let DailyForecast = DailyForecastArray[0] as? NSDictionary {
-                        getMemberValue.getDailyForecast(DailyForecast)
+                    cityDailyForecast.removeAll()
+                    for index in 0...DailyForecastArray.count - 1 {
+                        if let DailyForecast = DailyForecastArray[index] as? NSDictionary {
+                            cityDailyForecast.append(getMemberValue.getDailyForecast(DailyForecast))
+                        }
                     }
+                }
+                if let HourlyForecastArray = aStatus["hourly_forecast"] as? NSArray {
+                    cityDailyForecast.removeAll()
+                    for index in 0...HourlyForecastArray.count - 1 {
+                        if let HourlyForecast = HourlyForecastArray[index] as? NSDictionary {
+                            cityHourlyForecast.append(getMemberValue.getHourlyForecast(HourlyForecast))
+                        }
+                    }
+                }
+                if let now = aStatus["now"] as? NSDictionary {
+                    cityNow = getMemberValue.getNow(now)
+                }
+                if let sugguestion = aStatus["suggestion"] as? NSDictionary {
+                    citySuggestion = getMemberValue.getSuggestion(sugguestion)
                 }
             }
         }
@@ -70,7 +87,10 @@ class ViewController: UIViewController {
     var weatherData = WeatherData()
     var cityAQI = WeatherData.CityAQI()
     var cityBasic = WeatherData.Basic()
-    var cityDailyForecast = WeatherData.DailyForecast()
+    var cityDailyForecast = [WeatherData.DailyForecast()]
+    var cityHourlyForecast = [WeatherData.HourlyForecast()]
+    var cityNow = WeatherData.Now()
+    var citySuggestion = WeatherData.Suggestion()
     var getMemberValue = GetMemberValue()
     
     

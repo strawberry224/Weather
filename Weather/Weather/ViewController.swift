@@ -7,19 +7,22 @@
 //
 
 import UIKit
+import MapKit
+import CoreLocation
 
-class ViewController: UIViewController {
-    
+class ViewController: UIViewController, CLLocationManagerDelegate {
     
     @IBAction func btnPressed(sender: AnyObject) {
-        print("Button Pressed")
+        loadWeatherData()
     }
+    
+    @IBOutlet weak var tv: UITextView!
     
     var httpUrl = "http://apis.baidu.com/heweather/weather/free"
     var httpCity = "city=hangzhou"
     let aqiKey = "616e8a401061a1108d387543235f3159"
     
-    func getWeatherData() {
+    func loadWeatherData() {
         request(httpUrl, httpCity: httpCity)
     }
     
@@ -93,16 +96,87 @@ class ViewController: UIViewController {
     var citySuggestion = WeatherData.Suggestion()
     var getMemberValue = GetMemberValue()
     
+    // Save access to local location
+    var currLocation : CLLocation!
+    
+    // For positioning service management class
+    // it can provide us with location information and height information
+    // also can monitor the equipment to enter or leave a certain area
+    // but also can obtain the operation direction of equipment
+    let locationManager : CLLocationManager = CLLocationManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        getWeatherData()
+        // Set location service manager proxy
+        locationManager.delegate = self
+        
+        // Send authorization request
+        locationManager.requestAlwaysAuthorization()
+        
+        // The highest accuracy when the device is powered by a battery
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        
+        // Accurate to 1000 meters
+        // distance filter
+        // defined the minimum distance of the device to get the position information after moving
+        locationManager.distanceFilter = kCLLocationAccuracyKilometer
+        
         // Do any additional setup after loading the view, typically from a nib.
     }
-
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        if CLLocationManager.locationServicesEnabled() {
+            
+            // To allow the use of the location of the service
+            // then open the positioning service updates
+            locationManager.startUpdatingLocation()
+        }
+    }
+    
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
+        currLocation = locations.last! as CLLocation
+        LonLatToCity()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+
+    // Change the latitude and longitude into a city name
+    func LonLatToCity() {
+        let geocoder: CLGeocoder = CLGeocoder()
+        geocoder.reverseGeocodeLocation(currLocation, completionHandler: { (placemark, error) -> Void in
+            
+            // Convert to success
+            // parse all the information
+            if (error == nil) {
+                let array = placemark! as NSArray
+                let mark = array.firstObject as! CLPlacemark
+                var SubLocality: NSString = (mark.addressDictionary! as NSDictionary).valueForKey("SubLocality") as! NSString
+                
+                // Remove the word "city" and "province"
+                SubLocality = SubLocality.stringByReplacingOccurrencesOfString("市", withString: "")
+                self.charactorType(SubLocality as String)
+                //print(self.cityName)
+            }else {
+                // conversion failed
+            }
+        })
+    }
+    
+    func charactorType(aString:String) {
+        
+        // Conversion failed to convert to variable string
+        let str = NSMutableString(string: aString)
+        CFStringTransform(str, nil, kCFStringTransformMandarinLatin, false)
+        
+        // And then converted to Pinyin without tone
+        CFStringTransform(str, nil, kCFStringTransformStripDiacritics, false)
+        let res = str as NSString
+        httpCity = "city=" + res.stringByReplacingOccurrencesOfString(" ", withString: "")
+        tv.text = aString
     }
 
 

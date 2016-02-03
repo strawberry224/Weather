@@ -13,6 +13,9 @@ class WeatherData: NSObject {
     var cityAQI: CityAQI?
     var cityBasic: Basic?
     var cityDailyForecast: [DailyForecast?] = []
+    var cityHourlyForecast: [WeatherData.HourlyForecast?] = []
+    var cityNow: WeatherData.Now?
+    var citySuggestion: WeatherData.Suggestion?
     
     // Air quality
     // only the domestic part of the city

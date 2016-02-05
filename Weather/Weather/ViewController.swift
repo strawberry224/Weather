@@ -12,11 +12,63 @@ import CoreLocation
 
 class ViewController: UIViewController, CLLocationManagerDelegate {
     
-    @IBAction func btnPressed(sender: AnyObject) {
-        loadWeatherData()
-    }
+    //Current Weather outlets
+    @IBOutlet weak var windBag: UIImageView!
+    @IBOutlet weak var umbrella: UIImageView!
+    @IBOutlet weak var rainDrop: UIImageView!
+    @IBOutlet weak var userLocationLabel: UILabel!
+    @IBOutlet weak var iconView: UIImageView!
     
-    @IBOutlet weak var tv: UITextView!
+    //@IBOutlet weak var currentTimeLabel: UILabel!
+    @IBOutlet weak var temperatureLabel: UILabel!
+    @IBOutlet weak var humidityLabel: UILabel!
+    @IBOutlet weak var precipitationLabel: UILabel!
+    @IBOutlet weak var windSpeedLabel: UILabel!
+    @IBOutlet weak var summaryLabel: UILabel!
+    
+    //@IBOutlet weak var refreshActivityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var degreeButton: UIButton!
+    @IBOutlet weak var swipeView: UIView!
+    @IBOutlet weak var heatIndex: UIImageView!
+    @IBOutlet weak var dayZeroTemperatureLowLabel: UILabel!
+    @IBOutlet weak var dayZeroTemperatureHighLabel: UILabel!
+    
+    @IBOutlet weak var windUILabel: UILabel!
+    @IBOutlet weak var rainUILabel: UILabel!
+    @IBOutlet weak var humidityUILabel: UILabel!
+    
+    
+    //Daily Weather outlets
+    @IBOutlet weak var dayZeroTemperatureLow: UILabel!
+    @IBOutlet weak var dayZeroTemperatureHigh: UILabel!
+    
+    @IBOutlet weak var dayOneWeekDayLabel: UILabel!
+    @IBOutlet weak var dayOneHighLow: UILabel!
+    @IBOutlet weak var dayOneImage: UIImageView!
+    
+    @IBOutlet weak var dayTwoWeekDayLabel: UILabel!
+    @IBOutlet weak var dayTwoHighLow: UILabel!
+    @IBOutlet weak var dayTwoImage: UIImageView!
+    
+    @IBOutlet weak var dayThreeWeekDayLabel: UILabel!
+    @IBOutlet weak var dayThreeHighLow: UILabel!
+    @IBOutlet weak var dayThreeImage: UIImageView!
+    
+    @IBOutlet weak var dayFourWeekDayLabel: UILabel!
+    @IBOutlet weak var dayFourHighLow: UILabel!
+    @IBOutlet weak var dayFourImage: UIImageView!
+    
+    @IBOutlet weak var dayFiveWeekDayLabel: UILabel!
+    @IBOutlet weak var dayFiveHighLow: UILabel!
+    @IBOutlet weak var dayFiveImage: UIImageView!
+    
+    @IBOutlet weak var daySixWeekDayLabel: UILabel!
+    @IBOutlet weak var daySixHighLow: UILabel!
+    @IBOutlet weak var daySixImage: UIImageView!
+    
+    //Alerts
+    
+    @IBOutlet weak var wAlerts: UILabel!
     
     var httpUrl = "http://apis.baidu.com/heweather/weather/free"
     var httpCity = "city=hangzhou"
@@ -79,6 +131,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 }
                 if let now = aStatus["now"] as? NSDictionary {
                     cityNow = getMemberValue.getNow(now)
+                    temperatureLabel.text = "!!!"
                 }
                 if let sugguestion = aStatus["suggestion"] as? NSDictionary {
                     citySuggestion = getMemberValue.getSuggestion(sugguestion)
@@ -176,7 +229,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         CFStringTransform(str, nil, kCFStringTransformStripDiacritics, false)
         let res = str as NSString
         httpCity = "city=" + res.stringByReplacingOccurrencesOfString(" ", withString: "")
-        tv.text = aString
+        userLocationLabel.text = aString
+        loadWeatherData()
     }
 
 

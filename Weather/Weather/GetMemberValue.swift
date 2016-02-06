@@ -25,7 +25,7 @@ class GetMemberValue {
         cityAQI.qlty = String(city["qlty"]!)
         cityAQI.so2 = Int(city["so2"]!.integerValue)
         
-        testCityAQI(cityAQI)
+        //testCityAQI(cityAQI)
         
         return cityAQI
     }
@@ -61,7 +61,7 @@ class GetMemberValue {
             cityBasic.update = tempUpdate
         }
         
-        testBasic(cityBasic)
+        //testBasic(cityBasic)
         
         return cityBasic
     }
@@ -122,7 +122,7 @@ class GetMemberValue {
             cityDailyForecast.wind = tempWind
         }
         
-        testDailyForecast(cityDailyForecast)
+        //testDailyForecast(cityDailyForecast)
         
         return cityDailyForecast
     }
@@ -165,7 +165,7 @@ class GetMemberValue {
             cityHourlyForecast.wind = tempWind
         }
         
-        testHourlyForecast(cityHourlyForecast)
+        //testHourlyForecast(cityHourlyForecast)
         
         return cityHourlyForecast
     }
@@ -209,7 +209,7 @@ class GetMemberValue {
             cityNow.wind = tempWind
         }
         
-        testNow(cityNow)
+        //testNow(cityNow)
 
         return cityNow
     }
@@ -251,7 +251,7 @@ class GetMemberValue {
         citySuggestion.trav = lifeDate("trav", city: city)
         citySuggestion.uv = lifeDate("uv", city: city)
         
-        testSuggestion(citySuggestion)
+        //testSuggestion(citySuggestion)
         
         return citySuggestion
     }

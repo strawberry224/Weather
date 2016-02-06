@@ -11,64 +11,12 @@ import MapKit
 import CoreLocation
 
 class ViewController: UIViewController, CLLocationManagerDelegate {
-    
-    //Current Weather outlets
-    @IBOutlet weak var windBag: UIImageView!
-    @IBOutlet weak var umbrella: UIImageView!
-    @IBOutlet weak var rainDrop: UIImageView!
+
     @IBOutlet weak var userLocationLabel: UILabel!
-    @IBOutlet weak var iconView: UIImageView!
-    
-    //@IBOutlet weak var currentTimeLabel: UILabel!
     @IBOutlet weak var temperatureLabel: UILabel!
-    @IBOutlet weak var humidityLabel: UILabel!
-    @IBOutlet weak var precipitationLabel: UILabel!
-    @IBOutlet weak var windSpeedLabel: UILabel!
-    @IBOutlet weak var summaryLabel: UILabel!
-    
-    //@IBOutlet weak var refreshActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var degreeButton: UIButton!
-    @IBOutlet weak var swipeView: UIView!
-    @IBOutlet weak var heatIndex: UIImageView!
-    @IBOutlet weak var dayZeroTemperatureLowLabel: UILabel!
-    @IBOutlet weak var dayZeroTemperatureHighLabel: UILabel!
-    
-    @IBOutlet weak var windUILabel: UILabel!
-    @IBOutlet weak var rainUILabel: UILabel!
-    @IBOutlet weak var humidityUILabel: UILabel!
-    
-    
-    //Daily Weather outlets
-    @IBOutlet weak var dayZeroTemperatureLow: UILabel!
-    @IBOutlet weak var dayZeroTemperatureHigh: UILabel!
-    
-    @IBOutlet weak var dayOneWeekDayLabel: UILabel!
-    @IBOutlet weak var dayOneHighLow: UILabel!
-    @IBOutlet weak var dayOneImage: UIImageView!
-    
-    @IBOutlet weak var dayTwoWeekDayLabel: UILabel!
-    @IBOutlet weak var dayTwoHighLow: UILabel!
-    @IBOutlet weak var dayTwoImage: UIImageView!
-    
-    @IBOutlet weak var dayThreeWeekDayLabel: UILabel!
-    @IBOutlet weak var dayThreeHighLow: UILabel!
-    @IBOutlet weak var dayThreeImage: UIImageView!
-    
-    @IBOutlet weak var dayFourWeekDayLabel: UILabel!
-    @IBOutlet weak var dayFourHighLow: UILabel!
-    @IBOutlet weak var dayFourImage: UIImageView!
-    
-    @IBOutlet weak var dayFiveWeekDayLabel: UILabel!
-    @IBOutlet weak var dayFiveHighLow: UILabel!
-    @IBOutlet weak var dayFiveImage: UIImageView!
-    
-    @IBOutlet weak var daySixWeekDayLabel: UILabel!
-    @IBOutlet weak var daySixHighLow: UILabel!
-    @IBOutlet weak var daySixImage: UIImageView!
-    
-    //Alerts
-    
-    @IBOutlet weak var wAlerts: UILabel!
+    @IBOutlet weak var iconView: UIImageView!
+    @IBOutlet weak var summaryLabel: UILabel!
     
     var httpUrl = "http://apis.baidu.com/heweather/weather/free"
     var httpCity = "city=hangzhou"
@@ -100,44 +48,51 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     func testJson(data: NSData) {
-        let jsonObject: AnyObject! = try? NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments)
-        let weatherInfo = jsonObject.objectForKey("HeWeather data service 3.0")!
-        
-        if let statusesArray = weatherInfo as? NSArray {
-            if let aStatus = statusesArray[0] as? NSDictionary {
-                if let aqi = aStatus["aqi"] as? NSDictionary {
-                    if let city = aqi["city"] as? NSDictionary {
-                       cityAQI = getMemberValue.getCityAQI(city)
-                    }
-                }
-                if let basic = aStatus["basic"] as? NSDictionary {
-                    cityBasic = getMemberValue.getBasic(basic)
-                }
-                if let DailyForecastArray = aStatus["daily_forecast"] as? NSArray {
-                    cityDailyForecast.removeAll()
-                    for index in 0...DailyForecastArray.count - 1 {
-                        if let DailyForecast = DailyForecastArray[index] as? NSDictionary {
-                            cityDailyForecast.append(getMemberValue.getDailyForecast(DailyForecast))
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            let jsonObject: AnyObject! = try? NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments)
+            let weatherInfo = jsonObject.objectForKey("HeWeather data service 3.0")!
+            
+            if let statusesArray = weatherInfo as? NSArray {
+                if let aStatus = statusesArray[0] as? NSDictionary {
+                    if let aqi = aStatus["aqi"] as? NSDictionary {
+                        if let city = aqi["city"] as? NSDictionary {
+                           self.cityAQI = self.getMemberValue.getCityAQI(city)
                         }
                     }
-                }
-                if let HourlyForecastArray = aStatus["hourly_forecast"] as? NSArray {
-                    cityDailyForecast.removeAll()
-                    for index in 0...HourlyForecastArray.count - 1 {
-                        if let HourlyForecast = HourlyForecastArray[index] as? NSDictionary {
-                            cityHourlyForecast.append(getMemberValue.getHourlyForecast(HourlyForecast))
+                    if let basic = aStatus["basic"] as? NSDictionary {
+                        self.cityBasic = self.getMemberValue.getBasic(basic)
+                    }
+                    if let DailyForecastArray = aStatus["daily_forecast"] as? NSArray {
+                        self.cityDailyForecast.removeAll()
+                        for index in 0...DailyForecastArray.count - 1 {
+                            if let DailyForecast = DailyForecastArray[index] as? NSDictionary {
+                                self.cityDailyForecast.append(self.getMemberValue.getDailyForecast(DailyForecast))
+                            }
                         }
                     }
-                }
-                if let now = aStatus["now"] as? NSDictionary {
-                    cityNow = getMemberValue.getNow(now)
-                    temperatureLabel.text = "!!!"
-                }
-                if let sugguestion = aStatus["suggestion"] as? NSDictionary {
-                    citySuggestion = getMemberValue.getSuggestion(sugguestion)
+                    if let HourlyForecastArray = aStatus["hourly_forecast"] as? NSArray {
+                        self.cityDailyForecast.removeAll()
+                        for index in 0...HourlyForecastArray.count - 1 {
+                            if let HourlyForecast = HourlyForecastArray[index] as? NSDictionary {
+                                self.cityHourlyForecast.append(self.getMemberValue.getHourlyForecast(HourlyForecast))
+                            }
+                        }
+                    }
+                    if let now = aStatus["now"] as? NSDictionary {
+                        self.cityNow = self.getMemberValue.getNow(now)
+                        self.temperatureLabel.text = "\(self.cityNow.tmp!)"
+                        
+                        let image = (self.cityNow.cond?.code)!
+                        print("\(image)")
+                        self.iconView.image = UIImage(named: "\(image)")
+                        self.summaryLabel.text = self.cityNow.cond?.txt
+                    }
+                    if let sugguestion = aStatus["suggestion"] as? NSDictionary {
+                        self.citySuggestion = self.getMemberValue.getSuggestion(sugguestion)
+                    }
                 }
             }
-        }
+        })
     }
     
     var weatherData = WeatherData()

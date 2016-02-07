@@ -17,6 +17,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var degreeButton: UIButton!
     @IBOutlet weak var iconView: UIImageView!
     @IBOutlet weak var summaryLabel: UILabel!
+
+    @IBOutlet weak var dayZeroTemperatureLow: UILabel!
+    @IBOutlet weak var dayZeroTemperatureHigh: UILabel!
+    
+    @IBOutlet weak var windSpeedLabel: UILabel!
+    @IBOutlet weak var rainLabel: UILabel!
+    @IBOutlet weak var humidityLabel: UILabel!
     
     var httpUrl = "http://apis.baidu.com/heweather/weather/free"
     var httpCity = "city=hangzhou"
@@ -69,6 +76,24 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                                 self.cityDailyForecast.append(self.getMemberValue.getDailyForecast(DailyForecast))
                             }
                         }
+                        
+                        let dailyTmp = self.cityDailyForecast[0]
+                        let min = (dailyTmp.tmp?.min)!
+                        let max = (dailyTmp.tmp?.max)!
+                        self.dayZeroTemperatureLow.text = "\(min)"
+                        self.dayZeroTemperatureHigh.text = "\(max)"
+                        
+                        let dailyWind = self.cityDailyForecast[0]
+                        let sc = (dailyWind.wind?.sc)!
+                        self.windSpeedLabel.text = "\(sc)"
+                        
+                        let dailyRain = self.cityDailyForecast[0]
+                        let pcpn = (dailyRain.pcpn)!
+                        self.rainLabel.text = "\(pcpn)"
+                        
+                        let dailyHumidity = self.cityDailyForecast[0]
+                        let hum = (dailyHumidity.hum)!
+                        self.humidityLabel.text = "\(hum)"
                     }
                     if let HourlyForecastArray = aStatus["hourly_forecast"] as? NSArray {
                         self.cityDailyForecast.removeAll()
@@ -83,7 +108,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                         self.temperatureLabel.text = "\(self.cityNow.tmp!)"
                         
                         let image = (self.cityNow.cond?.code)!
-                        print("\(image)")
                         self.iconView.image = UIImage(named: "\(image)")
                         self.summaryLabel.text = self.cityNow.cond?.txt
                     }

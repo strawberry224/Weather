@@ -25,15 +25,82 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var rainLabel: UILabel!
     @IBOutlet weak var humidityLabel: UILabel!
     
+    @IBOutlet weak var dayZeroWeekDayLabel: UILabel!
+    @IBOutlet weak var dayZeroImage: UIImageView!
+    @IBOutlet weak var dayZeroHighLow: UILabel!
+    
+    @IBOutlet weak var dayOneWeekDayLabel: UILabel!
+    @IBOutlet weak var dayOneImage: UIImageView!
+    @IBOutlet weak var dayOneHighLow: UILabel!
+    
+    @IBOutlet weak var dayTwoWeekDayLabel: UILabel!
+    @IBOutlet weak var dayTwoImage: UIImageView!
+    @IBOutlet weak var dayTwoHighLow: UILabel!
+    
+    @IBOutlet weak var dayThreeWeekDayLabel: UILabel!
+    @IBOutlet weak var dayThreeImage: UIImageView!
+    @IBOutlet weak var dayThreeHighLow: UILabel!
+    
+    @IBOutlet weak var dayFourWeekDayLabel: UILabel!
+    @IBOutlet weak var dayFourImage: UIImageView!
+    @IBOutlet weak var dayFourHighLow: UILabel!
+    
+    @IBOutlet weak var dayFiveWeekDayLabel: UILabel!
+    @IBOutlet weak var dayFiveImage: UIImageView!
+    @IBOutlet weak var dayFiveHighLow: UILabel!
+    
+    @IBOutlet weak var daySixWeekDayLabel: UILabel!
+    @IBOutlet weak var daySixImage: UIImageView!
+    @IBOutlet weak var daySixHighLow: UILabel!
+    
+    var dayWeekDayLabel = [UILabel!]()
+    var dayImage = [UIImageView!]()
+    var dayHighLow = [UILabel!]()
+    
     var httpUrl = "http://apis.baidu.com/heweather/weather/free"
     var httpCity = "city=hangzhou"
     let aqiKey = "616e8a401061a1108d387543235f3159"
     
     func loadWeatherData() {
+        
         request(httpUrl, httpCity: httpCity)
     }
     
+    func loadDayWeekDayLabel() {
+        
+        dayWeekDayLabel.append(dayZeroWeekDayLabel)
+        dayWeekDayLabel.append(dayOneWeekDayLabel)
+        dayWeekDayLabel.append(dayTwoWeekDayLabel)
+        dayWeekDayLabel.append(dayThreeWeekDayLabel)
+        dayWeekDayLabel.append(dayFourWeekDayLabel)
+        dayWeekDayLabel.append(dayFiveWeekDayLabel)
+        dayWeekDayLabel.append(daySixWeekDayLabel)
+    }
+    
+    func loadDayImage() {
+        
+        dayImage.append(dayZeroImage)
+        dayImage.append(dayOneImage)
+        dayImage.append(dayTwoImage)
+        dayImage.append(dayThreeImage)
+        dayImage.append(dayFourImage)
+        dayImage.append(dayFiveImage)
+        dayImage.append(daySixImage)
+    }
+    
+    func loadDayHighLow() {
+        
+        dayHighLow.append(dayZeroHighLow)
+        dayHighLow.append(dayOneHighLow)
+        dayHighLow.append(dayTwoHighLow)
+        dayHighLow.append(dayThreeHighLow)
+        dayHighLow.append(dayFourHighLow)
+        dayHighLow.append(dayFiveHighLow)
+        dayHighLow.append(daySixHighLow)
+    }
+    
     func  request(httpUrl: String, httpCity: String) {
+        
         let request = NSMutableURLRequest(URL: NSURL(string: httpUrl + "?" + httpCity)!)
         let session = NSURLSession.sharedSession()
         request.timeoutInterval = 6
@@ -55,6 +122,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     func testJson(data: NSData) {
+        
+        loadDayWeekDayLabel()
+        loadDayImage()
+        loadDayHighLow()
+        
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             let jsonObject: AnyObject! = try? NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments)
             let weatherInfo = jsonObject.objectForKey("HeWeather data service 3.0")!
@@ -74,26 +146,33 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                         for index in 0...DailyForecastArray.count - 1 {
                             if let DailyForecast = DailyForecastArray[index] as? NSDictionary {
                                 self.cityDailyForecast.append(self.getMemberValue.getDailyForecast(DailyForecast))
+                                
+                                let daily = self.cityDailyForecast[index]
+                                let date = (daily.date! as NSString).substringFromIndex(8)
+                                self.dayWeekDayLabel[index].text = date
+                                let image = (daily.cond?.codeD)!
+                                self.dayImage[index].image = UIImage(named: "\(image)")
+                                let min = (daily.tmp?.min)!
+                                let max = (daily.tmp?.max)!
+                                self.dayHighLow[index].text = "\(min)" + "~" + "\(max)"
                             }
                         }
                         
-                        let dailyTmp = self.cityDailyForecast[0]
-                        let min = (dailyTmp.tmp?.min)!
-                        let max = (dailyTmp.tmp?.max)!
+                        let daily = self.cityDailyForecast[0]
+                        let min = (daily.tmp?.min)!
+                        let max = (daily.tmp?.max)!
                         self.dayZeroTemperatureLow.text = "\(min)"
                         self.dayZeroTemperatureHigh.text = "\(max)"
-                        
-                        let dailyWind = self.cityDailyForecast[0]
-                        let sc = (dailyWind.wind?.sc)!
+      
+                        let sc = (daily.wind?.sc)!
                         self.windSpeedLabel.text = "\(sc)"
                         
-                        let dailyRain = self.cityDailyForecast[0]
-                        let pcpn = (dailyRain.pcpn)!
+                        let pcpn = (daily.pcpn)!
                         self.rainLabel.text = "\(pcpn)"
                         
-                        let dailyHumidity = self.cityDailyForecast[0]
-                        let hum = (dailyHumidity.hum)!
+                        let hum = (daily.hum)!
                         self.humidityLabel.text = "\(hum)"
+                        
                     }
                     if let HourlyForecastArray = aStatus["hourly_forecast"] as? NSArray {
                         self.cityDailyForecast.removeAll()

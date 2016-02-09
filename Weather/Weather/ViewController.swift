@@ -53,9 +53,42 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var daySixImage: UIImageView!
     @IBOutlet weak var daySixHighLow: UILabel!
     
+    @IBOutlet weak var AQIButton: UIButton!
+    
+    @IBOutlet weak var dayZeroWeekDayButton: UIButton!
+    @IBOutlet weak var dayOneWeekDayButton: UIButton!
+    @IBOutlet weak var dayTwoWeekButton: UIButton!
+    @IBOutlet weak var dayThreeWeekButton: UIButton!
+    @IBOutlet weak var dayFourWeekButton: UIButton!
+    @IBOutlet weak var dayFiveWeekButton: UIButton!
+    @IBOutlet weak var daySixWeekButton: UIButton!
+    
+    @IBAction func zeroButtonPressed(sender: AnyObject) {
+    }
+    
+    @IBAction func oneButtonPressed(sender: AnyObject) {
+    }
+    
+    @IBAction func twoButtonPressed(sender: AnyObject) {
+    }
+    
+    @IBAction func threeButtonPressed(sender: AnyObject) {
+    }
+    
+    @IBAction func fourButtonPressed(sender: AnyObject) {
+    }
+    
+    @IBAction func fiveButtonPressed(sender: AnyObject) {
+    }
+    
+    @IBAction func sixButtonPressed(sender: AnyObject) {
+    }
+    
+    
     var dayWeekDayLabel = [UILabel!]()
     var dayImage = [UIImageView!]()
     var dayHighLow = [UILabel!]()
+    var dayWeekButton = [UIButton]()
     
     var httpUrl = "http://apis.baidu.com/heweather/weather/free"
     var httpCity = "city=hangzhou"
@@ -99,6 +132,17 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         dayHighLow.append(daySixHighLow)
     }
     
+    func loadDayWeekDayButton() {
+        
+        dayWeekButton.append(dayZeroWeekDayButton)
+        dayWeekButton.append(dayOneWeekDayButton)
+        dayWeekButton.append(dayTwoWeekButton)
+        dayWeekButton.append(dayThreeWeekButton)
+        dayWeekButton.append(dayFourWeekButton)
+        dayWeekButton.append(dayFiveWeekButton)
+        dayWeekButton.append(daySixWeekButton)
+    }
+    
     func  request(httpUrl: String, httpCity: String) {
         
         let request = NSMutableURLRequest(URL: NSURL(string: httpUrl + "?" + httpCity)!)
@@ -135,7 +179,20 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 if let aStatus = statusesArray[0] as? NSDictionary {
                     if let aqi = aStatus["aqi"] as? NSDictionary {
                         if let city = aqi["city"] as? NSDictionary {
-                           self.cityAQI = self.getMemberValue.getCityAQI(city)
+                            self.cityAQI = self.getMemberValue.getCityAQI(city)
+                            let colorNum = Float(self.cityAQI.aqi!)
+                            let tmpColor = 255 - (colorNum - 50) * 10;
+                            //System.out.println(tmpColor);
+                            var red: Float = 0, green: Float = 0;
+                            if (tmpColor > 255) {
+                                red = 255;
+                                green = 255 * 2 - tmpColor;
+                            } else {
+                                red = tmpColor;
+                                green = 255;
+                            }
+
+                            self.AQIButton.backgroundColor = UIColor(colorLiteralRed: red, green: green, blue: 0, alpha: 1)
                         }
                     }
                     if let basic = aStatus["basic"] as? NSDictionary {
@@ -287,6 +344,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         CFStringTransform(str, nil, kCFStringTransformStripDiacritics, false)
         let res = str as NSString
         httpCity = "city=" + res.stringByReplacingOccurrencesOfString(" ", withString: "")
+        httpCity = "city=hangzhou"
         userLocationLabel.text = aString
         loadWeatherData()
     }

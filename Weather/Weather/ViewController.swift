@@ -63,6 +63,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var dayFiveWeekButton: UIButton!
     @IBOutlet weak var daySixWeekButton: UIButton!
     
+    @IBOutlet weak var dayZeroView: UIView!
+    
+    @IBOutlet weak var dayOneView: UIView!
+    @IBOutlet weak var dayTwoView: UIView!
+    @IBOutlet weak var dayThreeView: UIView!
+    @IBOutlet weak var dayFourView: UIView!
+    @IBOutlet weak var dayFiveView: UIView!
+    @IBOutlet weak var daySixView: UIView!
+    
     @IBAction func zeroButtonPressed(sender: AnyObject) {
     }
     
@@ -88,7 +97,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     var dayWeekDayLabel = [UILabel!]()
     var dayImage = [UIImageView!]()
     var dayHighLow = [UILabel!]()
-    var dayWeekButton = [UIButton]()
+    var dayWeekButton = [UIButton!]()
+    var dayWeekDayView = [UIView!]()
     
     var httpUrl = "http://apis.baidu.com/heweather/weather/free"
     var httpCity = "city=hangzhou"
@@ -143,6 +153,17 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         dayWeekButton.append(daySixWeekButton)
     }
     
+    func loadDayWeekDayView() {
+        
+        dayWeekDayView.append(dayZeroView)
+        dayWeekDayView.append(dayOneView)
+        dayWeekDayView.append(dayTwoView)
+        dayWeekDayView.append(dayThreeView)
+        dayWeekDayView.append(dayFourView)
+        dayWeekDayView.append(dayFiveView)
+        dayWeekDayView.append(daySixView)
+    }
+    
     func  request(httpUrl: String, httpCity: String) {
         
         let request = NSMutableURLRequest(URL: NSURL(string: httpUrl + "?" + httpCity)!)
@@ -170,6 +191,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         loadDayWeekDayLabel()
         loadDayImage()
         loadDayHighLow()
+        loadDayWeekDayButton()
+        loadDayWeekDayView()
         
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             let jsonObject: AnyObject! = try? NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments)
@@ -212,6 +235,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                                 let min = (daily.tmp?.min)!
                                 let max = (daily.tmp?.max)!
                                 self.dayHighLow[index].text = "\(min)" + "~" + "\(max)"
+                                
+//                                print("\(daily.pcpn)")
+//                                let rect = CGRect(origin: CGPointMake(0, CGFloat(140.5 - daily.pcpn! * 10)), size: CGSize(width: 80, height: daily.pcpn! * 10))
+//                                //let rect = CGRect(x: 0, y: 140.5 - daily.pcpn! * 10, width: 80, height: daily.pcpn! * 10)
+//                                let dropView = UIView(frame: rect)
+//                                dropView.backgroundColor = UIColor(red: 0, green: 0, blue: CGFloat(daily.pop!), alpha: CGFloat(daily.vis! / 10))
+//                                self.dayWeekDayView[index].addSubview(dropView)
+
                             }
                         }
                         
@@ -229,6 +260,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                         
                         let hum = (daily.hum)!
                         self.humidityLabel.text = "\(hum)"
+                        
+                        //let rect = CGRect(origin: CGPointMake(0, CGFloat(140.5 - daily.pcpn! * 10)), size: CGSize(width: 80, height: daily.pcpn! * 10))
+                        let rect = CGRect(x: 0, y: 108 - daily.pcpn! * 10, width: 40, height: daily.pcpn! * 10)
+                        let dropView = UIView(frame: rect)
+                        dropView.backgroundColor = UIColor(red: 0, green: 0.5, blue: CGFloat(Double(daily.pop!) / 100), alpha: CGFloat(Double(daily.vis!) / 10.0))
+                        self.dayWeekDayView[0].addSubview(dropView)
                         
                     }
                     if let HourlyForecastArray = aStatus["hourly_forecast"] as? NSArray {
@@ -344,7 +381,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         CFStringTransform(str, nil, kCFStringTransformStripDiacritics, false)
         let res = str as NSString
         httpCity = "city=" + res.stringByReplacingOccurrencesOfString(" ", withString: "")
-        httpCity = "city=hangzhou"
+        httpCity = "city=tongxiang"
         userLocationLabel.text = aString
         loadWeatherData()
     }

@@ -64,7 +64,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var daySixWeekButton: UIButton!
     
     @IBOutlet weak var dayZeroView: UIView!
-    
     @IBOutlet weak var dayOneView: UIView!
     @IBOutlet weak var dayTwoView: UIView!
     @IBOutlet weak var dayThreeView: UIView!
@@ -203,9 +202,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                     if let aqi = aStatus["aqi"] as? NSDictionary {
                         if let city = aqi["city"] as? NSDictionary {
                             self.cityAQI = self.getMemberValue.getCityAQI(city)
+                            
                             let colorNum = Float(self.cityAQI.aqi!)
                             let tmpColor = 255 - (colorNum - 50) * 10;
-                            //System.out.println(tmpColor);
                             var red: Float = 0, green: Float = 0;
                             if (tmpColor > 255) {
                                 red = 255;
@@ -236,13 +235,23 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                                 let max = (daily.tmp?.max)!
                                 self.dayHighLow[index].text = "\(min)" + "~" + "\(max)"
                                 
-//                                print("\(daily.pcpn)")
-//                                let rect = CGRect(origin: CGPointMake(0, CGFloat(140.5 - daily.pcpn! * 10)), size: CGSize(width: 80, height: daily.pcpn! * 10))
-//                                //let rect = CGRect(x: 0, y: 140.5 - daily.pcpn! * 10, width: 80, height: daily.pcpn! * 10)
-//                                let dropView = UIView(frame: rect)
-//                                dropView.backgroundColor = UIColor(red: 0, green: 0, blue: CGFloat(daily.pop!), alpha: CGFloat(daily.vis! / 10))
-//                                self.dayWeekDayView[index].addSubview(dropView)
-
+                                let rectView = CGRect(x: 0, y: 108 - daily.pcpn! * 20, width: 40, height: daily.pcpn! * 20)
+                                let dropView = UIView(frame: rectView)
+                                dropView.backgroundColor = UIColor(red: 0, green: 0, blue: CGFloat(Double(daily.pop!) / 100), alpha: CGFloat(Double(daily.vis!) / 10.0))
+                                let rectLabel = CGRect(x: 0, y: 95 - daily.pcpn! * 20, width: 40, height: 10)
+                                let dropLabel = UILabel(frame: rectLabel)
+                                dropLabel.text = "\(daily.pcpn!)" + "mm"
+                                dropLabel.font = UIFont(name: "Helvetica", size: 10)
+                                dropLabel.textAlignment = .Center
+                                self.dayWeekDayView[index].addSubview(dropView)
+                                self.dayWeekDayView[index].addSubview(dropLabel)
+                                
+                                // From the bottom of the animation effect
+                                UIView.beginAnimations(nil, context: nil)
+                                UIView.setAnimationDuration(2.0)
+                                self.dayWeekDayView[index].center = CGPoint(x: 0, y: 0)
+                                UIView.setAnimationCurve(UIViewAnimationCurve.EaseOut)
+                                UIView.commitAnimations()
                             }
                         }
                         
@@ -261,12 +270,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                         let hum = (daily.hum)!
                         self.humidityLabel.text = "\(hum)"
                         
-                        //let rect = CGRect(origin: CGPointMake(0, CGFloat(140.5 - daily.pcpn! * 10)), size: CGSize(width: 80, height: daily.pcpn! * 10))
-                        let rect = CGRect(x: 0, y: 108 - daily.pcpn! * 10, width: 40, height: daily.pcpn! * 10)
-                        let dropView = UIView(frame: rect)
-                        dropView.backgroundColor = UIColor(red: 0, green: 0.5, blue: CGFloat(Double(daily.pop!) / 100), alpha: CGFloat(Double(daily.vis!) / 10.0))
-                        self.dayWeekDayView[0].addSubview(dropView)
-                        
+                        self.setBackgroundColor()
                     }
                     if let HourlyForecastArray = aStatus["hourly_forecast"] as? NSArray {
                         self.cityDailyForecast.removeAll()
@@ -290,6 +294,33 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 }
             }
         })
+    }
+    
+    func setBackgroundColor() {
+        var time = (self.cityBasic.update?.loc!)! as NSString
+        var hour = time.substringWithRange(NSMakeRange(11, 2))
+        var minute = time.substringWithRange(NSMakeRange(14, 2))
+        var h = Int(hour)!
+        var m = Int(minute)!
+        let updateTime = h * 60 + m
+        
+        time = (self.cityDailyForecast[0].astro?.sr)! as NSString
+        hour = time.substringWithRange(NSMakeRange(0, 2))
+        minute = time.substringWithRange(NSMakeRange(3, 2))
+        h = Int(hour)!
+        m = Int(minute)!
+        let srTime = h * 60 + m
+        
+        time = (self.cityDailyForecast[0].astro?.ss)! as NSString
+        hour = time.substringWithRange(NSMakeRange(0, 2))
+        minute = time.substringWithRange(NSMakeRange(3, 2))
+        h = Int(hour)!
+        m = Int(minute)!
+        let ssTime = h * 60 + m
+        
+        if updateTime <= srTime || updateTime >= ssTime {
+            self.view.backgroundColor = UIColor.darkGrayColor()
+        }
     }
     
     var weatherData = WeatherData()
@@ -337,6 +368,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             // then open the positioning service updates
             locationManager.startUpdatingLocation()
         }
+        
+        //setBackgroundColor()
     }
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
@@ -381,7 +414,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         CFStringTransform(str, nil, kCFStringTransformStripDiacritics, false)
         let res = str as NSString
         httpCity = "city=" + res.stringByReplacingOccurrencesOfString(" ", withString: "")
-        httpCity = "city=tongxiang"
+        httpCity = "city=hangzhou"
         userLocationLabel.text = aString
         loadWeatherData()
     }

@@ -12,7 +12,7 @@ import CoreLocation
 
 class ViewController: UIViewController, CLLocationManagerDelegate {
 
-    @IBOutlet weak var userLocationLabel: UILabel!
+    @IBOutlet weak var userLocationButton: UIButton!
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var degreeButton: UIButton!
     @IBOutlet weak var iconView: UIImageView!
@@ -70,6 +70,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var dayFourView: UIView!
     @IBOutlet weak var dayFiveView: UIView!
     @IBOutlet weak var daySixView: UIView!
+    
+    @IBAction func cancelToPlayersViewController(segue:UIStoryboardSegue) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    @IBAction func savePlayerDetail(segue:UIStoryboardSegue) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
     
     @IBAction func zeroButtonPressed(sender: AnyObject) {
     }
@@ -167,7 +175,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
         let request = NSMutableURLRequest(URL: NSURL(string: httpUrl + "?" + httpCity)!)
         let session = NSURLSession.sharedSession()
-        request.timeoutInterval = 6
+        //request.timeoutInterval = 6
         request.HTTPMethod = "GET"
         request.addValue(aqiKey, forHTTPHeaderField: "apikey")
         
@@ -235,10 +243,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                                 let max = (daily.tmp?.max)!
                                 self.dayHighLow[index].text = "\(min)" + "~" + "\(max)"
                                 
-                                let rectView = CGRect(x: 0, y: 108 - daily.pcpn! * 20, width: 40, height: daily.pcpn! * 20)
+                                let rectView = CGRect(x: 0, y: 95 - daily.pcpn! * 50, width: 40, height: daily.pcpn! * 50)
                                 let dropView = UIView(frame: rectView)
                                 dropView.backgroundColor = UIColor(red: 0, green: 0, blue: CGFloat(Double(daily.pop!) / 100), alpha: CGFloat(Double(daily.vis!) / 10.0))
-                                let rectLabel = CGRect(x: 0, y: 95 - daily.pcpn! * 20, width: 40, height: 10)
+                                let rectLabel = CGRect(x: 0, y: 85 - daily.pcpn! * 50, width: 40, height: 10)
                                 let dropLabel = UILabel(frame: rectLabel)
                                 dropLabel.text = "\(daily.pcpn!)" + "mm"
                                 dropLabel.font = UIFont(name: "Helvetica", size: 10)
@@ -323,6 +331,18 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         }
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if let selectCityVC = segue.destinationViewController as? SelectCityViewController {
+            if let identifier = segue.identifier {
+                switch identifier {
+                    case "SelectCity":
+                    selectCityVC.title = "!!!"
+                default: break
+                }
+            }
+        }
+    }
+    
     var weatherData = WeatherData()
     var cityAQI = WeatherData.CityAQI()
     var cityBasic = WeatherData.Basic()
@@ -343,6 +363,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //self.navigationController?.navigationBarHidden = true
         // Set location service manager proxy
         locationManager.delegate = self
         
@@ -368,8 +390,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             // then open the positioning service updates
             locationManager.startUpdatingLocation()
         }
-        
-        //setBackgroundColor()
+        self.navigationController?.navigationBarHidden = true
     }
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
@@ -415,7 +436,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         let res = str as NSString
         httpCity = "city=" + res.stringByReplacingOccurrencesOfString(" ", withString: "")
         httpCity = "city=hangzhou"
-        userLocationLabel.text = aString
+        userLocationButton.setTitle("当前城市：" + aString, forState: UIControlState.Normal)
         loadWeatherData()
     }
 

@@ -25,87 +25,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var rainLabel: UILabel!
     @IBOutlet weak var humidityLabel: UILabel!
     
-    @IBOutlet weak var dayZeroWeekDayLabel: UILabel!
-    @IBOutlet weak var dayZeroImage: UIImageView!
-    @IBOutlet weak var dayZeroHighLow: UILabel!
-    
-    @IBOutlet weak var dayOneWeekDayLabel: UILabel!
-    @IBOutlet weak var dayOneImage: UIImageView!
-    @IBOutlet weak var dayOneHighLow: UILabel!
-    
-    @IBOutlet weak var dayTwoWeekDayLabel: UILabel!
-    @IBOutlet weak var dayTwoImage: UIImageView!
-    @IBOutlet weak var dayTwoHighLow: UILabel!
-    
-    @IBOutlet weak var dayThreeWeekDayLabel: UILabel!
-    @IBOutlet weak var dayThreeImage: UIImageView!
-    @IBOutlet weak var dayThreeHighLow: UILabel!
-    
-    @IBOutlet weak var dayFourWeekDayLabel: UILabel!
-    @IBOutlet weak var dayFourImage: UIImageView!
-    @IBOutlet weak var dayFourHighLow: UILabel!
-    
-    @IBOutlet weak var dayFiveWeekDayLabel: UILabel!
-    @IBOutlet weak var dayFiveImage: UIImageView!
-    @IBOutlet weak var dayFiveHighLow: UILabel!
-    
-    @IBOutlet weak var daySixWeekDayLabel: UILabel!
-    @IBOutlet weak var daySixImage: UIImageView!
-    @IBOutlet weak var daySixHighLow: UILabel!
-    
     @IBOutlet weak var AQIButton: UIButton!
-    
-    @IBOutlet weak var dayZeroWeekDayButton: UIButton!
-    @IBOutlet weak var dayOneWeekDayButton: UIButton!
-    @IBOutlet weak var dayTwoWeekButton: UIButton!
-    @IBOutlet weak var dayThreeWeekButton: UIButton!
-    @IBOutlet weak var dayFourWeekButton: UIButton!
-    @IBOutlet weak var dayFiveWeekButton: UIButton!
-    @IBOutlet weak var daySixWeekButton: UIButton!
-    
-    @IBOutlet weak var dayZeroView: UIView!
-    @IBOutlet weak var dayOneView: UIView!
-    @IBOutlet weak var dayTwoView: UIView!
-    @IBOutlet weak var dayThreeView: UIView!
-    @IBOutlet weak var dayFourView: UIView!
-    @IBOutlet weak var dayFiveView: UIView!
-    @IBOutlet weak var daySixView: UIView!
-    
-    @IBAction func cancelToPlayersViewController(segue:UIStoryboardSegue) {
-        dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    @IBAction func savePlayerDetail(segue:UIStoryboardSegue) {
-        dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    @IBAction func zeroButtonPressed(sender: AnyObject) {
-    }
-    
-    @IBAction func oneButtonPressed(sender: AnyObject) {
-    }
-    
-    @IBAction func twoButtonPressed(sender: AnyObject) {
-    }
-    
-    @IBAction func threeButtonPressed(sender: AnyObject) {
-    }
-    
-    @IBAction func fourButtonPressed(sender: AnyObject) {
-    }
-    
-    @IBAction func fiveButtonPressed(sender: AnyObject) {
-    }
-    
-    @IBAction func sixButtonPressed(sender: AnyObject) {
-    }
-    
-    
-    var dayWeekDayLabel = [UILabel!]()
-    var dayImage = [UIImageView!]()
-    var dayHighLow = [UILabel!]()
-    var dayWeekButton = [UIButton!]()
-    var dayWeekDayView = [UIView!]()
     
     var httpUrl = "http://apis.baidu.com/heweather/weather/free"
     var httpCity = "city=hangzhou"
@@ -116,73 +36,24 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         request(httpUrl, httpCity: httpCity)
     }
     
-    func loadDayWeekDayLabel() {
-        
-        dayWeekDayLabel.append(dayZeroWeekDayLabel)
-        dayWeekDayLabel.append(dayOneWeekDayLabel)
-        dayWeekDayLabel.append(dayTwoWeekDayLabel)
-        dayWeekDayLabel.append(dayThreeWeekDayLabel)
-        dayWeekDayLabel.append(dayFourWeekDayLabel)
-        dayWeekDayLabel.append(dayFiveWeekDayLabel)
-        dayWeekDayLabel.append(daySixWeekDayLabel)
+    @IBAction func cancelToPlayersViewController(segue:UIStoryboardSegue) {
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
-    func loadDayImage() {
-        
-        dayImage.append(dayZeroImage)
-        dayImage.append(dayOneImage)
-        dayImage.append(dayTwoImage)
-        dayImage.append(dayThreeImage)
-        dayImage.append(dayFourImage)
-        dayImage.append(dayFiveImage)
-        dayImage.append(daySixImage)
-    }
-    
-    func loadDayHighLow() {
-        
-        dayHighLow.append(dayZeroHighLow)
-        dayHighLow.append(dayOneHighLow)
-        dayHighLow.append(dayTwoHighLow)
-        dayHighLow.append(dayThreeHighLow)
-        dayHighLow.append(dayFourHighLow)
-        dayHighLow.append(dayFiveHighLow)
-        dayHighLow.append(daySixHighLow)
-    }
-    
-    func loadDayWeekDayButton() {
-        
-        dayWeekButton.append(dayZeroWeekDayButton)
-        dayWeekButton.append(dayOneWeekDayButton)
-        dayWeekButton.append(dayTwoWeekButton)
-        dayWeekButton.append(dayThreeWeekButton)
-        dayWeekButton.append(dayFourWeekButton)
-        dayWeekButton.append(dayFiveWeekButton)
-        dayWeekButton.append(daySixWeekButton)
-    }
-    
-    func loadDayWeekDayView() {
-        
-        dayWeekDayView.append(dayZeroView)
-        dayWeekDayView.append(dayOneView)
-        dayWeekDayView.append(dayTwoView)
-        dayWeekDayView.append(dayThreeView)
-        dayWeekDayView.append(dayFourView)
-        dayWeekDayView.append(dayFiveView)
-        dayWeekDayView.append(daySixView)
+    @IBAction func savePlayerDetail(segue:UIStoryboardSegue) {
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
     func  request(httpUrl: String, httpCity: String) {
         
         let request = NSMutableURLRequest(URL: NSURL(string: httpUrl + "?" + httpCity)!)
         let session = NSURLSession.sharedSession()
-        //request.timeoutInterval = 6
+        request.timeoutInterval = 6
         request.HTTPMethod = "GET"
         request.addValue(aqiKey, forHTTPHeaderField: "apikey")
         
         let task = session.dataTaskWithRequest(request, completionHandler: {
             (data, response, error) -> Void in
-            let result = response as! NSHTTPURLResponse
-            print(result.statusCode)
             if let _ = error{
                 print("请求失败")
             }
@@ -194,13 +65,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     func testJson(data: NSData) {
-        
-        loadDayWeekDayLabel()
-        loadDayImage()
-        loadDayHighLow()
-        loadDayWeekDayButton()
-        loadDayWeekDayView()
-        
+       
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             let jsonObject: AnyObject! = try? NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments)
             let weatherInfo = jsonObject.objectForKey("HeWeather data service 3.0")!
@@ -233,33 +98,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                         for index in 0...DailyForecastArray.count - 1 {
                             if let DailyForecast = DailyForecastArray[index] as? NSDictionary {
                                 self.cityDailyForecast.append(self.getMemberValue.getDailyForecast(DailyForecast))
-                                
-                                let daily = self.cityDailyForecast[index]
-                                let date = (daily.date! as NSString).substringFromIndex(8)
-                                self.dayWeekDayLabel[index].text = date
-                                let image = (daily.cond?.codeD)!
-                                self.dayImage[index].image = UIImage(named: "\(image)")
-                                let min = (daily.tmp?.min)!
-                                let max = (daily.tmp?.max)!
-                                self.dayHighLow[index].text = "\(min)" + "~" + "\(max)"
-                                
-                                let rectView = CGRect(x: 0, y: 95 - daily.pcpn! * 50, width: 40, height: daily.pcpn! * 50)
-                                let dropView = UIView(frame: rectView)
-                                dropView.backgroundColor = UIColor(red: 0, green: 0, blue: CGFloat(Double(daily.pop!) / 100), alpha: CGFloat(Double(daily.vis!) / 10.0))
-                                let rectLabel = CGRect(x: 0, y: 85 - daily.pcpn! * 50, width: 40, height: 10)
-                                let dropLabel = UILabel(frame: rectLabel)
-                                dropLabel.text = "\(daily.pcpn!)" + "mm"
-                                dropLabel.font = UIFont(name: "Helvetica", size: 10)
-                                dropLabel.textAlignment = .Center
-                                self.dayWeekDayView[index].addSubview(dropView)
-                                self.dayWeekDayView[index].addSubview(dropLabel)
-                                
-                                // From the bottom of the animation effect
-                                UIView.beginAnimations(nil, context: nil)
-                                UIView.setAnimationDuration(2.0)
-                                self.dayWeekDayView[index].center = CGPoint(x: 0, y: 0)
-                                UIView.setAnimationCurve(UIViewAnimationCurve.EaseOut)
-                                UIView.commitAnimations()
                             }
                         }
                         
@@ -331,12 +169,19 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         }
     }
     
+    var items: [String] = ["jiaxing", "shenzhen", "huzhou"]
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if let selectCityVC = segue.destinationViewController as? SelectCityViewController {
+       print("\(segue.identifier)")
+        if let selectCityVC = segue.destinationViewController as? SelectCityTableView {
+            print("~~~")
+             print("\(segue.identifier)")
             if let identifier = segue.identifier {
+                print("\(identifier)")
                 switch identifier {
                     case "SelectCity":
-                    selectCityVC.title = "!!!"
+                        print("\(identifier)")
+                    selectCityVC.items = items
                 default: break
                 }
             }
@@ -390,7 +235,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             // then open the positioning service updates
             locationManager.startUpdatingLocation()
         }
-        self.navigationController?.navigationBarHidden = true
+        self.navigationController?.navigationBarHidden
     }
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
@@ -435,7 +280,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         CFStringTransform(str, nil, kCFStringTransformStripDiacritics, false)
         let res = str as NSString
         httpCity = "city=" + res.stringByReplacingOccurrencesOfString(" ", withString: "")
-        httpCity = "city=hangzhou"
+        // httpCity = "city=hangzhou"
         userLocationButton.setTitle("当前城市：" + aString, forState: UIControlState.Normal)
         loadWeatherData()
     }

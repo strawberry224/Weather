@@ -25,21 +25,7 @@ class GetMemberValue {
         cityAQI.qlty = String(city["qlty"]!)
         cityAQI.so2 = Int(city["so2"]!.integerValue)
         
-        //testCityAQI(cityAQI)
-        
         return cityAQI
-    }
-    
-    func testCityAQI(cityAQI: WeatherData.CityAQI) {
-        
-        print(cityAQI.aqi)
-        print(cityAQI.co)
-        print(cityAQI.no2)
-        print(cityAQI.o3)
-        print(cityAQI.pm10)
-        print(cityAQI.pm25)
-        print(cityAQI.qlty)
-        print(cityAQI.so2)
     }
     
     // MARK: - Basic Public API
@@ -61,20 +47,7 @@ class GetMemberValue {
             cityBasic.update = tempUpdate
         }
         
-        //testBasic(cityBasic)
-        
         return cityBasic
-    }
-    
-    func testBasic(cityBasic: WeatherData.Basic) {
-        
-        print(cityBasic.city)
-        print(cityBasic.cnty)
-        print(cityBasic.id)
-        print(cityBasic.lat)
-        print(cityBasic.lon)
-        print(cityBasic.update?.loc)
-        print(cityBasic.update?.utc)
     }
     
     // MARK: - DailyForecast Public API
@@ -122,31 +95,9 @@ class GetMemberValue {
             cityDailyForecast.wind = tempWind
         }
         
-        //testDailyForecast(cityDailyForecast)
-        
         return cityDailyForecast
     }
     
-    func testDailyForecast(cityDailyForecast: WeatherData.DailyForecast) {
-        
-        print(cityDailyForecast.astro?.sr)
-        print(cityDailyForecast.astro?.ss)
-        print(cityDailyForecast.cond?.codeD)
-        print(cityDailyForecast.cond?.codeN)
-        print(cityDailyForecast.cond?.txtD)
-        print(cityDailyForecast.cond?.txtN)
-        print(cityDailyForecast.date)
-        print(cityDailyForecast.hum)
-        print(cityDailyForecast.pcpn)
-        print(cityDailyForecast.pop)
-        print(cityDailyForecast.tmp?.max)
-        print(cityDailyForecast.tmp?.min)
-        print(cityDailyForecast.wind?.deg)
-        print(cityDailyForecast.wind?.dir)
-        print(cityDailyForecast.wind?.sc)
-        print(cityDailyForecast.wind?.spd)
-    }
-
     func getHourlyForecast(city: NSDictionary) -> WeatherData.HourlyForecast {
         
         let cityHourlyForecast = WeatherData.HourlyForecast()
@@ -165,22 +116,7 @@ class GetMemberValue {
             cityHourlyForecast.wind = tempWind
         }
         
-        //testHourlyForecast(cityHourlyForecast)
-        
         return cityHourlyForecast
-    }
-    
-    func testHourlyForecast(cityHourlyForecast: WeatherData.HourlyForecast) {
-        
-        print(cityHourlyForecast.date)
-        print(cityHourlyForecast.hum)
-        print(cityHourlyForecast.pop)
-        print(cityHourlyForecast.pres)
-        print(cityHourlyForecast.tmp)
-        print(cityHourlyForecast.wind?.deg)
-        print(cityHourlyForecast.wind?.dir)
-        print(cityHourlyForecast.wind?.sc)
-        print(cityHourlyForecast.wind?.spd)
     }
     
     func getNow(city: NSDictionary) -> WeatherData.Now {
@@ -209,25 +145,7 @@ class GetMemberValue {
             cityNow.wind = tempWind
         }
         
-        //testNow(cityNow)
-
         return cityNow
-    }
-
-    func testNow(cityNow: WeatherData.Now) {
-        
-        print(cityNow.cond?.code)
-        print(cityNow.cond?.txt)
-        print(cityNow.fl)
-        print(cityNow.hum)
-        print(cityNow.pcpn)
-        print(cityNow.pres)
-        print(cityNow.tmp)
-        print(cityNow.vis)
-        print(cityNow.wind?.deg)
-        print(cityNow.wind?.dir)
-        print(cityNow.wind?.sc)
-        print(cityNow.wind?.spd)
     }
     
     func lifeDate(key: String, city: NSDictionary) -> WeatherData.Life {
@@ -251,27 +169,6 @@ class GetMemberValue {
         citySuggestion.trav = lifeDate("trav", city: city)
         citySuggestion.uv = lifeDate("uv", city: city)
         
-        //testSuggestion(citySuggestion)
-        
         return citySuggestion
     }
-    
-    func testSuggestion(citySuggestion: WeatherData.Suggestion) {
-        
-        print(citySuggestion.comf?.brf)
-        print(citySuggestion.comf?.txt)
-        print(citySuggestion.cw?.brf)
-        print(citySuggestion.cw?.txt)
-        print(citySuggestion.drsg?.brf)
-        print(citySuggestion.drsg?.txt)
-        print(citySuggestion.flu?.brf)
-        print(citySuggestion.flu?.txt)
-        print(citySuggestion.sport?.brf)
-        print(citySuggestion.sport?.txt)
-        print(citySuggestion.trav?.brf)
-        print(citySuggestion.trav?.txt)
-        print(citySuggestion.uv?.brf)
-        print(citySuggestion.uv?.txt)
-    }
-
 }

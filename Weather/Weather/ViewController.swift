@@ -172,16 +172,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     var items: [String] = ["jiaxing", "shenzhen", "huzhou"]
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-       print("\(segue.identifier)")
-        if let selectCityVC = segue.destinationViewController as? SelectCityTableView {
-            print("~~~")
-             print("\(segue.identifier)")
+        if let selectCityVC = segue.destinationViewController as? CityViewController {
             if let identifier = segue.identifier {
-                print("\(identifier)")
                 switch identifier {
                     case "SelectCity":
-                        print("\(identifier)")
-                    selectCityVC.items = items
+                    selectCityVC.title = "!!!"
                 default: break
                 }
             }

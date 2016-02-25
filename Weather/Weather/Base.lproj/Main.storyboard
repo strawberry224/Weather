@@ -226,47 +226,6 @@
             </objects>
             <point key="canvasLocation" x="119" y="141"/>
         </scene>
-        <!--Select City-->
-        <scene sceneID="h3v-bQ-aMv">
-            <objects>
-                <tableViewController id="8eD-nJ-YIQ" customClass="SelectCityTableView" customModule="Weather" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="11d-2N-wN6">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="cell" selectionStyle="blue" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="cell" id="CnA-CZ-79b">
-                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CnA-CZ-79b" id="czZ-Ns-1xI">
-                                    <rect key="frame" x="0.0" y="0.0" width="567" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="8eD-nJ-YIQ" id="hfn-hN-qtr"/>
-                            <outlet property="delegate" destination="8eD-nJ-YIQ" id="FuT-Vk-rKk"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Select City" id="jxV-uc-WZQ">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Z49-BW-uPw">
-                            <connections>
-                                <segue destination="vL2-0H-Gge" kind="unwind" unwindAction="cancelToPlayersViewController:" id="Qkl-dF-QHz"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="Xyh-8T-ZQn">
-                            <connections>
-                                <segue destination="vL2-0H-Gge" kind="unwind" unwindAction="savePlayerDetail:" id="fYt-3g-Dot"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="5M1-J5-JQa" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="vL2-0H-Gge" userLabel="Exit" sceneMemberID="exit"/>
-            </objects>
-            <point key="canvasLocation" x="1580" y="141"/>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="8Lc-Pi-FDf">
             <objects>
@@ -278,12 +237,43 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="8eD-nJ-YIQ" kind="relationship" relationship="rootViewController" id="vY1-vO-aRf"/>
+                        <segue destination="Px2-wS-Ke6" kind="relationship" relationship="rootViewController" id="Bp6-Yg-jnk"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s4G-TH-wR5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="820" y="141"/>
+            <point key="canvasLocation" x="852" y="141"/>
+        </scene>
+        <!--选择所在城市-->
+        <scene sceneID="HcH-EN-0nT">
+            <objects>
+                <viewController id="Px2-wS-Ke6" customClass="CityViewController" customModule="Weather" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="wCJ-rA-qDc"/>
+                        <viewControllerLayoutGuide type="bottom" id="3cI-Sf-YCg"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="dMn-Ls-EJu">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="选择所在城市" id="5HZ-Le-huN">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="q2M-JF-ImQ">
+                            <connections>
+                                <segue destination="RlE-1H-Jx5" kind="unwind" unwindAction="cancelToPlayersViewController:" id="o4D-uf-2OU"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="xqg-Ns-rvh">
+                            <connections>
+                                <segue destination="RlE-1H-Jx5" kind="unwind" unwindAction="savePlayerDetail:" id="2Ro-CN-QI5"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Qio-Rz-VDx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="RlE-1H-Jx5" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="1539" y="141"/>
         </scene>
     </scenes>
     <resources>

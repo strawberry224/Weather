@@ -253,11 +253,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             if (error == nil) {
                 let array = placemark! as NSArray
                 let mark = array.firstObject as! CLPlacemark
-                var SubLocality: NSString = (mark.addressDictionary! as NSDictionary).valueForKey("SubLocality") as! NSString
                 
-                // Remove the word "city" and "province"
-                SubLocality = SubLocality.stringByReplacingOccurrencesOfString("市", withString: "")
-                self.charactorType(SubLocality as String)
+                var subLocality = mark.name
+                let provinceEndId = subLocality?.rangeOfString("省")?.endIndex
+                let cityStartId = subLocality?.rangeOfString("市")?.startIndex
+                let range = Range(start: provinceEndId!, end: cityStartId!)
+                subLocality = subLocality?.substringWithRange(range)
+                self.charactorType(subLocality! as String)
                 //print(self.cityName)
             }else {
                 // conversion failed

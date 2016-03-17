@@ -11,16 +11,16 @@ import UIKit
 class CityViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var tableView: UITableView?
-    
     var items: NSArray = []
-
+    var cityDictionary: NSDictionary?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let plistPath = NSBundle.mainBundle().pathForResource("citylist", ofType: "plist")!
         let provinceArray = NSArray(contentsOfFile: plistPath)!
-        let a = provinceArray[0] as? NSDictionary
-        items = (a?.allKeys)!
+        cityDictionary = provinceArray[0] as? NSDictionary
+        items = (cityDictionary?.allKeys)!
         
         // Create table view
         self.tableView = UITableView(frame: self.view.frame, style:UITableViewStyle.Plain)
@@ -34,24 +34,18 @@ class CityViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
-        // To configure the tableview
-        //configureTableView()
-        
-        // After loading the data
-        //loadCellDescriptors()
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     // MARK: UITableViewDelegate & Datasource
     
     // The number of groups
     func numberOfRowsInSection(section: Int) -> Int{
-        return items.count;
+        return 1
     }
     
     // Is specified in the UITableView how many section
@@ -59,7 +53,7 @@ class CityViewController: UIViewController, UITableViewDelegate, UITableViewData
     // a section will contain more than Cell
     // there is only one section
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+        return self.items.count
     }
     
     // Is specified in each of the section which has a number of Cell.
@@ -75,8 +69,27 @@ class CityViewController: UIViewController, UITableViewDelegate, UITableViewData
     // A Cell looks like it is determined by this method.
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "cell")
-        cell.textLabel?.text = items[indexPath.row] as? String
+        //cell.textLabel?.text = items[indexPath.row] as? String
+        
+        let id = indexPath.section
+        let province:String = items[id] as! String
+        let cityArray = cityDictionary![province]! as! NSArray
+        cell.textLabel?.text = cityArray[indexPath.row] as? String
         return cell
+    }
+    
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = UIView(frame: CGRectMake(0, 0, self.view.frame.size.width, 30))
+        view.backgroundColor = UIColor.grayColor()
+        let provinceLabel = UILabel(frame:CGRectMake(0, 0, self.view.frame.size.width, 30))
+        provinceLabel.text = items[section] as? String
+        view.addSubview(provinceLabel)
+        return view
+    }
+    
+    // set header height
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 30
     }
     
     // Is the method of selecting an Cell after execution.

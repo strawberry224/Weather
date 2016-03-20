@@ -8,7 +8,13 @@
 
 import UIKit
 
+@objc protocol CityViewControllerDelegate {
+    func cityDidSelected(cityKey: String)
+}
+
 class CityViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
+    @IBOutlet weak var delegate: CityViewControllerDelegate?
     
     var tableView: UITableView?
     var items: NSArray = []
@@ -61,7 +67,10 @@ class CityViewController: UIViewController, UITableViewDelegate, UITableViewData
     // how many cities have the number of optional Cell
     // This is depending on the situation.
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.items.count
+        //return self.items.count
+        let province:String = items[section] as! String
+        let cityArray = cityDictionary![province]! as! NSArray
+        return cityArray.count
     }
     
     
@@ -96,6 +105,24 @@ class CityViewController: UIViewController, UITableViewDelegate, UITableViewData
     // When the user selects a cell, we need to know which one it is
     // and the cell of the city's name sent to the main interface used to access the city's weather data.
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let id = indexPath.section
+        let province:String = items[id] as! String
+        let cityArray = cityDictionary![province]! as! NSArray
+        let cityKey = cityArray[indexPath.row] as? String
+        
+        self.delegate?.cityDidSelected(cityKey!)
+        
+//        let mainViewController = storyboard?.instantiateViewControllerWithIdentifier("main") as! ViewController
+//        mainViewController.userLocationButton.setTitle(selectCity, forState: UIControlState.Normal)
+//        self.navigationController?.pushViewController(mainViewController, animated: true)
+    }
+    
+    // MARK: - Navigation
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "Done" {
+            
+        }
     }
     
 }

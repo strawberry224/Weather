@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 import CoreLocation
 
-class ViewController: UIViewController, CLLocationManagerDelegate {
+class ViewController: UIViewController, CLLocationManagerDelegate, CityViewControllerDelegate {
 
     @IBOutlet weak var userLocationButton: UIButton!
     @IBOutlet weak var temperatureLabel: UILabel!
@@ -28,11 +28,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var AQIButton: UIButton!
     
     var httpUrl = "http://apis.baidu.com/heweather/weather/free"
-    var httpCity = "city=hangzhou"
+    var httpCity = "city=?"
     let aqiKey = "616e8a401061a1108d387543235f3159"
     
     func loadWeatherData() {
-        
         request(httpUrl, httpCity: httpCity)
     }
     
@@ -45,7 +44,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     func  request(httpUrl: String, httpCity: String) {
-        
         let request = NSMutableURLRequest(URL: NSURL(string: httpUrl + "?" + httpCity)!)
         let session = NSURLSession.sharedSession()
         request.timeoutInterval = 6
@@ -69,7 +67,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             let jsonObject: AnyObject! = try? NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments)
             let weatherInfo = jsonObject.objectForKey("HeWeather data service 3.0")!
-            
             if let statusesArray = weatherInfo as? NSArray {
                 if let aStatus = statusesArray[0] as? NSDictionary {
                     if let aqi = aStatus["aqi"] as? NSDictionary {
@@ -86,7 +83,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                                 red = tmpColor;
                                 green = 255;
                             }
-
                             self.AQIButton.backgroundColor = UIColor(colorLiteralRed: red, green: green, blue: 0, alpha: 1)
                         }
                     }
@@ -168,19 +164,19 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             self.view.backgroundColor = UIColor.darkGrayColor()
         }
     }
-    
-    var items: [String] = ["jiaxing", "shenzhen", "huzhou"]
-    
+        
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if let selectCityVC = segue.destinationViewController as? CityViewController {
-            if let identifier = segue.identifier {
-                switch identifier {
-                    case "SelectCity":
-                    selectCityVC.title = "!!!"
-                default: break
-                }
-            }
+        if segue.identifier == "Done" {
         }
+        else if segue.identifier == "SelectCity" {
+            let destinationController: UINavigationController = segue.destinationViewController as! UINavigationController
+            let cityController = destinationController.viewControllers[0] as! CityViewController
+            cityController.delegate = self;
+        }
+    }
+    
+    func cityDidSelected(cityKey: String){
+        charactorType(cityKey)
     }
     
     var weatherData = WeatherData()
@@ -220,11 +216,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         locationManager.distanceFilter = kCLLocationAccuracyKilometer
         
         // Do any additional setup after loading the view, typically from a nib.
+        
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        if CLLocationManager.locationServicesEnabled() {
+        if CLLocationManager.locationServicesEnabled() && httpCity == "city=?" {
             
             // To allow the use of the location of the service
             // then open the positioning service updates

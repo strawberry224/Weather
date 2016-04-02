@@ -15,6 +15,9 @@ import UIKit
 class CityViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var delegate: CityViewControllerDelegate?
+    @IBOutlet weak var currentCityLabel: UILabel!
+        
+    var currentCity: String?
     
     var tableView: UITableView?
     var items: NSArray = []
@@ -23,13 +26,16 @@ class CityViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        currentCityLabel.text = "当前城市:  " + currentCity!
+        
         let plistPath = NSBundle.mainBundle().pathForResource("citylist", ofType: "plist")!
         let provinceArray = NSArray(contentsOfFile: plistPath)!
         cityDictionary = provinceArray[0] as? NSDictionary
         items = (cityDictionary?.allKeys)!
         
         // Create table view
-        self.tableView = UITableView(frame: self.view.frame, style:UITableViewStyle.Plain)
+        self.tableView = UITableView(frame: CGRectMake(0, 100, UIScreen.mainScreen().bounds.size.width,
+            UIScreen.mainScreen().bounds.size.height), style:UITableViewStyle.Plain)
         self.tableView!.delegate = self
         self.tableView!.dataSource = self
         
@@ -109,6 +115,7 @@ class CityViewController: UIViewController, UITableViewDelegate, UITableViewData
         let province:String = items[id] as! String
         let cityArray = cityDictionary![province]! as! NSArray
         let cityKey = cityArray[indexPath.row] as? String
+        currentCityLabel.text = "当前城市:  " + cityKey!
         
         self.delegate?.cityDidSelected(cityKey!)
         

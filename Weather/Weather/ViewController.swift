@@ -11,13 +11,13 @@ import MapKit
 import CoreLocation
 
 class ViewController: UIViewController, CLLocationManagerDelegate, CityViewControllerDelegate {
-
+    
     @IBOutlet weak var userLocationButton: UIButton!
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var degreeButton: UIButton!
     @IBOutlet weak var iconView: UIImageView!
     @IBOutlet weak var summaryLabel: UILabel!
-
+    
     @IBOutlet weak var dayZeroTemperatureLow: UILabel!
     @IBOutlet weak var dayZeroTemperatureHigh: UILabel!
     
@@ -63,12 +63,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CityViewContr
     }
     
     func testJson(data: NSData) {
-       
+        
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             let jsonObject: AnyObject! = try? NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments)
             let weatherInfo = jsonObject.objectForKey("HeWeather data service 3.0")!
             if let statusesArray = weatherInfo as? NSArray {
                 if let aStatus = statusesArray[0] as? NSDictionary {
+                    
                     if let aqi = aStatus["aqi"] as? NSDictionary {
                         if let city = aqi["city"] as? NSDictionary {
                             self.cityAQI = self.getMemberValue.getCityAQI(city)
@@ -102,7 +103,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CityViewContr
                         let max = (daily.tmp?.max)!
                         self.dayZeroTemperatureLow.text = "\(min)"
                         self.dayZeroTemperatureHigh.text = "\(max)"
-      
+                        
                         let sc = (daily.wind?.sc)!
                         self.windSpeedLabel.text = "\(sc)"
                         
@@ -164,7 +165,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CityViewContr
             self.view.backgroundColor = UIColor.darkGrayColor()
         }
     }
-        
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "Done" {
         }
@@ -172,6 +173,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CityViewContr
             let destinationController: UINavigationController = segue.destinationViewController as! UINavigationController
             let cityController = destinationController.viewControllers[0] as! CityViewController
             cityController.delegate = self;
+            cityController.currentCity = currentCity
         }
     }
     
@@ -239,7 +241,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CityViewContr
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
+    var currentCity: String?
+    
     // Change the latitude and longitude into a city name
     func LonLatToCity() {
         let geocoder: CLGeocoder = CLGeocoder()
@@ -254,7 +258,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CityViewContr
                 var subLocality = mark.name
                 let provinceEndId = subLocality?.rangeOfString("省")?.endIndex
                 let cityStartId = subLocality?.rangeOfString("市")?.startIndex
-                let range = Range(start: provinceEndId!, end: cityStartId!)
+                let range = Range(provinceEndId! ..< cityStartId!)
                 subLocality = subLocality?.substringWithRange(range)
                 self.charactorType(subLocality! as String)
                 //print(self.cityName)
@@ -265,7 +269,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CityViewContr
     }
     
     func charactorType(aString:String) {
-        
+        self.currentCity = aString
         // Conversion failed to convert to variable string
         let str = NSMutableString(string: aString)
         CFStringTransform(str, nil, kCFStringTransformMandarinLatin, false)
@@ -278,7 +282,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CityViewContr
         userLocationButton.setTitle("当前城市：" + aString, forState: UIControlState.Normal)
         loadWeatherData()
     }
-
-
+    
+    
 }
-

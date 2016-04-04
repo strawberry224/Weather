@@ -116,7 +116,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CityViewContr
                         self.setBackgroundColor()
                     }
                     if let HourlyForecastArray = aStatus["hourly_forecast"] as? NSArray {
-                        self.cityDailyForecast.removeAll()
+                        self.cityHourlyForecast.removeAll()
                         for index in 0...HourlyForecastArray.count - 1 {
                             if let HourlyForecast = HourlyForecastArray[index] as? NSDictionary {
                                 self.cityHourlyForecast.append(self.getMemberValue.getHourlyForecast(HourlyForecast))
@@ -139,6 +139,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CityViewContr
         })
     }
     
+    var nightFlag = false
     func setBackgroundColor() {
         var time = (self.cityBasic.update?.loc!)! as NSString
         var hour = time.substringWithRange(NSMakeRange(11, 2))
@@ -163,17 +164,21 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CityViewContr
         
         if updateTime <= srTime || updateTime >= ssTime {
             self.view.backgroundColor = UIColor.darkGrayColor()
+            nightFlag = true
         }
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "Done" {
-        }
-        else if segue.identifier == "SelectCity" {
-            let destinationController: UINavigationController = segue.destinationViewController as! UINavigationController
+        if segue.identifier == "SelectCity" {
+            let destinationController = segue.destinationViewController as! UINavigationController
             let cityController = destinationController.viewControllers[0] as! CityViewController
             cityController.delegate = self;
             cityController.currentCity = currentCity
+        } else if segue.identifier == "Forecast" {
+            let destinationController = segue.destinationViewController as! UINavigationController
+            let forecastController = destinationController.viewControllers[0] as! ForecastViewController
+            forecastController.cityDailyForecast = cityDailyForecast
+            forecastController.nightFlag = nightFlag
         }
     }
     

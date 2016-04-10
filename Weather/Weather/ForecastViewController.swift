@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ForecastViewController: UIViewController, TemperatureViewDelegate {
+class ForecastViewController: UIViewController, TemperatureViewDelegate, HumidityViewDelegate, WindViewDelegate {
     
     let scroll = UIScrollView();
     var currentHeight: CGFloat = 0
@@ -21,7 +21,9 @@ class ForecastViewController: UIViewController, TemperatureViewDelegate {
     
     override func viewDidLoad() {
         if (nightFlag == true) {
-            //self.view.backgroundColor = UIColor.darkGrayColor()
+            self.view.backgroundColor = UIColor.lightGrayColor()
+        } else {
+            
         }
         showDate()
     }
@@ -51,16 +53,7 @@ class ForecastViewController: UIViewController, TemperatureViewDelegate {
             scroll.addSubview(label)
         }
     }
-    
-    func normalization(array: [Int]) -> [CGFloat] {
-        var result = [CGFloat]()
-        let min = array.minElement()
-        let max = array.maxElement()
-        for i in 0...array.count - 1 {
-            result.append(CGFloat(array[i] - min!) / CGFloat(max! - min!))
-        }
-        return result
-    }
+   
     
     let SR = true
     let SS = false
@@ -106,8 +99,8 @@ class ForecastViewController: UIViewController, TemperatureViewDelegate {
     }
     
     func showWeatherConditionData(dayFlag: Bool) {
-        currentHeight += dayFlag ? LABEL_HEIGHT : LABEL_WIDTH
-        let title = UILabel(frame: CGRectMake(0, currentHeight, LABEL_WIDTH, LABEL_WIDTH))
+        currentHeight += dayFlag ? LABEL_HEIGHT : LABEL_WIDTH * 0.75
+        let title = UILabel(frame: CGRectMake(0, currentHeight, LABEL_WIDTH, LABEL_WIDTH * 0.75))
         title.text = dayFlag ? "白天" + "\n天气" : "夜间" + "\n天气"
         title.numberOfLines = 0
         title.textColor = UIColor.orangeColor()
@@ -120,7 +113,8 @@ class ForecastViewController: UIViewController, TemperatureViewDelegate {
         
         for i in 0...6 {
             let forecast = cityDailyForecast[i]
-            let imageView = UIImageView(frame: CGRectMake(CGFloat(i + 1) * LABEL_WIDTH, currentHeight, LABEL_WIDTH, LABEL_WIDTH))
+            let imageView = UIImageView(frame: CGRectMake(CGFloat(i + 1) * LABEL_WIDTH, currentHeight, LABEL_WIDTH * 0.75, LABEL_WIDTH * 0.75))
+            imageView.backgroundColor = dayFlag ? UIColor.clearColor() : UIColor.lightGrayColor()
             let id = dayFlag ? (forecast.cond?.codeD)! : (forecast.cond?.codeN)!
             imageView.image = UIImage(named: "\(id)")
             scroll.addSubview(imageView)
@@ -128,7 +122,7 @@ class ForecastViewController: UIViewController, TemperatureViewDelegate {
     }
     
     func showHumidityData() {
-        currentHeight += LABEL_WIDTH
+        currentHeight += LABEL_WIDTH * 0.75
         let title = UILabel(frame: CGRectMake(0, currentHeight, LABEL_WIDTH, LABEL_WIDTH))
         title.text = "湿度"
         title.textColor = UIColor.yellowColor()
@@ -138,21 +132,16 @@ class ForecastViewController: UIViewController, TemperatureViewDelegate {
         title.layer.borderColor = UIColor.yellowColor().CGColor
         scroll.addSubview(title)
         
-        
+        let subVlew = HumidityView(frame: CGRect(x: LABEL_WIDTH, y: currentHeight,
+            width: LABEL_WIDTH * 7, height: LABEL_WIDTH))
+        subVlew.dataSource = self
+        subVlew.backgroundColor = UIColor.clearColor()
+        scroll.addSubview(subVlew)
     }
     
-    func showDate() {
-        setScroll()
-        showAstroData(SR)
-        showAstroData(SS)
-        showWeatherConditionData(SR)
-        showWeatherConditionData(SS)
-        
-
-        
-        // precipitation
+    func showPrecipitationData() {
         currentHeight += LABEL_WIDTH
-        var title = UILabel(frame: CGRectMake(0, currentHeight, LABEL_WIDTH, LABEL_WIDTH))
+        let title = UILabel(frame: CGRectMake(0, currentHeight, LABEL_WIDTH, LABEL_WIDTH * 1.5))
         title.text = "降水"
         title.textColor = UIColor.greenColor()
         title.textAlignment = NSTextAlignment.Center
@@ -161,35 +150,41 @@ class ForecastViewController: UIViewController, TemperatureViewDelegate {
         title.layer.borderColor = UIColor.greenColor().CGColor
         scroll.addSubview(title)
         
-        // humidity(%) -> blue
         // precipitation(mm) -> height
-        // Precipitation probability -> alpha
+        // Precipitation probability -> blue
         
+        var pcpnArray = [Double]()
+        var popArray = [Int]()
         for i in 0...6 {
             let forecast = cityDailyForecast[i]
-            let hum = CGFloat(Double(forecast.hum!) / 100.0)
-            let pcpn = CGFloat(forecast.pcpn!)
-            let pop = CGFloat(Double(forecast.pop!) / 10.0)
-            
+            pcpnArray.append(forecast.pcpn!)
+            popArray.append(forecast.pop!)
+        }
+        
+        var pcpn = normalization(pcpnArray)
+        var pop = normalization(popArray)
+        
+        for i in 0...6 {
             let subVlew = UIView(frame: CGRect(x: CGFloat(Double(i) + 1.25) * LABEL_WIDTH,
-                y: currentHeight +  LABEL_WIDTH - pcpn * 2.5,
-                width: LABEL_WIDTH * 0.5, height: pcpn * 2.5))
-            subVlew.backgroundColor = UIColor(red: hum, green: 1.0, blue: 1.0, alpha: pop)
+                y: currentHeight +  LABEL_WIDTH * 1.5 - pcpn[i] * LABEL_WIDTH,
+                width: LABEL_WIDTH * 0.5, height: pcpn[i] * LABEL_WIDTH))
+            subVlew.backgroundColor = UIColor(red: pop[i], green: 1.0, blue: 1.0, alpha: 1.0)
             scroll.addSubview(subVlew)
             
             let label = UILabel(frame: CGRect(x: CGFloat(Double(i) + 1.25) * LABEL_WIDTH,
-                y: currentHeight + LABEL_WIDTH - pcpn * 2.5  - LABEL_HEIGHT * 0.5,
+                y: currentHeight + LABEL_WIDTH * 1.5 - pcpn[i] * LABEL_WIDTH  - LABEL_HEIGHT * 0.5,
                 width: LABEL_WIDTH, height: LABEL_HEIGHT * 0.5))
-            label.text = String(pcpn) + "mm"
+            label.text = String(pcpnArray[i]) + "mm"
             label.font = UIFont(name: "HelveticaNeue", size: 10)
             label.adjustsFontSizeToFitWidth = true
+            label.textColor = nightFlag! ? UIColor.whiteColor() : UIColor.blackColor()
             scroll.addSubview(label)
-
         }
-        
-        // temperature
-        currentHeight += LABEL_WIDTH
-        title = UILabel(frame: CGRectMake(0, currentHeight, LABEL_WIDTH, LABEL_WIDTH * 2))
+    }
+    
+    func showTemperatureData() {
+        currentHeight += LABEL_WIDTH * 1.5
+        let title = UILabel(frame: CGRectMake(0, currentHeight, LABEL_WIDTH, LABEL_WIDTH * 2))
         title.text = "温度"
         title.textColor = UIColor.cyanColor()
         title.textAlignment = NSTextAlignment.Center
@@ -203,12 +198,11 @@ class ForecastViewController: UIViewController, TemperatureViewDelegate {
         subVlew.dataSource = self
         subVlew.backgroundColor = UIColor.clearColor()
         scroll.addSubview(subVlew)
-        
-        self.view.addSubview(scroll)
-        
-        // visitable
+    }
+    
+    func showVisibilityData() {
         currentHeight += LABEL_WIDTH * 2
-        title = UILabel(frame: CGRectMake(0, currentHeight, LABEL_WIDTH, LABEL_HEIGHT))
+        let title = UILabel(frame: CGRectMake(0, currentHeight, LABEL_WIDTH, LABEL_HEIGHT))
         title.text = "可见度"
         title.textColor = UIColor.blueColor()
         title.textAlignment = NSTextAlignment.Center
@@ -235,10 +229,11 @@ class ForecastViewController: UIViewController, TemperatureViewDelegate {
             
             scroll.addSubview(label)
         }
-        
-        // wind
+    }
+    
+    func showWindData() {
         currentHeight += LABEL_HEIGHT
-        title = UILabel(frame: CGRectMake(0, currentHeight, LABEL_WIDTH, LABEL_WIDTH))
+        let title = UILabel(frame: CGRectMake(0, currentHeight, LABEL_WIDTH, LABEL_WIDTH))
         title.text = "风速"
         title.textColor = UIColor.purpleColor()
         title.textAlignment = NSTextAlignment.Center
@@ -246,9 +241,55 @@ class ForecastViewController: UIViewController, TemperatureViewDelegate {
         title.layer.borderWidth = 2
         title.layer.borderColor = UIColor.purpleColor().CGColor
         scroll.addSubview(title)
+        
+        let subVlew = WindView(frame: CGRect(x: LABEL_WIDTH, y: currentHeight,
+            width: LABEL_WIDTH * 7, height: LABEL_WIDTH * 2))
+        subVlew.dataSource = self
+        subVlew.backgroundColor = UIColor.clearColor()
+        scroll.addSubview(subVlew)
     }
     
+    func showDate() {
+        setScroll()
+        showAstroData(SR)
+        showAstroData(SS)
+        showWeatherConditionData(SR)
+        showWeatherConditionData(SS)
+        showHumidityData()
+        showPrecipitationData()
+        showTemperatureData()
+        showVisibilityData()
+        showWindData()
+        
+        self.view.addSubview(scroll)
+    }
+    
+    // ViewDelegate
+    // TemperatureView
     func dataForTemperatureView(sender: TemperatureView) -> [WeatherData.DailyForecast] {
         return cityDailyForecast
     }
+    
+    func timeForTemperatureView(sender: TemperatureView) -> Bool {
+        return nightFlag!
+    }
+    
+    // HumidityView
+    func dataForHumidityView(sender: HumidityView) -> [WeatherData.DailyForecast] {
+        return cityDailyForecast
+    }
+    
+    func timeForHumidityView(sender: HumidityView) -> Bool {
+        return nightFlag!
+    }
+    
+    // WindView
+    func dataForWindView(sender: WindView) -> [WeatherData.DailyForecast] {
+        return cityDailyForecast
+    }
+    
+    func timeForWindView(sender: WindView) -> Bool {
+        return nightFlag!
+    }
+   
 }

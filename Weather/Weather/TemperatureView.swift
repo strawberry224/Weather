@@ -10,6 +10,7 @@ import UIKit
 
 protocol TemperatureViewDelegate: class {
     func dataForTemperatureView(sender: TemperatureView) -> [WeatherData.DailyForecast]
+    func timeForTemperatureView(sender: TemperatureView) -> Bool
 }
 
 class TemperatureView: UIView {
@@ -20,19 +21,8 @@ class TemperatureView: UIView {
     
     weak var dataSource: TemperatureViewDelegate?
     
-    
-    
-    func normalization(array: [Int]) -> [CGFloat] {
-        var result = [CGFloat]()
-        let min = array.minElement()
-        let max = array.maxElement()
-        for i in 0...array.count - 1 {
-            result.append(CGFloat(array[i] - min!) / CGFloat(max! - min!))
-        }
-        return result
-    }
-    
     func drawTemperature(cityDailyForecast: [WeatherData.DailyForecast], flag: Bool) {
+        
         var max = [Int]()
         
         // normalization
@@ -43,7 +33,7 @@ class TemperatureView: UIView {
         var high = normalization(max)
         
         // get brush context
-        let context:CGContextRef =  UIGraphicsGetCurrentContext()!;
+        let context:CGContextRef =  UIGraphicsGetCurrentContext()!
         // antialiasing settings
         CGContextSetAllowsAntialiasing(context, true)
         
@@ -58,10 +48,11 @@ class TemperatureView: UIView {
                 RADIUS, RADIUS))
             
             // draw string
-            color.set()
+            let nightFlag = dataSource?.timeForTemperatureView(self)
+            let strColor = nightFlag! ? UIColor.whiteColor() : UIColor.blackColor()
             let str = String(max[i])
             str.drawAtPoint(CGPointMake(CGFloat(Double(i) + 0.5) * LABEL_WIDTH, (offset - CGFloat(high[i])) * LABEL_HEIGHT + RADIUS),
-                            withAttributes: nil);
+                            withAttributes: [NSForegroundColorAttributeName: strColor]);
             
             // draw line
             if (i < 6) {

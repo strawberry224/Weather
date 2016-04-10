@@ -7,15 +7,87 @@
 //
 
 import UIKit
+import MapKit
+import CoreLocation
 
 @objc protocol CityViewControllerDelegate {
     func cityDidSelected(cityKey: String)
+    func cityFlag(flag: Bool)
 }
 
-class CityViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class CityViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate {
     
     @IBOutlet weak var delegate: CityViewControllerDelegate?
     @IBOutlet weak var currentCityLabel: UILabel!
+    @IBOutlet weak var inputCityName: UITextField!
+    
+    var flag = true
+    
+    // Save access to local location
+    var currLocation : CLLocation!
+    
+    // For positioning service management class
+    // it can provide us with location information and height information
+    // also can monitor the equipment to enter or leave a certain area
+    // but also can obtain the operation direction of equipment
+    let locationManager : CLLocationManager = CLLocationManager()
+
+    
+    @IBAction func getUserPosition(sender: AnyObject) {
+        
+        //self.navigationController?.navigationBarHidden = true
+        // Set location service manager proxy
+        locationManager.delegate = self
+        
+        // Send authorization request
+        locationManager.requestAlwaysAuthorization()
+        
+        // The highest accuracy when the device is powered by a battery
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        
+        // Accurate to 1000 meters
+        // distance filter
+        // defined the minimum distance of the device to get the position information after moving
+        locationManager.distanceFilter = kCLLocationAccuracyKilometer
+        
+        // Do any additional setup after loading the view, typically from a nib.
+        
+        if CLLocationManager.locationServicesEnabled() {
+            
+            // To allow the use of the location of the service
+            // then open the positioning service updates
+            locationManager.startUpdatingLocation()
+        }
+
+    }
+    
+    // Change the latitude and longitude into a city name
+    func LonLatToCity() {
+        let geocoder: CLGeocoder = CLGeocoder()
+        geocoder.reverseGeocodeLocation(currLocation, completionHandler: { (placemark, error) -> Void in
+            
+            // Convert to success
+            // parse all the information
+            if (error == nil) {
+                let array = placemark! as NSArray
+                let mark = array.firstObject as! CLPlacemark
+                
+                var subLocality = mark.name
+                let provinceEndId = subLocality?.rangeOfString("省")?.endIndex
+                let cityStartId = subLocality?.rangeOfString("市")?.startIndex
+                let range = Range(provinceEndId! ..< cityStartId!)
+                subLocality = subLocality?.substringWithRange(range)
+                self.currentCityLabel.text = "当前城市:  " + subLocality! as String
+            }else {
+                // conversion failed
+            }
+        })
+    }
+    
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
+        currLocation = locations.last! as CLLocation
+        LonLatToCity()
+    }
         
     var currentCity: String?
     
@@ -34,7 +106,7 @@ class CityViewController: UIViewController, UITableViewDelegate, UITableViewData
         items = (cityDictionary?.allKeys)!
         
         // Create table view
-        self.tableView = UITableView(frame: CGRectMake(0, 100, UIScreen.mainScreen().bounds.size.width,
+        self.tableView = UITableView(frame: CGRectMake(0, 150, UIScreen.mainScreen().bounds.size.width,
             UIScreen.mainScreen().bounds.size.height), style:UITableViewStyle.Plain)
         self.tableView!.delegate = self
         self.tableView!.dataSource = self
@@ -128,7 +200,24 @@ class CityViewController: UIViewController, UITableViewDelegate, UITableViewData
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "Done" {
-            
+            flag = false
+            for i in 0...items.count - 1 {
+                let province:String = items[i] as! String
+                let cityArray = cityDictionary![province]! as! NSArray
+                for j in 0...cityArray.count - 1 {
+                    let cityKey = cityArray[j] as? String
+                    if (cityKey == inputCityName.text) {
+                        flag = true
+                        self.delegate?.cityDidSelected(inputCityName.text!)
+                    }
+                }
+            }
+            if (flag == false) {
+                let alertController = UIAlertController(title: "系统提示",
+                                                        message: "该城市不支持查询", preferredStyle: .Alert)
+                self.presentViewController(alertController, animated: true, completion: nil)
+            } 
+            self.delegate?.cityFlag(flag)
         }
     }
     

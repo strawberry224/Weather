@@ -25,6 +25,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CityViewContr
     @IBOutlet weak var rainLabel: UILabel!
     @IBOutlet weak var humidityLabel: UILabel!
     
+    @IBOutlet weak var WIND: UILabel!
+    @IBOutlet weak var RAIN: UILabel!
+    @IBOutlet weak var HUMIDITY: UILabel!
+    
+    
     @IBOutlet weak var AQIButton: UIButton!
     
     var httpUrl = "http://apis.baidu.com/heweather/weather/free"
@@ -40,7 +45,18 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CityViewContr
     }
     
     @IBAction func savePlayerDetail(segue:UIStoryboardSegue) {
-        dismissViewControllerAnimated(true, completion: nil)
+        if (citySearchFlag == true) {
+            dismissViewControllerAnimated(true, completion: nil)
+        }
+    }
+    
+    var citySearchFlag = true
+    func cityFlag(flag: Bool) {
+        citySearchFlag = flag
+    }
+    
+    func cityDidSelected(cityKey: String){
+        charactorType(cityKey)
     }
     
     func  request(httpUrl: String, httpCity: String) {
@@ -141,6 +157,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CityViewContr
     
     var nightFlag = false
     func setBackgroundColor() {
+        
         var time = (self.cityBasic.update?.loc!)! as NSString
         var hour = time.substringWithRange(NSMakeRange(11, 2))
         var minute = time.substringWithRange(NSMakeRange(14, 2))
@@ -163,7 +180,17 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CityViewContr
         let ssTime = h * 60 + m
         
         if updateTime <= srTime || updateTime >= ssTime {
-            self.view.backgroundColor = UIColor.darkGrayColor()
+            self.view.backgroundColor = UIColor(patternImage: UIImage(named: "bg_night")!)
+            userLocationButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+            temperatureLabel.textColor = UIColor.whiteColor()
+            degreeButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+            summaryLabel.textColor = UIColor.whiteColor()
+            windSpeedLabel.textColor = UIColor.whiteColor()
+            rainLabel.textColor = UIColor.whiteColor()
+            humidityLabel.textColor = UIColor.whiteColor()
+            WIND.textColor = UIColor.whiteColor()
+            RAIN.textColor = UIColor.whiteColor()
+            HUMIDITY.textColor = UIColor.whiteColor()
             nightFlag = true
         }
     }
@@ -180,10 +207,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CityViewContr
             forecastController.cityDailyForecast = cityDailyForecast
             forecastController.nightFlag = nightFlag
         }
-    }
-    
-    func cityDidSelected(cityKey: String){
-        charactorType(cityKey)
     }
     
     var weatherData = WeatherData()
@@ -206,6 +229,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CityViewContr
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "bg_day")!)
         
         //self.navigationController?.navigationBarHidden = true
         // Set location service manager proxy

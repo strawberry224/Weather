@@ -19,13 +19,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="999" translatesAutoresizingMaskIntoConstraints="NO" id="XpL-Gz-Enk">
-                                <rect key="frame" x="240" y="66" width="120" height="80"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="80" id="BR2-yf-X3p"/>
-                                    <constraint firstAttribute="width" constant="120" id="LDI-mA-Wne"/>
-                                </constraints>
-                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="多云" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xsQ-IA-pJU">
                                 <rect key="frame" x="368" y="71" width="212" height="80"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
@@ -156,6 +149,13 @@
                                     <segue destination="POb-JJ-Ww0" kind="presentation" identifier="Forecast" id="epn-13-Nmx"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="999" translatesAutoresizingMaskIntoConstraints="NO" id="XpL-Gz-Enk">
+                                <rect key="frame" x="240" y="66" width="120" height="80"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="80" id="BR2-yf-X3p"/>
+                                    <constraint firstAttribute="width" constant="120" id="LDI-mA-Wne"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.63921568630000003" green="0.86666666670000003" blue="0.99215686270000003" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -218,6 +218,9 @@
                     </view>
                     <connections>
                         <outlet property="AQIButton" destination="y0r-kh-Hgt" id="0SG-re-k6Y"/>
+                        <outlet property="HUMIDITY" destination="54T-WX-tZz" id="jnd-uP-WBN"/>
+                        <outlet property="RAIN" destination="Hnn-MC-dOB" id="Tpy-if-uAB"/>
+                        <outlet property="WIND" destination="dJL-tC-gHd" id="cpg-Gb-6GC"/>
                         <outlet property="dayZeroTemperatureHigh" destination="dVI-Nw-qgA" id="r0X-5P-pKV"/>
                         <outlet property="dayZeroTemperatureLow" destination="PKr-2G-lfu" id="mbw-0a-bgT"/>
                         <outlet property="degreeButton" destination="ix9-OG-eFT" id="Ihy-1i-uH2"/>
@@ -290,19 +293,69 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AON-Lz-Zhr">
+                                <rect key="frame" x="359" y="72" width="221" height="30"/>
+                                <state key="normal" title="重新定位"/>
+                                <connections>
+                                    <action selector="getUserPosition:" destination="Px2-wS-Ke6" eventType="touchUpInside" id="en6-QD-xXn"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="搜索城市：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gKd-6R-5fT">
+                                <rect key="frame" x="20" y="116" width="75" height="18"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GbD-YF-fZz">
+                                <rect key="frame" x="103" y="110" width="248" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uat-v0-YYp">
+                                <rect key="frame" x="359" y="110" width="221" height="30"/>
+                                <state key="normal" title="检测输入"/>
+                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="当前城市：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nul-cc-nAS">
-                                <rect key="frame" x="20" y="72" width="560" height="20.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <rect key="frame" x="20" y="72" width="331" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="gKd-6R-5fT" firstAttribute="leading" secondItem="dMn-Ls-EJu" secondAttribute="leadingMargin" id="0CH-oV-WFR"/>
                             <constraint firstAttribute="leadingMargin" secondItem="Nul-cc-nAS" secondAttribute="leading" id="1i1-3R-31X"/>
+                            <constraint firstItem="Uat-v0-YYp" firstAttribute="leading" secondItem="GbD-YF-fZz" secondAttribute="trailing" constant="8" symbolic="YES" id="9aT-35-n3R"/>
+                            <constraint firstItem="gKd-6R-5fT" firstAttribute="top" secondItem="Nul-cc-nAS" secondAttribute="bottom" constant="8" symbolic="YES" id="A7v-OS-orr"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Nul-cc-nAS" secondAttribute="trailing" id="ChW-o1-KiI"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Uat-v0-YYp" secondAttribute="trailing" id="E7z-uz-qQe"/>
+                            <constraint firstItem="Nul-cc-nAS" firstAttribute="centerY" secondItem="AON-Lz-Zhr" secondAttribute="centerY" id="F6a-5q-xnh"/>
+                            <constraint firstItem="AON-Lz-Zhr" firstAttribute="top" secondItem="wCJ-rA-qDc" secondAttribute="bottom" constant="8" symbolic="YES" id="HY0-3q-Mjr"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="AON-Lz-Zhr" secondAttribute="trailing" id="L4e-Ea-OJU"/>
+                            <constraint firstItem="GbD-YF-fZz" firstAttribute="bottom" secondItem="Uat-v0-YYp" secondAttribute="bottom" id="Lhm-Sz-pmW"/>
+                            <constraint firstItem="gKd-6R-5fT" firstAttribute="bottom" secondItem="GbD-YF-fZz" secondAttribute="bottom" id="PrP-AA-zy7"/>
+                            <constraint firstItem="gKd-6R-5fT" firstAttribute="baseline" secondItem="GbD-YF-fZz" secondAttribute="baseline" id="VdK-cc-nvx"/>
+                            <constraint firstItem="gKd-6R-5fT" firstAttribute="centerY" secondItem="GbD-YF-fZz" secondAttribute="centerY" id="WOt-s3-dXN"/>
+                            <constraint firstItem="AON-Lz-Zhr" firstAttribute="leading" secondItem="Nul-cc-nAS" secondAttribute="trailing" constant="8" symbolic="YES" id="eVn-fO-wvu"/>
+                            <constraint firstItem="Uat-v0-YYp" firstAttribute="width" secondItem="AON-Lz-Zhr" secondAttribute="width" id="f84-od-jhv"/>
+                            <constraint firstItem="GbD-YF-fZz" firstAttribute="top" secondItem="Nul-cc-nAS" secondAttribute="bottom" constant="8" symbolic="YES" id="fir-RB-zto"/>
+                            <constraint firstItem="Uat-v0-YYp" firstAttribute="top" secondItem="AON-Lz-Zhr" secondAttribute="bottom" constant="8" symbolic="YES" id="nCa-8C-4JX"/>
                             <constraint firstItem="Nul-cc-nAS" firstAttribute="top" secondItem="wCJ-rA-qDc" secondAttribute="bottom" constant="8" symbolic="YES" id="oDp-Xa-exe"/>
+                            <constraint firstItem="Nul-cc-nAS" firstAttribute="width" secondItem="AON-Lz-Zhr" secondAttribute="width" multiplier="1.5" id="toe-Ej-yjS"/>
+                            <constraint firstItem="GbD-YF-fZz" firstAttribute="leading" secondItem="gKd-6R-5fT" secondAttribute="trailing" constant="8" symbolic="YES" id="u4e-q2-dBP"/>
+                            <constraint firstItem="Nul-cc-nAS" firstAttribute="baseline" secondItem="AON-Lz-Zhr" secondAttribute="baseline" id="z9r-ko-GkD"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="ChW-o1-KiI"/>
+                                <exclude reference="z9r-ko-GkD"/>
+                                <exclude reference="A7v-OS-orr"/>
+                                <exclude reference="PrP-AA-zy7"/>
+                                <exclude reference="VdK-cc-nvx"/>
+                                <exclude reference="fir-RB-zto"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" title="选择所在城市" id="5HZ-Le-huN">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="q2M-JF-ImQ">
@@ -318,6 +371,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="currentCityLabel" destination="Nul-cc-nAS" id="dSo-Jq-ihw"/>
+                        <outlet property="inputCityName" destination="GbD-YF-fZz" id="V0Y-Zd-uZw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qio-Rz-VDx" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -12,6 +12,7 @@ import CoreLocation
 
 class ViewController: UIViewController, CLLocationManagerDelegate, CityViewControllerDelegate {
     
+    // Define control
     @IBOutlet weak var userLocationButton: UIButton!
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var degreeButton: UIButton!
@@ -29,9 +30,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CityViewContr
     @IBOutlet weak var RAIN: UILabel!
     @IBOutlet weak var HUMIDITY: UILabel!
     
-    
     @IBOutlet weak var AQIButton: UIButton!
     
+    // API Configuration
     var httpUrl = "http://apis.baidu.com/heweather/weather/free"
     var httpCity = "city=?"
     let aqiKey = "616e8a401061a1108d387543235f3159"
@@ -45,11 +46,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CityViewContr
     }
     
     @IBAction func savePlayerDetail(segue:UIStoryboardSegue) {
+        
+        // if the city is legel, then can come back
         if (citySearchFlag == true) {
             dismissViewControllerAnimated(true, completion: nil)
         }
     }
     
+    // get flag of whether user input the city is legal
     var citySearchFlag = true
     func cityFlag(flag: Bool) {
         citySearchFlag = flag
@@ -90,17 +94,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CityViewContr
                         if let city = aqi["city"] as? NSDictionary {
                             self.cityAQI = self.getMemberValue.getCityAQI(city)
                             
-                            let colorNum = Float(self.cityAQI.aqi!)
-                            let tmpColor = 255 - (colorNum - 50) * 10;
-                            var red: Float = 0, green: Float = 0;
-                            if (tmpColor > 255) {
-                                red = 255;
-                                green = 255 * 2 - tmpColor;
-                            } else {
-                                red = tmpColor;
-                                green = 255;
-                            }
-                            self.AQIButton.backgroundColor = UIColor(colorLiteralRed: red, green: green, blue: 0, alpha: 1)
+                            // set AQI value color from red to green
+                            self.AQIButton.backgroundColor = normalization(self.cityAQI.aqi!, alpha: 1.0)
                         }
                     }
                     if let basic = aStatus["basic"] as? NSDictionary {
@@ -120,12 +115,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CityViewContr
                         self.dayZeroTemperatureLow.text = "\(min)"
                         self.dayZeroTemperatureHigh.text = "\(max)"
                         
+                        // show wind speed value
                         let sc = (daily.wind?.sc)!
                         self.windSpeedLabel.text = "\(sc)"
                         
+                        // show precipitation value
                         let pcpn = (daily.pcpn)!
                         self.rainLabel.text = "\(pcpn)"
                         
+                        // show humidity value
                         let hum = (daily.hum)!
                         self.humidityLabel.text = "\(hum)"
                         
@@ -158,6 +156,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CityViewContr
     var nightFlag = false
     func setBackgroundColor() {
         
+        // Conversion now time to seconds
         var time = (self.cityBasic.update?.loc!)! as NSString
         var hour = time.substringWithRange(NSMakeRange(11, 2))
         var minute = time.substringWithRange(NSMakeRange(14, 2))
@@ -165,6 +164,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CityViewContr
         var m = Int(minute)!
         let updateTime = h * 60 + m
         
+        // Conversion sun rise time to seconds
         time = (self.cityDailyForecast[0].astro?.sr)! as NSString
         hour = time.substringWithRange(NSMakeRange(0, 2))
         minute = time.substringWithRange(NSMakeRange(3, 2))
@@ -172,6 +172,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CityViewContr
         m = Int(minute)!
         let srTime = h * 60 + m
         
+        // Conversion sunset time to seconds
         time = (self.cityDailyForecast[0].astro?.ss)! as NSString
         hour = time.substringWithRange(NSMakeRange(0, 2))
         minute = time.substringWithRange(NSMakeRange(3, 2))
@@ -179,8 +180,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CityViewContr
         m = Int(minute)!
         let ssTime = h * 60 + m
         
+        // if if now is night
         if updateTime <= srTime || updateTime >= ssTime {
+            
+            // set view background picture is bg_night.jpg
             self.view.backgroundColor = UIColor(patternImage: UIImage(named: "bg_night")!)
+            
+            // set all text color is white
             userLocationButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
             temperatureLabel.textColor = UIColor.whiteColor()
             degreeButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
@@ -197,15 +203,25 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CityViewContr
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "SelectCity" {
+            
+            // The transition to the CityViewController
             let destinationController = segue.destinationViewController as! UINavigationController
             let cityController = destinationController.viewControllers[0] as! CityViewController
             cityController.delegate = self;
             cityController.currentCity = currentCity
         } else if segue.identifier == "Forecast" {
+            
+            // The transition to the ForecastViewController
             let destinationController = segue.destinationViewController as! UINavigationController
             let forecastController = destinationController.viewControllers[0] as! ForecastViewController
             forecastController.cityDailyForecast = cityDailyForecast
             forecastController.nightFlag = nightFlag
+        } else if segue.identifier == "showAQI" {
+            
+            // The transition to the AQIViewController
+            let destinationController = segue.destinationViewController as! UINavigationController
+            let forecastController = destinationController.viewControllers[0] as! AQIViewController
+            forecastController.cityAQI = cityAQI
         }
     }
     
@@ -232,7 +248,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CityViewContr
         
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "bg_day")!)
         
-        //self.navigationController?.navigationBarHidden = true
+        // self.navigationController?.navigationBarHidden = true
         // Set location service manager proxy
         locationManager.delegate = self
         

@@ -35,7 +35,7 @@ class CityViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBAction func getUserPosition(sender: AnyObject) {
         
-        //self.navigationController?.navigationBarHidden = true
+        // self.navigationController?.navigationBarHidden = true
         // Set location service manager proxy
         locationManager.delegate = self
         
@@ -98,6 +98,8 @@ class CityViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "bg_city")!)
+        
         currentCityLabel.text = "当前城市:  " + currentCity!
         
         let plistPath = NSBundle.mainBundle().pathForResource("citylist", ofType: "plist")!
@@ -110,6 +112,7 @@ class CityViewController: UIViewController, UITableViewDelegate, UITableViewData
             UIScreen.mainScreen().bounds.size.height), style:UITableViewStyle.Plain)
         self.tableView!.delegate = self
         self.tableView!.dataSource = self
+        self.tableView?.backgroundColor = UIColor.clearColor()
         
         // Create a reusable cell
         self.tableView!.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell1")
@@ -162,12 +165,20 @@ class CityViewController: UIViewController, UITableViewDelegate, UITableViewData
         let province:String = items[id] as! String
         let cityArray = cityDictionary![province]! as! NSArray
         cell.textLabel?.text = cityArray[indexPath.row] as? String
+        cell.backgroundColor = UIColor.clearColor()
         return cell
     }
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = UIView(frame: CGRectMake(0, 0, self.view.frame.size.width, 30))
-        view.backgroundColor = UIColor.grayColor()
+        //view.backgroundColor = UIColor.groupTableViewBackgroundColor()
+        view.backgroundColor = UIColor.clearColor()
+        
+        let blurEffect = UIBlurEffect(style: .Light)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = CGRectMake(0, 0, self.view.frame.size.width, 30)
+        view.insertSubview(blurEffectView, atIndex: 0)
+        
         let provinceLabel = UILabel(frame:CGRectMake(0, 0, self.view.frame.size.width, 30))
         provinceLabel.text = items[section] as? String
         view.addSubview(provinceLabel)
@@ -190,17 +201,17 @@ class CityViewController: UIViewController, UITableViewDelegate, UITableViewData
         currentCityLabel.text = "当前城市:  " + cityKey!
         
         self.delegate?.cityDidSelected(cityKey!)
-        
-//        let mainViewController = storyboard?.instantiateViewControllerWithIdentifier("main") as! ViewController
-//        mainViewController.userLocationButton.setTitle(selectCity, forState: UIControlState.Normal)
-//        self.navigationController?.pushViewController(mainViewController, animated: true)
     }
     
     // MARK: - Navigation
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "Done" {
-            flag = false
+            
+            // If the user does not input the search of the city, not to change flag
+            flag = inputCityName.text == "" ? true : false
+            
+            // To judge whether the city is in list
             for i in 0...items.count - 1 {
                 let province:String = items[i] as! String
                 let cityArray = cityDictionary![province]! as! NSArray
@@ -212,6 +223,8 @@ class CityViewController: UIViewController, UITableViewDelegate, UITableViewData
                     }
                 }
             }
+            
+            // If not in the list, prompt the error message
             if (flag == false) {
                 let alertController = UIAlertController(title: "系统提示",
                                                         message: "该城市不支持查询", preferredStyle: .Alert)

@@ -29,10 +29,13 @@ class ForecastViewController: UIViewController, TemperatureViewDelegate, Humidit
     }
     
     func setScroll() {
+        
         // set the size of Scrollview
         scroll.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)
+        
         // content size
         scroll.contentSize = CGSizeMake(self.view.frame.size.width * 1.5, self.view.frame.size.width)
+        
         // whether to support paging
         // scroll.pagingEnabled = true
         // padding

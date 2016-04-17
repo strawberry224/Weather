@@ -25,6 +25,7 @@ class WindView: UIView {
     
     override func drawRect(rect: CGRect) {
         
+        // get wind value form delegate
         let cityDailyForecast = dataSource?.dataForWindView(self)
         
         // get brush context
@@ -62,17 +63,18 @@ class WindView: UIView {
             let alpha = CGFloat((cityDailyForecast![i].wind?.deg)!) / CGFloat(360) * CGFloat(2 * M_PI)
             let x = LABEL_WIDTH / 2 * cos(alpha)
             let y = LABEL_WIDTH / 3 * sin(alpha)
-            /*
-             绘制线性渐变
-             context:图形上下文
-             gradient:渐变色
-             startPoint:起始位置
-             startRadius:起始半径（通常为0，否则在此半径范围内容无任何填充）
-             endCenter:终点位置（通常和起始点相同，否则会有偏移）
-             endRadius:终点半径（也就是渐变的扩散长度）
-             options:绘制方式,DrawsBeforeStartLocation 开始位置之前就进行绘制，到结束位置之后不再绘制，
-             DrawsAfterEndLocation开始位置之前不进行绘制，到结束点之后继续填充
-             */
+
+             // Draw a linear gradient
+             // context: Graphics context
+             // gradient: Gradient color
+             // startPoint: Starting position
+             // startRadius: Start radius (usually 0, otherwise there is no fill in this radius)
+             // endCenter: The terminal point (usually the same as the starting point
+             //            otherwise there will be a shift).
+             // endRadius: End point radius (that is, the diffusion length of the gradient)
+             // options: Drawing method, DrawsBeforeStartLocation start position before the drawing, 
+             //          to the end of the location is no longer drawn
+             // DrawsAfterEndLocation: Start position not to draw until after the end of the point to continue filling
             CGContextDrawRadialGradient(context, gradient,
                                         CGPointMake(LABEL_WIDTH / 2 + LABEL_WIDTH * CGFloat(i), LABEL_WIDTH / 3), 0,
                                         CGPointMake(LABEL_WIDTH / 2 + LABEL_WIDTH * CGFloat(i) + x, LABEL_WIDTH / 3 + y),

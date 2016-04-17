@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C619C59E1CBA472F0094EBCC /* AQIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C619C59D1CBA472F0094EBCC /* AQIViewController.swift */; };
+		C619C5A01CBA7A1A0094EBCC /* AQIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C619C59F1CBA7A1A0094EBCC /* AQIView.swift */; };
 		C6504C3C1C5DBF64008938A1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6504C3B1C5DBF64008938A1 /* AppDelegate.swift */; };
 		C6504C3E1C5DBF64008938A1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6504C3D1C5DBF64008938A1 /* ViewController.swift */; };
 		C6504C411C5DBF64008938A1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C6504C3F1C5DBF64008938A1 /* Main.storyboard */; };
@@ -43,6 +45,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C619C59D1CBA472F0094EBCC /* AQIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AQIViewController.swift; sourceTree = "<group>"; };
+		C619C59F1CBA7A1A0094EBCC /* AQIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AQIView.swift; sourceTree = "<group>"; };
 		C6504C381C5DBF64008938A1 /* Weather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Weather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6504C3B1C5DBF64008938A1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C6504C3D1C5DBF64008938A1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -117,6 +121,8 @@
 			children = (
 				C6504C3B1C5DBF64008938A1 /* AppDelegate.swift */,
 				C6504C3D1C5DBF64008938A1 /* ViewController.swift */,
+				C619C59D1CBA472F0094EBCC /* AQIViewController.swift */,
+				C619C59F1CBA7A1A0094EBCC /* AQIView.swift */,
 				C6DBEA6D1CA81F430029014F /* ForecastViewController.swift */,
 				C6E57AF71CB406A500771A1C /* WindView.swift */,
 				C6E57AF51CB2B7AE00771A1C /* HumidityView.swift */,
@@ -289,10 +295,12 @@
 			files = (
 				C6504C6E1C5F6F3B008938A1 /* GetMemberValue.swift in Sources */,
 				C6504C3E1C5DBF64008938A1 /* ViewController.swift in Sources */,
+				C619C5A01CBA7A1A0094EBCC /* AQIView.swift in Sources */,
 				C6504C6A1C5E3485008938A1 /* WeatherData.swift in Sources */,
 				C685FD031C75908500357567 /* CityViewController.swift in Sources */,
 				C6504C3C1C5DBF64008938A1 /* AppDelegate.swift in Sources */,
 				C6E57AF81CB406A500771A1C /* WindView.swift in Sources */,
+				C619C59E1CBA472F0094EBCC /* AQIViewController.swift in Sources */,
 				C6E57AF61CB2B7AE00771A1C /* HumidityView.swift in Sources */,
 				C6F566161CB0F52E00B0DAC7 /* TemperatureView.swift in Sources */,
 				C6DBEA6E1CA81F430029014F /* ForecastViewController.swift in Sources */,

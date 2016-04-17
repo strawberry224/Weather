@@ -15,6 +15,7 @@ protocol TemperatureViewDelegate: class {
 
 class TemperatureView: UIView {
     
+    // set constants value 
     let LABEL_WIDTH: CGFloat = 60
     let LABEL_HEIGHT: CGFloat = 20
     let RADIUS: CGFloat = 5

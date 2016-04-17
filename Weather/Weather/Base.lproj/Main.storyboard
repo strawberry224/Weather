@@ -133,6 +133,9 @@
                                 <state key="normal" title="AQI">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <segue destination="XX3-ow-6Lf" kind="presentation" identifier="showAQI" id="JUA-Mt-dXJ"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RAIN" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hnn-MC-dOB">
                                 <rect key="frame" x="271" y="338" width="59.5" height="18"/>
@@ -235,7 +238,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="119" y="141"/>
+            <point key="canvasLocation" x="27" y="466"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="8Lc-Pi-FDf">
@@ -379,6 +382,34 @@
             </objects>
             <point key="canvasLocation" x="1539" y="141"/>
         </scene>
+        <!--空气质量情况-->
+        <scene sceneID="KbC-aX-CwV">
+            <objects>
+                <viewController id="gGA-3e-UtO" customClass="AQIViewController" customModule="Weather" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="0xC-DN-GZH"/>
+                        <viewControllerLayoutGuide type="bottom" id="l1D-xw-Gvp"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="pCm-3h-sxU">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="空气质量情况" id="K28-4e-gz4">
+                        <barButtonItem key="leftBarButtonItem" title="back" id="xNb-5L-DSt">
+                            <connections>
+                                <segue destination="RL9-ep-TW2" kind="unwind" unwindAction="cancelToPlayersViewController:" id="KSy-gv-f65"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Av1-0u-rdS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="RL9-ep-TW2" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="852" y="1578"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="ZK8-Jh-Vmo">
             <objects>
@@ -396,6 +427,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g24-TT-omD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="852" y="865"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="YRx-rk-SYf">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="XX3-ow-6Lf" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="olt-Ni-qz1">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="gGA-3e-UtO" kind="relationship" relationship="rootViewController" id="1HP-bP-oLs"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OPR-2G-KOV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="27" y="1578"/>
         </scene>
     </scenes>
     <resources>

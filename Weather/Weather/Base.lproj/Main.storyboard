@@ -131,7 +131,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y0r-kh-Hgt">
                                 <rect key="frame" x="398.5" y="190" width="181.5" height="36"/>
                                 <state key="normal" title="AQI">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                 </state>
                                 <connections>
                                     <segue destination="XX3-ow-6Lf" kind="presentation" identifier="showAQI" id="JUA-Mt-dXJ"/>

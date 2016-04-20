@@ -201,6 +201,7 @@ class CityViewController: UIViewController, UITableViewDelegate, UITableViewData
         currentCityLabel.text = "当前城市:  " + cityKey!
         
         self.delegate?.cityDidSelected(cityKey!)
+        print(cityKey!)
     }
     
     // MARK: - Navigation

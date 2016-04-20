@@ -95,7 +95,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CityViewContr
                             self.cityAQI = self.getMemberValue.getCityAQI(city)
                             
                             // set AQI value color from red to green
-                            self.AQIButton.backgroundColor = normalization(self.cityAQI.aqi!, alpha: 1.0)
+                            self.AQIButton.backgroundColor = normalization(self.cityAQI.aqi!)
                         }
                     }
                     if let basic = aStatus["basic"] as? NSDictionary {
@@ -214,14 +214,18 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CityViewContr
             // The transition to the ForecastViewController
             let destinationController = segue.destinationViewController as! UINavigationController
             let forecastController = destinationController.viewControllers[0] as! ForecastViewController
+            
+            // transmit data
             forecastController.cityDailyForecast = cityDailyForecast
             forecastController.nightFlag = nightFlag
         } else if segue.identifier == "showAQI" {
             
             // The transition to the AQIViewController
             let destinationController = segue.destinationViewController as! UINavigationController
-            let forecastController = destinationController.viewControllers[0] as! AQIViewController
-            forecastController.cityAQI = cityAQI
+            let aqiController = destinationController.viewControllers[0] as! AQIViewController
+            
+            // transmit data
+            aqiController.cityAQI = cityAQI
         }
     }
     

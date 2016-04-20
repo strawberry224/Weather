@@ -13,6 +13,7 @@ class ForecastViewController: UIViewController, TemperatureViewDelegate, Humidit
     let scroll = UIScrollView();
     var currentHeight: CGFloat = 0
     
+    // According to nightFlag to change the background color
     var nightFlag: Bool?
     var cityDailyForecast = [WeatherData.DailyForecast()]
     
@@ -22,8 +23,6 @@ class ForecastViewController: UIViewController, TemperatureViewDelegate, Humidit
     override func viewDidLoad() {
         if (nightFlag == true) {
             self.view.backgroundColor = UIColor.lightGrayColor()
-        } else {
-            
         }
         showDate()
     }
@@ -117,7 +116,7 @@ class ForecastViewController: UIViewController, TemperatureViewDelegate, Humidit
         for i in 0...6 {
             let forecast = cityDailyForecast[i]
             let imageView = UIImageView(frame: CGRectMake(CGFloat(i + 1) * LABEL_WIDTH, currentHeight, LABEL_WIDTH * 0.75, LABEL_WIDTH * 0.75))
-            imageView.backgroundColor = dayFlag ? UIColor.clearColor() : UIColor.lightGrayColor()
+            imageView.backgroundColor = UIColor.clearColor()
             let id = dayFlag ? (forecast.cond?.codeD)! : (forecast.cond?.codeN)!
             imageView.image = UIImage(named: "\(id)")
             scroll.addSubview(imageView)

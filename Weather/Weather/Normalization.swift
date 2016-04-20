@@ -33,17 +33,19 @@ func normalization(array: [Double]) -> [CGFloat] {
 
 // AQI value normalization
 // Int -> (red, green)
-func normalization(colorNum: Int, alpha: CGFloat) -> UIColor {
-    //let tmpColor: CGFloat = 255 - (CGFloat(colorNum) - 50) * 10;
-    
-    var red: CGFloat = 0, green: CGFloat = 0;
-    if (colorNum * 2 > 255) {
-        red = 255;
-        green = 255 * 2 - CGFloat(colorNum);
-    } else {
-        red = CGFloat(colorNum);
-        green = 255;
+func normalization(aqi: Int) -> UIColor {
+    switch aqi / 50 {
+    case 0:
+        return UIColor.greenColor();
+    case 1:
+        return UIColor.yellowColor()
+    case 2:
+        return UIColor.orangeColor()
+    case 3:
+        return UIColor.redColor()
+    case 4, 5:
+        return UIColor.purpleColor()
+    default:
+        return UIColor.brownColor()
     }
-    let color = UIColor(red: red / 255.0, green: green / 255.0, blue: 0, alpha: alpha)
-    return color
 }

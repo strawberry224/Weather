@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C619C59E1CBA472F0094EBCC /* AQIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C619C59D1CBA472F0094EBCC /* AQIViewController.swift */; };
-		C619C5A01CBA7A1A0094EBCC /* AQIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C619C59F1CBA7A1A0094EBCC /* AQIView.swift */; };
+		C619C5A01CBA7A1A0094EBCC /* GeneralAQIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C619C59F1CBA7A1A0094EBCC /* GeneralAQIView.swift */; };
 		C6504C3C1C5DBF64008938A1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6504C3B1C5DBF64008938A1 /* AppDelegate.swift */; };
 		C6504C3E1C5DBF64008938A1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6504C3D1C5DBF64008938A1 /* ViewController.swift */; };
 		C6504C411C5DBF64008938A1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C6504C3F1C5DBF64008938A1 /* Main.storyboard */; };
@@ -46,7 +46,7 @@
 
 /* Begin PBXFileReference section */
 		C619C59D1CBA472F0094EBCC /* AQIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AQIViewController.swift; sourceTree = "<group>"; };
-		C619C59F1CBA7A1A0094EBCC /* AQIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AQIView.swift; sourceTree = "<group>"; };
+		C619C59F1CBA7A1A0094EBCC /* GeneralAQIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralAQIView.swift; sourceTree = "<group>"; };
 		C6504C381C5DBF64008938A1 /* Weather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Weather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6504C3B1C5DBF64008938A1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C6504C3D1C5DBF64008938A1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -120,22 +120,22 @@
 			isa = PBXGroup;
 			children = (
 				C6504C3B1C5DBF64008938A1 /* AppDelegate.swift */,
-				C6504C3D1C5DBF64008938A1 /* ViewController.swift */,
 				C619C59D1CBA472F0094EBCC /* AQIViewController.swift */,
-				C619C59F1CBA7A1A0094EBCC /* AQIView.swift */,
-				C6DBEA6D1CA81F430029014F /* ForecastViewController.swift */,
-				C6E57AF71CB406A500771A1C /* WindView.swift */,
-				C6E57AF51CB2B7AE00771A1C /* HumidityView.swift */,
-				C6504C6D1C5F6F3B008938A1 /* GetMemberValue.swift */,
-				C685FD081C7AE24B00357567 /* citylist.plist */,
-				C6504C691C5E3485008938A1 /* WeatherData.swift */,
-				C6504C3F1C5DBF64008938A1 /* Main.storyboard */,
 				C685FD021C75908500357567 /* CityViewController.swift */,
+				C6DBEA6D1CA81F430029014F /* ForecastViewController.swift */,
+				C619C59F1CBA7A1A0094EBCC /* GeneralAQIView.swift */,
+				C6504C6D1C5F6F3B008938A1 /* GetMemberValue.swift */,
+				C6E57AF51CB2B7AE00771A1C /* HumidityView.swift */,
+				C6E57AF91CB7EA1D00771A1C /* Normalization.swift */,
+				C6F566151CB0F52E00B0DAC7 /* TemperatureView.swift */,
+				C6504C3D1C5DBF64008938A1 /* ViewController.swift */,
+				C6504C691C5E3485008938A1 /* WeatherData.swift */,
+				C6E57AF71CB406A500771A1C /* WindView.swift */,
+				C685FD081C7AE24B00357567 /* citylist.plist */,
+				C6504C3F1C5DBF64008938A1 /* Main.storyboard */,
 				C6504C421C5DBF64008938A1 /* Assets.xcassets */,
 				C6504C441C5DBF64008938A1 /* LaunchScreen.storyboard */,
 				C6504C471C5DBF64008938A1 /* Info.plist */,
-				C6F566151CB0F52E00B0DAC7 /* TemperatureView.swift */,
-				C6E57AF91CB7EA1D00771A1C /* Normalization.swift */,
 			);
 			path = Weather;
 			sourceTree = "<group>";
@@ -295,7 +295,7 @@
 			files = (
 				C6504C6E1C5F6F3B008938A1 /* GetMemberValue.swift in Sources */,
 				C6504C3E1C5DBF64008938A1 /* ViewController.swift in Sources */,
-				C619C5A01CBA7A1A0094EBCC /* AQIView.swift in Sources */,
+				C619C5A01CBA7A1A0094EBCC /* GeneralAQIView.swift in Sources */,
 				C6504C6A1C5E3485008938A1 /* WeatherData.swift in Sources */,
 				C685FD031C75908500357567 /* CityViewController.swift in Sources */,
 				C6504C3C1C5DBF64008938A1 /* AppDelegate.swift in Sources */,

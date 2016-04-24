@@ -119,7 +119,15 @@ class ForecastViewController: UIViewController, TemperatureViewDelegate, Humidit
             imageView.backgroundColor = UIColor.clearColor()
             let id = dayFlag ? (forecast.cond?.codeD)! : (forecast.cond?.codeN)!
             imageView.image = UIImage(named: "\(id)")
+            
+            imageView.alpha = 0
             scroll.addSubview(imageView)
+            
+            // add Fade animation
+            UIView.beginAnimations(nil, context: nil)
+            UIView.setAnimationDuration(2.0)
+            imageView.alpha = 1.0
+            UIView.commitAnimations()
         }
     }
     
@@ -168,10 +176,18 @@ class ForecastViewController: UIViewController, TemperatureViewDelegate, Humidit
         
         for i in 0...6 {
             let subVlew = UIView(frame: CGRect(x: CGFloat(Double(i) + 1.25) * LABEL_WIDTH,
-                y: currentHeight +  LABEL_WIDTH * 1.5 - pcpn[i] * LABEL_WIDTH,
-                width: LABEL_WIDTH * 0.5, height: pcpn[i] * LABEL_WIDTH))
+                y: currentHeight +  LABEL_WIDTH * 1.5,
+                width: LABEL_WIDTH * 0.5, height: 0))
             subVlew.backgroundColor = UIColor(red: pop[i], green: 1.0, blue: 1.0, alpha: 1.0)
             scroll.addSubview(subVlew)
+            
+            // add Size adjust animation
+            UIView.beginAnimations(nil, context: nil)
+            UIView.setAnimationDuration(2.0)
+            subVlew.frame = CGRectMake(CGFloat(Double(i) + 1.25) * LABEL_WIDTH,
+                                       currentHeight +  LABEL_WIDTH * 1.5 - pcpn[i] * LABEL_WIDTH,
+                                       LABEL_WIDTH * 0.5, pcpn[i] * LABEL_WIDTH)
+            UIView.commitAnimations()
             
             let label = UILabel(frame: CGRect(x: CGFloat(Double(i) + 1.25) * LABEL_WIDTH,
                 y: currentHeight + LABEL_WIDTH * 1.5 - pcpn[i] * LABEL_WIDTH  - LABEL_HEIGHT * 0.5,
@@ -196,10 +212,18 @@ class ForecastViewController: UIViewController, TemperatureViewDelegate, Humidit
         scroll.addSubview(title)
         
         let subVlew = TemperatureView(frame: CGRect(x: LABEL_WIDTH, y: currentHeight,
-            width: LABEL_WIDTH * 7, height: LABEL_WIDTH * 2))
+            width: 0, height: LABEL_WIDTH * 2))
         subVlew.dataSource = self
         subVlew.backgroundColor = UIColor.clearColor()
         scroll.addSubview(subVlew)
+        
+        // add Size adjust animation
+        UIView.beginAnimations(nil, context: nil)
+        UIView.setAnimationDuration(2.0)
+        subVlew.frame = CGRectMake(LABEL_WIDTH, currentHeight,
+                                   LABEL_WIDTH * 7, LABEL_WIDTH * 2)
+        UIView.commitAnimations()
+
     }
     
     func showVisibilityData() {

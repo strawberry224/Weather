@@ -22,6 +22,7 @@ class TemperatureView: UIView {
     
     weak var dataSource: TemperatureViewDelegate?
     
+    // rendering code in drawRect
     func drawTemperature(cityDailyForecast: [WeatherData.DailyForecast], flag: Bool) {
         
         var max = [Int]()

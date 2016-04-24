@@ -22,6 +22,7 @@ class HumidityView: UIView {
     
     weak var dataSource: HumidityViewDelegate?
     
+    // rendering code in drawRect
     override func drawRect(rect: CGRect) {
         let cityDailyForecast = dataSource?.dataForHumidityView(self)
         let nightFlag = dataSource?.timeForHumidityView(self)
@@ -34,7 +35,7 @@ class HumidityView: UIView {
         for i in 0...6 {
             let forecast = cityDailyForecast![i]
             let humidity = forecast.hum! / 10
-            UIColor(red: 1.0, green: 1.0, blue: CGFloat(humidity) / 100, alpha: 1.0).set()
+            UIColor(red: 1.0, green: 1.0, blue: CGFloat(forecast.hum!) / 100, alpha: 1.0).set()
             
             for j in 1...max(1, humidity - 1) {
                 for k in 1...max(1, humidity - 3) {

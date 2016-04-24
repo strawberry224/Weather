@@ -23,6 +23,7 @@ class WindView: UIView {
     
     weak var dataSource: WindViewDelegate?
     
+    // rendering code in drawRect
     override func drawRect(rect: CGRect) {
         
         // get wind value form delegate

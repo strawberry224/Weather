@@ -41,46 +41,180 @@ class AQIViewController: UIViewController, GeneralAQIViewDelegate {
         scroll.scrollsToTop = false
         
         // draw AQI data
-        var subVlew: GeneralAQIView = AQIView(frame: CGRect(x: 0, y: 0, width: WIDTH, height: HIGHT))
+        var subVlew: GeneralAQIView = AQIView(frame: CGRect(x: 0, y: UIScreen.mainScreen().bounds.size.height, width: WIDTH, height: HIGHT))
         subVlew.dataSource = self
         subVlew.backgroundColor = UIColor.clearColor()
+        
+        // add Mobile animation
+        UIView.beginAnimations(nil, context: nil)
+        UIView.setAnimationDuration(2.0)
+        subVlew.center = CGPointMake(WIDTH / 2, 0)
+        
+        // Set the relative speed of the animation
+        UIView.setAnimationCurve(UIViewAnimationCurve.EaseOut)
+        UIView.commitAnimations()
+        
         scroll.addSubview(subVlew)
+        
+        // add Mobile animation
+        UIView.beginAnimations(nil, context: nil)
+        UIView.setAnimationDuration(5.5)
+        subVlew.center = CGPointMake(WIDTH / 2, HIGHT / 2)
+        
+        // Set the relative speed of the animation
+        UIView.setAnimationCurve(UIViewAnimationCurve.EaseOut)
+        UIView.commitAnimations()
         
         // draw CO data
         subVlew = COView(frame: CGRect(x: 0, y: HIGHT, width: WIDTH, height: HIGHT))
         subVlew.dataSource = self
         subVlew.backgroundColor = UIColor.clearColor()
+        // add Mobile animation
+        UIView.beginAnimations(nil, context: nil)
+        UIView.setAnimationDuration(2.0)
+        subVlew.center = CGPointMake(WIDTH / 2, 0)
+        
+        // Set the relative speed of the animation
+        UIView.setAnimationCurve(UIViewAnimationCurve.EaseOut)
+        UIView.commitAnimations()
+        
         scroll.addSubview(subVlew)
+        
+        // add Mobile animation
+        UIView.beginAnimations(nil, context: nil)
+        UIView.setAnimationDuration(5.0)
+        subVlew.center = CGPointMake(WIDTH / 2, HIGHT + HIGHT / 2)
+        
+        // Set the relative speed of the animation
+        UIView.setAnimationCurve(UIViewAnimationCurve.EaseOut)
+        UIView.commitAnimations()
         
         // draw NO2 data
         subVlew = NO2View(frame: CGRect(x: 0, y: HIGHT * 2, width: WIDTH, height: HIGHT))
         subVlew.dataSource = self
         subVlew.backgroundColor = UIColor.clearColor()
+        // add Mobile animation
+        UIView.beginAnimations(nil, context: nil)
+        UIView.setAnimationDuration(2.0)
+        subVlew.center = CGPointMake(WIDTH / 2, 0)
+        
+        // Set the relative speed of the animation
+        UIView.setAnimationCurve(UIViewAnimationCurve.EaseOut)
+        UIView.commitAnimations()
+        
         scroll.addSubview(subVlew)
+        
+        // add Mobile animation
+        UIView.beginAnimations(nil, context: nil)
+        UIView.setAnimationDuration(4.5)
+        subVlew.center = CGPointMake(WIDTH / 2, HIGHT * 2 + HIGHT / 2)
+        
+        // Set the relative speed of the animation
+        UIView.setAnimationCurve(UIViewAnimationCurve.EaseOut)
+        UIView.commitAnimations()
         
         // draw o3 data
         subVlew = O3View(frame: CGRect(x: 0, y: HIGHT * 3, width: WIDTH, height: HIGHT))
         subVlew.dataSource = self
         subVlew.backgroundColor = UIColor.clearColor()
+        // add Mobile animation
+        UIView.beginAnimations(nil, context: nil)
+        UIView.setAnimationDuration(2.0)
+        subVlew.center = CGPointMake(WIDTH / 2, 0)
+        
+        // Set the relative speed of the animation
+        UIView.setAnimationCurve(UIViewAnimationCurve.EaseOut)
+        UIView.commitAnimations()
+        
         scroll.addSubview(subVlew)
+        
+        // add Mobile animation
+        UIView.beginAnimations(nil, context: nil)
+        UIView.setAnimationDuration(4.0)
+        subVlew.center = CGPointMake(WIDTH / 2, HIGHT * 3 + HIGHT / 2)
+        
+        // Set the relative speed of the animation
+        UIView.setAnimationCurve(UIViewAnimationCurve.EaseOut)
+        UIView.commitAnimations()
+        
         
         // draw pm10 data
         subVlew = PM10View(frame: CGRect(x: 0, y: HIGHT * 4, width: WIDTH, height: HIGHT))
         subVlew.dataSource = self
         subVlew.backgroundColor = UIColor.clearColor()
+        
+        // add Mobile animation
+        UIView.beginAnimations(nil, context: nil)
+        UIView.setAnimationDuration(2.0)
+        subVlew.center = CGPointMake(WIDTH / 2, 0)
+        
+        // Set the relative speed of the animation
+        UIView.setAnimationCurve(UIViewAnimationCurve.EaseOut)
+        UIView.commitAnimations()
+        
         scroll.addSubview(subVlew)
+        
+        // add Mobile animation
+        UIView.beginAnimations(nil, context: nil)
+        UIView.setAnimationDuration(3.5)
+        subVlew.center = CGPointMake(WIDTH / 2, HIGHT * 4 + HIGHT / 2)
+        
+        // Set the relative speed of the animation
+        UIView.setAnimationCurve(UIViewAnimationCurve.EaseOut)
+        UIView.commitAnimations()
+
         
         // draw pm25 data
         subVlew = PM25View(frame: CGRect(x: 0, y: HIGHT * 5, width: WIDTH, height: HIGHT))
         subVlew.dataSource = self
         subVlew.backgroundColor = UIColor.clearColor()
+        
+        // add Mobile animation
+        UIView.beginAnimations(nil, context: nil)
+        UIView.setAnimationDuration(2.0)
+        subVlew.center = CGPointMake(WIDTH / 2, 0)
+        
+        // Set the relative speed of the animation
+        UIView.setAnimationCurve(UIViewAnimationCurve.EaseOut)
+        UIView.commitAnimations()
+        
         scroll.addSubview(subVlew)
         
-        // draw so2 data
+        // add Mobile animation
+        UIView.beginAnimations(nil, context: nil)
+        UIView.setAnimationDuration(3.0)
+        subVlew.center = CGPointMake(WIDTH / 2, HIGHT * 5 + HIGHT / 2)
+        
+        // Set the relative speed of the animation
+        UIView.setAnimationCurve(UIViewAnimationCurve.EaseOut)
+        UIView.commitAnimations()
+
+        
+        // MARK - draw so2 data
         subVlew = SO2View(frame: CGRect(x: 0, y: HIGHT * 6, width: WIDTH, height: HIGHT))
         subVlew.dataSource = self
         subVlew.backgroundColor = UIColor.clearColor()
+        
+        // add Mobile animation
+        UIView.beginAnimations(nil, context: nil)
+        UIView.setAnimationDuration(2.0)
+        subVlew.center = CGPointMake(WIDTH / 2, 0)
+        
+        // Set the relative speed of the animation
+        UIView.setAnimationCurve(UIViewAnimationCurve.EaseOut)
+        UIView.commitAnimations()
+        
         scroll.addSubview(subVlew)
+        
+        // add Mobile animation
+        UIView.beginAnimations(nil, context: nil)
+        UIView.setAnimationDuration(2.5)
+        subVlew.center = CGPointMake(WIDTH / 2, HIGHT * 6 + HIGHT / 2)
+        
+        // Set the relative speed of the animation
+        UIView.setAnimationCurve(UIViewAnimationCurve.EaseOut)
+        UIView.commitAnimations()
+
     }
     
     // ViewDelegate

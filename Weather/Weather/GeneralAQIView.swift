@@ -24,14 +24,19 @@ class GeneralAQIView: UIView {
 }
 
 class AQIView : GeneralAQIView {
+    
+    // rendering code in drawRect
     override func drawRect(rect: CGRect) {
         
         // get brush context
         let context:CGContextRef =  UIGraphicsGetCurrentContext()!
+        
         // antialiasing settings
         CGContextSetAllowsAntialiasing(context, true)
         
+        // get AQI data
         let cityAQI = dataSource?.dataForGeneralAQIView(self)
+        
         // use RGB color space
         let colorSpace = CGColorSpaceCreateDeviceRGB()
         
@@ -73,13 +78,15 @@ class AQIView : GeneralAQIView {
         let R = radio * HIGHT / 2
         UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.5).set()
         CGContextAddEllipseInRect(context,
-                                  CGRect(x: WIDTH * radio, y: HIGHT / 2 - R, width: R * 2, height: R * 2))
+                                  CGRect(x: min(WIDTH * radio, WIDTH - 2 * R),
+                                         y: HIGHT / 2 - R, width: R * 2, height: R * 2))
         CGContextDrawPath(context, CGPathDrawingMode.FillStroke)
         
         let r = R * 0.7
         UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.9).set()
         CGContextAddEllipseInRect(context,
-                                  CGRect(x: WIDTH * radio + R * 0.3, y: HIGHT / 2 - r, width: r * 2, height: r * 2))
+                                  CGRect(x: min(WIDTH * radio + R * 0.3, WIDTH - r - R),
+                                         y: HIGHT / 2 - r, width: r * 2, height: r * 2))
         CGContextDrawPath(context, CGPathDrawingMode.FillStroke)
         
         // draw string
@@ -97,10 +104,13 @@ class COView : GeneralAQIView {
         
         // get brush context
         let context:CGContextRef =  UIGraphicsGetCurrentContext()!
+        
         // antialiasing settings
         CGContextSetAllowsAntialiasing(context, true)
         
+        // get CO data
         let cityAQI = dataSource?.dataForGeneralAQIView(self)
+        
         // use RGB color space
         let colorSpace = CGColorSpaceCreateDeviceRGB()
 
@@ -142,13 +152,15 @@ class COView : GeneralAQIView {
         let R = radio * HIGHT / 2
         UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.5).set()
         CGContextAddEllipseInRect(context,
-                                  CGRect(x: WIDTH * radio, y: HIGHT / 2 - R, width: R * 2, height: R * 2))
+                                  CGRect(x: min(WIDTH * radio, WIDTH - 2 * R),
+                                         y: HIGHT / 2 - R, width: R * 2, height: R * 2))
         CGContextDrawPath(context, CGPathDrawingMode.FillStroke)
         
         let r = R * 0.7
         UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.9).set()
         CGContextAddEllipseInRect(context,
-                                  CGRect(x: WIDTH * radio + R * 0.3, y: HIGHT / 2 - r, width: r * 2, height: r * 2))
+                                  CGRect(x: min(WIDTH * radio + R * 0.3, WIDTH - r - R),
+                                         y: HIGHT / 2 - r, width: r * 2, height: r * 2))
         CGContextDrawPath(context, CGPathDrawingMode.FillStroke)
         
         // draw string
@@ -166,10 +178,13 @@ class NO2View: GeneralAQIView {
         
         // get brush context
         let context:CGContextRef =  UIGraphicsGetCurrentContext()!
+        
         // antialiasing settings
         CGContextSetAllowsAntialiasing(context, true)
         
+        // get NO2 data
         let cityAQI = dataSource?.dataForGeneralAQIView(self)
+        
         // use RGB color space
         let colorSpace = CGColorSpaceCreateDeviceRGB()
         
@@ -211,13 +226,15 @@ class NO2View: GeneralAQIView {
         let R = radio * HIGHT / 2
         UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.5).set()
         CGContextAddEllipseInRect(context,
-                                  CGRect(x: WIDTH * radio, y: HIGHT / 2 - R, width: R * 2, height: R * 2))
+                                  CGRect(x: min(WIDTH * radio, WIDTH - 2 * R),
+                                         y: HIGHT / 2 - R, width: R * 2, height: R * 2))
         CGContextDrawPath(context, CGPathDrawingMode.FillStroke)
         
         let r = R * 0.7
         UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.9).set()
         CGContextAddEllipseInRect(context,
-                                  CGRect(x: WIDTH * radio + R * 0.3, y: HIGHT / 2 - r, width: r * 2, height: r * 2))
+                                  CGRect(x: min(WIDTH * radio + R * 0.3, WIDTH - r - R),
+                                         y: HIGHT / 2 - r, width: r * 2, height: r * 2))
         CGContextDrawPath(context, CGPathDrawingMode.FillStroke)
         
         // draw string
@@ -234,10 +251,13 @@ class O3View: GeneralAQIView {
         
         // get brush context
         let context:CGContextRef =  UIGraphicsGetCurrentContext()!
+        
         // antialiasing settings
         CGContextSetAllowsAntialiasing(context, true)
         
+        // get O3 data
         let cityAQI = dataSource?.dataForGeneralAQIView(self)
+        
         // use RGB color space
         let colorSpace = CGColorSpaceCreateDeviceRGB()
         
@@ -279,13 +299,15 @@ class O3View: GeneralAQIView {
         let R = radio * HIGHT / 2
         UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.5).set()
         CGContextAddEllipseInRect(context,
-                                  CGRect(x: WIDTH * radio, y: HIGHT / 2 - R, width: R * 2, height: R * 2))
+                                  CGRect(x: min(WIDTH * radio, WIDTH - 2 * R),
+                                         y: HIGHT / 2 - R, width: R * 2, height: R * 2))
         CGContextDrawPath(context, CGPathDrawingMode.FillStroke)
         
         let r = R * 0.7
         UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.9).set()
         CGContextAddEllipseInRect(context,
-                                  CGRect(x: WIDTH * radio + R * 0.3, y: HIGHT / 2 - r, width: r * 2, height: r * 2))
+                                  CGRect(x: min(WIDTH * radio + R * 0.3, WIDTH - r - R),
+                                         y: HIGHT / 2 - r, width: r * 2, height: r * 2))
         CGContextDrawPath(context, CGPathDrawingMode.FillStroke)
         
         // draw string
@@ -301,10 +323,13 @@ class PM10View: GeneralAQIView {
         
         // get brush context
         let context:CGContextRef =  UIGraphicsGetCurrentContext()!
+        
         // antialiasing settings
         CGContextSetAllowsAntialiasing(context, true)
         
+        // get PM10 data
         let cityAQI = dataSource?.dataForGeneralAQIView(self)
+        
         // use RGB color space
         let colorSpace = CGColorSpaceCreateDeviceRGB()
         
@@ -346,18 +371,20 @@ class PM10View: GeneralAQIView {
         let R = radio * HIGHT / 2
         UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.5).set()
         CGContextAddEllipseInRect(context,
-                                  CGRect(x: WIDTH * radio, y: HIGHT / 2 - R, width: R * 2, height: R * 2))
+                                  CGRect(x: min(WIDTH * radio, WIDTH - 2 * R),
+                                         y: HIGHT / 2 - R, width: R * 2, height: R * 2))
         CGContextDrawPath(context, CGPathDrawingMode.FillStroke)
         
         let r = R * 0.7
         UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.9).set()
         CGContextAddEllipseInRect(context,
-                                  CGRect(x: WIDTH * radio + R * 0.3, y: HIGHT / 2 - r, width: r * 2, height: r * 2))
+                                  CGRect(x: min(WIDTH * radio + R * 0.3, WIDTH - r - R),
+                                         y: HIGHT / 2 - r, width: r * 2, height: r * 2))
         CGContextDrawPath(context, CGPathDrawingMode.FillStroke)
         
         // draw string
         let str = "PM10 : " + String((cityAQI?.pm10)!)
-        str.drawAtPoint(CGPointMake(WIDTH * radio - r, HIGHT - 15),
+        str.drawAtPoint(CGPointMake(min(WIDTH * radio, WIDTH - 2 * R) - r, HIGHT - 15),
                         withAttributes: [NSForegroundColorAttributeName: UIColor.lightTextColor()]);
         
     }
@@ -369,10 +396,13 @@ class PM25View: GeneralAQIView {
         
         // get brush context
         let context:CGContextRef =  UIGraphicsGetCurrentContext()!
+        
         // antialiasing settings
         CGContextSetAllowsAntialiasing(context, true)
         
+        // get PM25 data
         let cityAQI = dataSource?.dataForGeneralAQIView(self)
+        
         // use RGB color space
         let colorSpace = CGColorSpaceCreateDeviceRGB()
         
@@ -414,13 +444,15 @@ class PM25View: GeneralAQIView {
         let R = radio * HIGHT / 2
         UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.5).set()
         CGContextAddEllipseInRect(context,
-                                  CGRect(x: WIDTH * radio, y: HIGHT / 2 - R, width: R * 2, height: R * 2))
+                                  CGRect(x: min(WIDTH * radio, WIDTH - 2 * R),
+                                         y: HIGHT / 2 - R, width: R * 2, height: R * 2))
         CGContextDrawPath(context, CGPathDrawingMode.FillStroke)
         
         let r = R * 0.7
         UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.9).set()
         CGContextAddEllipseInRect(context,
-                                  CGRect(x: WIDTH * radio + R * 0.3, y: HIGHT / 2 - r, width: r * 2, height: r * 2))
+                                  CGRect(x: min(WIDTH * radio + R * 0.3, WIDTH - r - R), 
+                                         y: HIGHT / 2 - r, width: r * 2, height: r * 2))
         CGContextDrawPath(context, CGPathDrawingMode.FillStroke)
         
         // draw string
@@ -437,10 +469,13 @@ class SO2View: GeneralAQIView {
         
         // get brush context
         let context:CGContextRef =  UIGraphicsGetCurrentContext()!
+        
         // antialiasing settings
         CGContextSetAllowsAntialiasing(context, true)
         
+        // get SO2 data
         let cityAQI = dataSource?.dataForGeneralAQIView(self)
+        
         // use RGB color space
         let colorSpace = CGColorSpaceCreateDeviceRGB()
         
@@ -482,13 +517,15 @@ class SO2View: GeneralAQIView {
         let R = radio * HIGHT / 2
         UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.5).set()
         CGContextAddEllipseInRect(context,
-                                  CGRect(x: WIDTH * radio, y: HIGHT / 2 - R, width: R * 2, height: R * 2))
+                                  CGRect(x: min(WIDTH * radio, WIDTH - 2 * R),
+                                         y: HIGHT / 2 - R, width: R * 2, height: R * 2))
         CGContextDrawPath(context, CGPathDrawingMode.FillStroke)
         
         let r = R * 0.7
         UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.9).set()
         CGContextAddEllipseInRect(context,
-                                  CGRect(x: WIDTH * radio + R * 0.3, y: HIGHT / 2 - r, width: r * 2, height: r * 2))
+                                  CGRect(x: min(WIDTH * radio + R * 0.3, WIDTH - r - R),
+                                         y: HIGHT / 2 - r, width: r * 2, height: r * 2))
         CGContextDrawPath(context, CGPathDrawingMode.FillStroke)
         
         // draw string

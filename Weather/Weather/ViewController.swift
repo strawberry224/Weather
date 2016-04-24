@@ -217,8 +217,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CityViewContr
             
             // transmit data
             forecastController.cityDailyForecast = cityDailyForecast
+            
+            // set background color of forecastController
             forecastController.nightFlag = nightFlag
-        } else if segue.identifier == "showAQI" {
+        } else if segue.identifier == "ShowAQI" {
             
             // The transition to the AQIViewController
             let destinationController = segue.destinationViewController as! UINavigationController
@@ -226,6 +228,29 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CityViewContr
             
             // transmit data
             aqiController.cityAQI = cityAQI
+        } else if segue.identifier == "ShowNow" {
+            
+            // The transition to the TodayViewController
+            let destinationController = segue.destinationViewController as! UINavigationController
+            let todayViewController = destinationController.viewControllers[0] as! TodayViewController
+            
+            // transmit data
+            todayViewController.now = cityNow
+            
+            // set background color of hourlyForecastController
+            todayViewController.nightFlag = nightFlag
+        } else if segue.identifier == "HourlyForecast" {
+            
+            // The transition to the HourlyForecastViewController
+            let destinationController = segue.destinationViewController as! UINavigationController
+            let hourlyForecastController = destinationController.viewControllers[0] as! HourlyForecastViewController
+            
+            // transmit data
+            hourlyForecastController.hourlyForecast = cityHourlyForecast[0]
+            hourlyForecastController.dailyForecast = cityDailyForecast[0]
+            
+            // set background color of hourlyForecastController
+            hourlyForecastController.nightFlag = nightFlag
         }
     }
     

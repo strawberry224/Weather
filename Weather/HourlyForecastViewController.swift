@@ -14,8 +14,8 @@ class HourlyForecastViewController: UIViewController, HourlyForecastViewDelegate
     
     // According to nightFlag to change the background color
     var nightFlag: Bool?
-    var hourlyForecast =  WeatherData.HourlyForecast()
-    var dailyForecast =  WeatherData.DailyForecast()
+    var hourlyForecast =  [WeatherData.HourlyForecast()]
+    var now =  WeatherData.Now()
 
     
     override func viewDidLoad() {
@@ -33,7 +33,7 @@ class HourlyForecastViewController: UIViewController, HourlyForecastViewDelegate
         scroll.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)
         
         // content size
-        scroll.contentSize = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height)
+        scroll.contentSize = CGSizeMake(self.view.frame.size.width * 1.5, self.view.frame.size.height)
         
         // whether to support paging
         // scroll.pagingEnabled = true
@@ -45,8 +45,8 @@ class HourlyForecastViewController: UIViewController, HourlyForecastViewDelegate
         scroll.scrollsToTop = false
         
         // draw AQI data
-        let subVlew = HourlyForecastView(frame: CGRect(x: 0, y: 0,
-            width: self.view.frame.size.width, height: self.view.frame.size.height))
+        let subVlew = HourlyHumView(frame: CGRect(x: 0, y: 0,
+            width: self.view.frame.size.width * 1.5, height: self.view.frame.size.height))
         subVlew.dataSource = self
         subVlew.backgroundColor = UIColor.clearColor()
         scroll.addSubview(subVlew)
@@ -54,8 +54,12 @@ class HourlyForecastViewController: UIViewController, HourlyForecastViewDelegate
     
     // ViewDelegate
     // HourlyForecastView
-    func dataForHourlyForecastView(sender: HourlyForecastView) -> (WeatherData.HourlyForecast, WeatherData.DailyForecast) {
-        return (hourlyForecast, dailyForecast)
+    func dataForHourlyForecastView(sender: HourlyForecastView) -> ([WeatherData.HourlyForecast], WeatherData.Now) {
+        return (hourlyForecast, now)
+    }
+    
+    func timeForHourlyForecastView(sender: HourlyForecastView) -> Bool {
+        return nightFlag!
     }
 }
 

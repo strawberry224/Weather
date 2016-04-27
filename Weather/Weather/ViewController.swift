@@ -246,8 +246,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CityViewContr
             let hourlyForecastController = destinationController.viewControllers[0] as! HourlyForecastViewController
             
             // transmit data
-            hourlyForecastController.hourlyForecast = cityHourlyForecast[0]
-            hourlyForecastController.dailyForecast = cityDailyForecast[0]
+            hourlyForecastController.hourlyForecast = cityHourlyForecast
+            hourlyForecastController.now = cityNow
             
             // set background color of hourlyForecastController
             hourlyForecastController.nightFlag = nightFlag

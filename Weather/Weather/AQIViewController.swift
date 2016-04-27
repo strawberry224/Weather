@@ -41,7 +41,7 @@ class AQIViewController: UIViewController, GeneralAQIViewDelegate {
         scroll.scrollsToTop = false
         
         // draw AQI data
-        var subVlew: GeneralAQIView = AQIView(frame: CGRect(x: 0, y: UIScreen.mainScreen().bounds.size.height, width: WIDTH, height: HIGHT))
+        var subVlew: GeneralAQIView = AQIView(frame: CGRect(x: 0, y: 0, width: WIDTH, height: HIGHT))
         subVlew.dataSource = self
         subVlew.backgroundColor = UIColor.clearColor()
         

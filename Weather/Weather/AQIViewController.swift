@@ -15,7 +15,7 @@ class AQIViewController: UIViewController, GeneralAQIViewDelegate {
     
     // set constants value
     let WIDTH: CGFloat = UIScreen.mainScreen().bounds.size.width
-    let HIGHT: CGFloat = (UIScreen.mainScreen().bounds.size.height + 10) / 8.0
+    let HEIGHT: CGFloat = (UIScreen.mainScreen().bounds.size.height + 10) / 8.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,10 +26,10 @@ class AQIViewController: UIViewController, GeneralAQIViewDelegate {
     func setScroll() {
         
         // set the size of Scrollview
-        scroll.frame = CGRectMake(0, 0, self.view.frame.size.width, HIGHT * 8)
+        scroll.frame = CGRectMake(0, 0, self.view.frame.size.width, HEIGHT * 8)
         
         // content size
-        scroll.contentSize = CGSizeMake(WIDTH, HIGHT)
+        scroll.contentSize = CGSizeMake(WIDTH, HEIGHT)
         
         // whether to support paging
         // scroll.pagingEnabled = true
@@ -41,7 +41,7 @@ class AQIViewController: UIViewController, GeneralAQIViewDelegate {
         scroll.scrollsToTop = false
         
         // draw AQI data
-        var subVlew: GeneralAQIView = AQIView(frame: CGRect(x: 0, y: 0, width: WIDTH, height: HIGHT))
+        var subVlew: GeneralAQIView = AQIView(frame: CGRect(x: 0, y: 0, width: WIDTH, height: HEIGHT))
         subVlew.dataSource = self
         subVlew.backgroundColor = UIColor.clearColor()
         
@@ -59,14 +59,14 @@ class AQIViewController: UIViewController, GeneralAQIViewDelegate {
         // add Mobile animation
         UIView.beginAnimations(nil, context: nil)
         UIView.setAnimationDuration(5.5)
-        subVlew.center = CGPointMake(WIDTH / 2, HIGHT / 2)
+        subVlew.center = CGPointMake(WIDTH / 2, HEIGHT / 2)
         
         // Set the relative speed of the animation
         UIView.setAnimationCurve(UIViewAnimationCurve.EaseOut)
         UIView.commitAnimations()
         
         // draw CO data
-        subVlew = COView(frame: CGRect(x: 0, y: HIGHT, width: WIDTH, height: HIGHT))
+        subVlew = COView(frame: CGRect(x: 0, y: HEIGHT, width: WIDTH, height: HEIGHT))
         subVlew.dataSource = self
         subVlew.backgroundColor = UIColor.clearColor()
         // add Mobile animation
@@ -83,14 +83,14 @@ class AQIViewController: UIViewController, GeneralAQIViewDelegate {
         // add Mobile animation
         UIView.beginAnimations(nil, context: nil)
         UIView.setAnimationDuration(5.0)
-        subVlew.center = CGPointMake(WIDTH / 2, HIGHT + HIGHT / 2)
+        subVlew.center = CGPointMake(WIDTH / 2, HEIGHT + HEIGHT / 2)
         
         // Set the relative speed of the animation
         UIView.setAnimationCurve(UIViewAnimationCurve.EaseOut)
         UIView.commitAnimations()
         
         // draw NO2 data
-        subVlew = NO2View(frame: CGRect(x: 0, y: HIGHT * 2, width: WIDTH, height: HIGHT))
+        subVlew = NO2View(frame: CGRect(x: 0, y: HEIGHT * 2, width: WIDTH, height: HEIGHT))
         subVlew.dataSource = self
         subVlew.backgroundColor = UIColor.clearColor()
         // add Mobile animation
@@ -107,14 +107,14 @@ class AQIViewController: UIViewController, GeneralAQIViewDelegate {
         // add Mobile animation
         UIView.beginAnimations(nil, context: nil)
         UIView.setAnimationDuration(4.5)
-        subVlew.center = CGPointMake(WIDTH / 2, HIGHT * 2 + HIGHT / 2)
+        subVlew.center = CGPointMake(WIDTH / 2, HEIGHT * 2 + HEIGHT / 2)
         
         // Set the relative speed of the animation
         UIView.setAnimationCurve(UIViewAnimationCurve.EaseOut)
         UIView.commitAnimations()
         
         // draw o3 data
-        subVlew = O3View(frame: CGRect(x: 0, y: HIGHT * 3, width: WIDTH, height: HIGHT))
+        subVlew = O3View(frame: CGRect(x: 0, y: HEIGHT * 3, width: WIDTH, height: HEIGHT))
         subVlew.dataSource = self
         subVlew.backgroundColor = UIColor.clearColor()
         // add Mobile animation
@@ -131,7 +131,7 @@ class AQIViewController: UIViewController, GeneralAQIViewDelegate {
         // add Mobile animation
         UIView.beginAnimations(nil, context: nil)
         UIView.setAnimationDuration(4.0)
-        subVlew.center = CGPointMake(WIDTH / 2, HIGHT * 3 + HIGHT / 2)
+        subVlew.center = CGPointMake(WIDTH / 2, HEIGHT * 3 + HEIGHT / 2)
         
         // Set the relative speed of the animation
         UIView.setAnimationCurve(UIViewAnimationCurve.EaseOut)
@@ -139,7 +139,7 @@ class AQIViewController: UIViewController, GeneralAQIViewDelegate {
         
         
         // draw pm10 data
-        subVlew = PM10View(frame: CGRect(x: 0, y: HIGHT * 4, width: WIDTH, height: HIGHT))
+        subVlew = PM10View(frame: CGRect(x: 0, y: HEIGHT * 4, width: WIDTH, height: HEIGHT))
         subVlew.dataSource = self
         subVlew.backgroundColor = UIColor.clearColor()
         
@@ -157,7 +157,7 @@ class AQIViewController: UIViewController, GeneralAQIViewDelegate {
         // add Mobile animation
         UIView.beginAnimations(nil, context: nil)
         UIView.setAnimationDuration(3.5)
-        subVlew.center = CGPointMake(WIDTH / 2, HIGHT * 4 + HIGHT / 2)
+        subVlew.center = CGPointMake(WIDTH / 2, HEIGHT * 4 + HEIGHT / 2)
         
         // Set the relative speed of the animation
         UIView.setAnimationCurve(UIViewAnimationCurve.EaseOut)
@@ -165,7 +165,7 @@ class AQIViewController: UIViewController, GeneralAQIViewDelegate {
 
         
         // draw pm25 data
-        subVlew = PM25View(frame: CGRect(x: 0, y: HIGHT * 5, width: WIDTH, height: HIGHT))
+        subVlew = PM25View(frame: CGRect(x: 0, y: HEIGHT * 5, width: WIDTH, height: HEIGHT))
         subVlew.dataSource = self
         subVlew.backgroundColor = UIColor.clearColor()
         
@@ -183,7 +183,7 @@ class AQIViewController: UIViewController, GeneralAQIViewDelegate {
         // add Mobile animation
         UIView.beginAnimations(nil, context: nil)
         UIView.setAnimationDuration(3.0)
-        subVlew.center = CGPointMake(WIDTH / 2, HIGHT * 5 + HIGHT / 2)
+        subVlew.center = CGPointMake(WIDTH / 2, HEIGHT * 5 + HEIGHT / 2)
         
         // Set the relative speed of the animation
         UIView.setAnimationCurve(UIViewAnimationCurve.EaseOut)
@@ -191,7 +191,7 @@ class AQIViewController: UIViewController, GeneralAQIViewDelegate {
 
         
         // MARK - draw so2 data
-        subVlew = SO2View(frame: CGRect(x: 0, y: HIGHT * 6, width: WIDTH, height: HIGHT))
+        subVlew = SO2View(frame: CGRect(x: 0, y: HEIGHT * 6, width: WIDTH, height: HEIGHT))
         subVlew.dataSource = self
         subVlew.backgroundColor = UIColor.clearColor()
         
@@ -209,7 +209,7 @@ class AQIViewController: UIViewController, GeneralAQIViewDelegate {
         // add Mobile animation
         UIView.beginAnimations(nil, context: nil)
         UIView.setAnimationDuration(2.5)
-        subVlew.center = CGPointMake(WIDTH / 2, HIGHT * 6 + HIGHT / 2)
+        subVlew.center = CGPointMake(WIDTH / 2, HEIGHT * 6 + HEIGHT / 2)
         
         // Set the relative speed of the animation
         UIView.setAnimationCurve(UIViewAnimationCurve.EaseOut)

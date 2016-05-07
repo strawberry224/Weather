@@ -75,9 +75,15 @@ class CityViewController: UIViewController, UITableViewDelegate, UITableViewData
                 var subLocality = mark.name
                 let provinceEndId = subLocality?.rangeOfString("省")?.endIndex
                 let cityStartId = subLocality?.rangeOfString("市")?.startIndex
-                let range = Range(provinceEndId! ..< cityStartId!)
-                subLocality = subLocality?.substringWithRange(range)
-                self.currentCityLabel.text = "当前城市:  " + subLocality! as String
+                
+                if (provinceEndId == nil || cityStartId == nil) {
+                    self.currentCityLabel.text = "当前城市:  杭州"
+                } else {
+                    let range = Range(provinceEndId! ..< cityStartId!)
+                    subLocality = subLocality?.substringWithRange(range)
+                    self.currentCityLabel.text = "当前城市:  " + subLocality! as String
+                }
+                                
             }else {
                 // conversion failed
             }

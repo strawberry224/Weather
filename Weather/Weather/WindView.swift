@@ -65,7 +65,7 @@ class WindView: UIView {
             let x = LABEL_WIDTH / 2 * cos(alpha)
             let y = LABEL_WIDTH / 3 * sin(alpha)
 
-             // Draw a linear gradient
+             // Draw a radial gradient
              // context: Graphics context
              // gradient: Gradient color
              // startPoint: Starting position

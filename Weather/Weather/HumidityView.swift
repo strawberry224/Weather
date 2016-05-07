@@ -29,6 +29,7 @@ class HumidityView: UIView {
         
         // get brush context
         let context:CGContextRef =  UIGraphicsGetCurrentContext()!
+        
         // antialiasing settings
         CGContextSetAllowsAntialiasing(context, true)
         

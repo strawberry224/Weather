@@ -20,7 +20,7 @@ class HourlyForecastViewController: UIViewController, HourlyForecastViewDelegate
     
     override func viewDidLoad() {
         if (nightFlag == true) {
-            self.view.backgroundColor = UIColor.blackColor()
+            self.view.backgroundColor = UIColor(patternImage: UIImage(named: "hour_bg")!)
         }
         
         setScroll()
@@ -33,7 +33,7 @@ class HourlyForecastViewController: UIViewController, HourlyForecastViewDelegate
         scroll.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)
         
         // content size
-        scroll.contentSize = CGSizeMake(self.view.frame.size.width * 1.5, self.view.frame.size.height)
+        scroll.contentSize = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height * 5)
         
         // whether to support paging
         // scroll.pagingEnabled = true
@@ -45,11 +45,72 @@ class HourlyForecastViewController: UIViewController, HourlyForecastViewDelegate
         scroll.scrollsToTop = false
         
         // draw AQI data
-        let subVlew = HourlyHumView(frame: CGRect(x: 0, y: 0,
-            width: self.view.frame.size.width * 1.5, height: self.view.frame.size.height))
+        var subVlew: HourlyForecastView
+        var title = UILabel(frame: CGRectMake(0, 15, self.view.frame.size.width, 20))
+        title.text = "相对湿度"
+        title.textColor = UIColor.darkTextColor()
+        title.textAlignment = NSTextAlignment.Center
+        scroll.addSubview(title)
+
+        subVlew = HourlyHumView(frame: CGRect(x: 0, y: -50,
+            width: self.view.frame.size.width, height: self.view.frame.size.height))
         subVlew.dataSource = self
         subVlew.backgroundColor = UIColor.clearColor()
         scroll.addSubview(subVlew)
+        
+        title = UILabel(frame: CGRectMake(0, self.view.frame.size.height + 70, self.view.frame.size.width, 20))
+        title.text = "降水概率"
+        title.textColor = UIColor.darkTextColor()
+        title.textAlignment = NSTextAlignment.Center
+        scroll.addSubview(title)
+
+        
+        subVlew = HourlyPopView(frame: CGRect(x: 0, y: self.view.frame.size.height,
+            width: self.view.frame.size.width, height: self.view.frame.size.height))
+        subVlew.dataSource = self
+        subVlew.backgroundColor = UIColor.clearColor()
+        scroll.addSubview(subVlew)
+        
+        title = UILabel(frame: CGRectMake(0, self.view.frame.size.height * 2 + 70, self.view.frame.size.width, 20))
+        title.text = "气压"
+        title.textColor = UIColor.darkTextColor()
+        title.textAlignment = NSTextAlignment.Center
+        scroll.addSubview(title)
+        
+        
+        subVlew = HourlyPresView(frame: CGRect(x: 0, y: self.view.frame.size.height * 2,
+            width: self.view.frame.size.width, height: self.view.frame.size.height))
+        subVlew.dataSource = self
+        subVlew.backgroundColor = UIColor.clearColor()
+        scroll.addSubview(subVlew)
+        
+        title = UILabel(frame: CGRectMake(0, self.view.frame.size.height * 3 + 70, self.view.frame.size.width, 20))
+        title.text = "温度"
+        title.textColor = UIColor.darkTextColor()
+        title.textAlignment = NSTextAlignment.Center
+        scroll.addSubview(title)
+        
+        
+        subVlew = HourlyTmpView(frame: CGRect(x: 0, y: self.view.frame.size.height * 3,
+            width: self.view.frame.size.width, height: self.view.frame.size.height))
+        subVlew.dataSource = self
+        subVlew.backgroundColor = UIColor.clearColor()
+        scroll.addSubview(subVlew)
+        
+        title = UILabel(frame: CGRectMake(0, self.view.frame.size.height * 4 + 70, self.view.frame.size.width, 20))
+        title.text = "风速"
+        title.textColor = UIColor.darkTextColor()
+        title.textAlignment = NSTextAlignment.Center
+        scroll.addSubview(title)
+        
+        
+        subVlew = HourlyWindView(frame: CGRect(x: 0, y: self.view.frame.size.height * 4,
+            width: self.view.frame.size.width, height: self.view.frame.size.height))
+        subVlew.dataSource = self
+        subVlew.backgroundColor = UIColor.clearColor()
+        scroll.addSubview(subVlew)
+
+
     }
     
     // ViewDelegate

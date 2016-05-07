@@ -16,7 +16,7 @@ class GeneralAQIView: UIView {
     
     // set constants value
     let WIDTH: CGFloat = UIScreen.mainScreen().bounds.size.width
-    let HIGHT: CGFloat = CGFloat(UIScreen.mainScreen().bounds.size.height) / 8.0
+    let HEIGHT: CGFloat = CGFloat(UIScreen.mainScreen().bounds.size.height) / 8.0
     
     // cityAQI value from deledate
     weak var dataSource: GeneralAQIViewDelegate?
@@ -75,23 +75,23 @@ class AQIView : GeneralAQIView {
         
         // radio = val / max * 2
         let radio = min(val / 200, 1.0)
-        let R = radio * HIGHT / 2
+        let R = radio * HEIGHT / 2
         UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.5).set()
         CGContextAddEllipseInRect(context,
                                   CGRect(x: min(WIDTH * radio, WIDTH - 2 * R),
-                                         y: HIGHT / 2 - R, width: R * 2, height: R * 2))
+                                         y: HEIGHT / 2 - R, width: R * 2, height: R * 2))
         CGContextDrawPath(context, CGPathDrawingMode.FillStroke)
         
         let r = R * 0.7
         UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.9).set()
         CGContextAddEllipseInRect(context,
                                   CGRect(x: min(WIDTH * radio + R * 0.3, WIDTH - r - R),
-                                         y: HIGHT / 2 - r, width: r * 2, height: r * 2))
+                                         y: HEIGHT / 2 - r, width: r * 2, height: r * 2))
         CGContextDrawPath(context, CGPathDrawingMode.FillStroke)
         
         // draw string
         let str = "AQI : " + String((cityAQI?.aqi)!)
-        str.drawAtPoint(CGPointMake(WIDTH * radio - r, HIGHT - 15),
+        str.drawAtPoint(CGPointMake(WIDTH * radio - r, HEIGHT - 15),
                         withAttributes: [NSForegroundColorAttributeName: UIColor.lightTextColor()]);
         
 
@@ -144,28 +144,28 @@ class COView : GeneralAQIView {
         // options: Drawing method, DrawsBeforeStartLocation start position before the drawing,
         //          to the end of the location is no longer drawn
         // DrawsAfterEndLocation: Start position not to draw until after the end of the point to continue filling
-        CGContextDrawLinearGradient(context, gradient, CGPointZero, CGPointMake(self.frame.size.width, HIGHT * 2),
+        CGContextDrawLinearGradient(context, gradient, CGPointZero, CGPointMake(self.frame.size.width, HEIGHT * 2),
                                     CGGradientDrawingOptions.DrawsAfterEndLocation)
         
         // radio = val / max * 2
         let radio = min(val * 10 / 60, 1.0)
-        let R = radio * HIGHT / 2
+        let R = radio * HEIGHT / 2
         UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.5).set()
         CGContextAddEllipseInRect(context,
                                   CGRect(x: min(WIDTH * radio, WIDTH - 2 * R),
-                                         y: HIGHT / 2 - R, width: R * 2, height: R * 2))
+                                         y: HEIGHT / 2 - R, width: R * 2, height: R * 2))
         CGContextDrawPath(context, CGPathDrawingMode.FillStroke)
         
         let r = R * 0.7
         UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.9).set()
         CGContextAddEllipseInRect(context,
                                   CGRect(x: min(WIDTH * radio + R * 0.3, WIDTH - r - R),
-                                         y: HIGHT / 2 - r, width: r * 2, height: r * 2))
+                                         y: HEIGHT / 2 - r, width: r * 2, height: r * 2))
         CGContextDrawPath(context, CGPathDrawingMode.FillStroke)
         
         // draw string
         let str = "CO : " + String((cityAQI?.co)!)
-        str.drawAtPoint(CGPointMake(WIDTH * radio - r, HIGHT - 15),
+        str.drawAtPoint(CGPointMake(WIDTH * radio - r, HEIGHT - 15),
                         withAttributes: [NSForegroundColorAttributeName: UIColor.lightTextColor()]);
         
 
@@ -218,28 +218,28 @@ class NO2View: GeneralAQIView {
         // options: Drawing method, DrawsBeforeStartLocation start position before the drawing,
         //          to the end of the location is no longer drawn
         // DrawsAfterEndLocation: Start position not to draw until after the end of the point to continue filling
-        CGContextDrawLinearGradient(context, gradient, CGPointZero, CGPointMake(self.frame.size.width, HIGHT * 2),
+        CGContextDrawLinearGradient(context, gradient, CGPointZero, CGPointMake(self.frame.size.width, HEIGHT * 2),
                                     CGGradientDrawingOptions.DrawsAfterEndLocation)
         
         // radio = val / max * 2
         let radio = min(val / 280, 1.0)
-        let R = radio * HIGHT / 2
+        let R = radio * HEIGHT / 2
         UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.5).set()
         CGContextAddEllipseInRect(context,
                                   CGRect(x: min(WIDTH * radio, WIDTH - 2 * R),
-                                         y: HIGHT / 2 - R, width: R * 2, height: R * 2))
+                                         y: HEIGHT / 2 - R, width: R * 2, height: R * 2))
         CGContextDrawPath(context, CGPathDrawingMode.FillStroke)
         
         let r = R * 0.7
         UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.9).set()
         CGContextAddEllipseInRect(context,
                                   CGRect(x: min(WIDTH * radio + R * 0.3, WIDTH - r - R),
-                                         y: HIGHT / 2 - r, width: r * 2, height: r * 2))
+                                         y: HEIGHT / 2 - r, width: r * 2, height: r * 2))
         CGContextDrawPath(context, CGPathDrawingMode.FillStroke)
         
         // draw string
         let str = "NO2 : " + String((cityAQI?.no2)!)
-        str.drawAtPoint(CGPointMake(WIDTH * radio - r, HIGHT - 15),
+        str.drawAtPoint(CGPointMake(WIDTH * radio - r, HEIGHT - 15),
                         withAttributes: [NSForegroundColorAttributeName: UIColor.lightTextColor()]);
         
     }
@@ -291,28 +291,28 @@ class O3View: GeneralAQIView {
         // options: Drawing method, DrawsBeforeStartLocation start position before the drawing,
         //          to the end of the location is no longer drawn
         // DrawsAfterEndLocation: Start position not to draw until after the end of the point to continue filling
-        CGContextDrawLinearGradient(context, gradient, CGPointZero, CGPointMake(self.frame.size.width, HIGHT * 2),
+        CGContextDrawLinearGradient(context, gradient, CGPointZero, CGPointMake(self.frame.size.width, HEIGHT * 2),
                                     CGGradientDrawingOptions.DrawsAfterEndLocation)
         
         // radio = val / max * 2
         let radio = min(val / 265, 1.0)
-        let R = radio * HIGHT / 2
+        let R = radio * HEIGHT / 2
         UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.5).set()
         CGContextAddEllipseInRect(context,
                                   CGRect(x: min(WIDTH * radio, WIDTH - 2 * R),
-                                         y: HIGHT / 2 - R, width: R * 2, height: R * 2))
+                                         y: HEIGHT / 2 - R, width: R * 2, height: R * 2))
         CGContextDrawPath(context, CGPathDrawingMode.FillStroke)
         
         let r = R * 0.7
         UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.9).set()
         CGContextAddEllipseInRect(context,
                                   CGRect(x: min(WIDTH * radio + R * 0.3, WIDTH - r - R),
-                                         y: HIGHT / 2 - r, width: r * 2, height: r * 2))
+                                         y: HEIGHT / 2 - r, width: r * 2, height: r * 2))
         CGContextDrawPath(context, CGPathDrawingMode.FillStroke)
         
         // draw string
         let str = "O3 : " + String((cityAQI?.o3)!)
-        str.drawAtPoint(CGPointMake(WIDTH * radio - r, HIGHT - 15),
+        str.drawAtPoint(CGPointMake(WIDTH * radio - r, HEIGHT - 15),
                         withAttributes: [NSForegroundColorAttributeName: UIColor.lightTextColor()]);
         
     }
@@ -363,28 +363,28 @@ class PM10View: GeneralAQIView {
         // options: Drawing method, DrawsBeforeStartLocation start position before the drawing,
         //          to the end of the location is no longer drawn
         // DrawsAfterEndLocation: Start position not to draw until after the end of the point to continue filling
-        CGContextDrawLinearGradient(context, gradient, CGPointZero, CGPointMake(self.frame.size.width, HIGHT * 2),
+        CGContextDrawLinearGradient(context, gradient, CGPointZero, CGPointMake(self.frame.size.width, HEIGHT * 2),
                                     CGGradientDrawingOptions.DrawsAfterEndLocation)
         
         // radio = val / max * 2
         let radio = min(val / 140, 1.0)
-        let R = radio * HIGHT / 2
+        let R = radio * HEIGHT / 2
         UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.5).set()
         CGContextAddEllipseInRect(context,
                                   CGRect(x: min(WIDTH * radio, WIDTH - 2 * R),
-                                         y: HIGHT / 2 - R, width: R * 2, height: R * 2))
+                                         y: HEIGHT / 2 - R, width: R * 2, height: R * 2))
         CGContextDrawPath(context, CGPathDrawingMode.FillStroke)
         
         let r = R * 0.7
         UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.9).set()
         CGContextAddEllipseInRect(context,
                                   CGRect(x: min(WIDTH * radio + R * 0.3, WIDTH - r - R),
-                                         y: HIGHT / 2 - r, width: r * 2, height: r * 2))
+                                         y: HEIGHT / 2 - r, width: r * 2, height: r * 2))
         CGContextDrawPath(context, CGPathDrawingMode.FillStroke)
         
         // draw string
         let str = "PM10 : " + String((cityAQI?.pm10)!)
-        str.drawAtPoint(CGPointMake(min(WIDTH * radio, WIDTH - 2 * R) - r, HIGHT - 15),
+        str.drawAtPoint(CGPointMake(min(WIDTH * radio, WIDTH - 2 * R) - r, HEIGHT - 15),
                         withAttributes: [NSForegroundColorAttributeName: UIColor.lightTextColor()]);
         
     }
@@ -436,28 +436,28 @@ class PM25View: GeneralAQIView {
         // options: Drawing method, DrawsBeforeStartLocation start position before the drawing,
         //          to the end of the location is no longer drawn
         // DrawsAfterEndLocation: Start position not to draw until after the end of the point to continue filling
-        CGContextDrawLinearGradient(context, gradient, CGPointZero, CGPointMake(self.frame.size.width, HIGHT * 2),
+        CGContextDrawLinearGradient(context, gradient, CGPointZero, CGPointMake(self.frame.size.width, HEIGHT * 2),
                                     CGGradientDrawingOptions.DrawsAfterEndLocation)
         
         // radio = val / max * 2
         let radio = min(val / 150, 1.0)
-        let R = radio * HIGHT / 2
+        let R = radio * HEIGHT / 2
         UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.5).set()
         CGContextAddEllipseInRect(context,
                                   CGRect(x: min(WIDTH * radio, WIDTH - 2 * R),
-                                         y: HIGHT / 2 - R, width: R * 2, height: R * 2))
+                                         y: HEIGHT / 2 - R, width: R * 2, height: R * 2))
         CGContextDrawPath(context, CGPathDrawingMode.FillStroke)
         
         let r = R * 0.7
         UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.9).set()
         CGContextAddEllipseInRect(context,
                                   CGRect(x: min(WIDTH * radio + R * 0.3, WIDTH - r - R), 
-                                         y: HIGHT / 2 - r, width: r * 2, height: r * 2))
+                                         y: HEIGHT / 2 - r, width: r * 2, height: r * 2))
         CGContextDrawPath(context, CGPathDrawingMode.FillStroke)
         
         // draw string
         let str = "PM25 : " + String((cityAQI?.pm25)!)
-        str.drawAtPoint(CGPointMake(WIDTH * radio - r, HIGHT - 15),
+        str.drawAtPoint(CGPointMake(WIDTH * radio - r, HEIGHT - 15),
                         withAttributes: [NSForegroundColorAttributeName: UIColor.lightTextColor()]);
         
     }
@@ -509,28 +509,28 @@ class SO2View: GeneralAQIView {
         // options: Drawing method, DrawsBeforeStartLocation start position before the drawing,
         //          to the end of the location is no longer drawn
         // DrawsAfterEndLocation: Start position not to draw until after the end of the point to continue filling
-        CGContextDrawLinearGradient(context, gradient, CGPointZero, CGPointMake(self.frame.size.width, HIGHT * 2),
+        CGContextDrawLinearGradient(context, gradient, CGPointZero, CGPointMake(self.frame.size.width, HEIGHT * 2),
                                     CGGradientDrawingOptions.DrawsAfterEndLocation)
         
         // radio = val / max * 2
         let radio = min(val * 10 / 800, 1.0)
-        let R = radio * HIGHT / 2
+        let R = radio * HEIGHT / 2
         UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.5).set()
         CGContextAddEllipseInRect(context,
                                   CGRect(x: min(WIDTH * radio, WIDTH - 2 * R),
-                                         y: HIGHT / 2 - R, width: R * 2, height: R * 2))
+                                         y: HEIGHT / 2 - R, width: R * 2, height: R * 2))
         CGContextDrawPath(context, CGPathDrawingMode.FillStroke)
         
         let r = R * 0.7
         UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.9).set()
         CGContextAddEllipseInRect(context,
                                   CGRect(x: min(WIDTH * radio + R * 0.3, WIDTH - r - R),
-                                         y: HIGHT / 2 - r, width: r * 2, height: r * 2))
+                                         y: HEIGHT / 2 - r, width: r * 2, height: r * 2))
         CGContextDrawPath(context, CGPathDrawingMode.FillStroke)
         
         // draw string
         let str = "SO2 : " + String((cityAQI?.so2)!)
-        str.drawAtPoint(CGPointMake(WIDTH * radio - r, HIGHT - 15),
+        str.drawAtPoint(CGPointMake(WIDTH * radio - r, HEIGHT - 15),
                         withAttributes: [NSForegroundColorAttributeName: UIColor.lightTextColor()]);
         
     }

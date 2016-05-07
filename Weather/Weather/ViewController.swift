@@ -38,6 +38,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CityViewContr
     let aqiKey = "616e8a401061a1108d387543235f3159"
     
     func loadWeatherData() {
+        print("1")
         request(httpUrl, httpCity: httpCity)
     }
     
@@ -308,6 +309,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CityViewContr
     }
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
+        print("!!!")
         currLocation = locations.last! as CLLocation
         LonLatToCity()
     }
@@ -318,9 +320,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CityViewContr
     }
     
     var currentCity: String?
+    var getSubcityFlag = true
     
     // Change the latitude and longitude into a city name
     func LonLatToCity() {
+        print("!!!!")
         let geocoder: CLGeocoder = CLGeocoder()
         geocoder.reverseGeocodeLocation(currLocation, completionHandler: { (placemark, error) -> Void in
             
@@ -333,28 +337,43 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CityViewContr
                 var subLocality = mark.name
                 let provinceEndId = subLocality?.rangeOfString("省")?.endIndex
                 let cityStartId = subLocality?.rangeOfString("市")?.startIndex
-                let range = Range(provinceEndId! ..< cityStartId!)
-                subLocality = subLocality?.substringWithRange(range)
-                self.charactorType(subLocality! as String)
-                //print(self.cityName)
+                
+                if (provinceEndId == nil || cityStartId == nil) {
+                    self.getSubcityFlag = false
+                } else {
+                    let range = Range(provinceEndId! ..< cityStartId!)
+                    subLocality = subLocality?.substringWithRange(range)
+                    
+                }
+                self.charactorType(subLocality)
+                print(subLocality)
             }else {
                 // conversion failed
             }
         })
     }
     
-    func charactorType(aString:String) {
-        self.currentCity = aString
-        // Conversion failed to convert to variable string
-        let str = NSMutableString(string: aString)
-        CFStringTransform(str, nil, kCFStringTransformMandarinLatin, false)
+    func charactorType(aString:String?) {
         
-        // And then converted to Pinyin without tone
-        CFStringTransform(str, nil, kCFStringTransformStripDiacritics, false)
-        let res = str as NSString
-        httpCity = "city=" + res.stringByReplacingOccurrencesOfString(" ", withString: "")
-        // httpCity = "city=hangzhou"
-        userLocationButton.setTitle("当前城市：" + aString, forState: UIControlState.Normal)
+        // if the city name is nil, the default city is hangzhou
+        // otherwise there will be a nil error
+        if (getSubcityFlag == false) {
+            httpCity = "city=hangzhou"
+            userLocationButton.setTitle("当前城市：杭州", forState: UIControlState.Normal)
+            
+        } else {
+            self.currentCity = aString
+            // Conversion failed to convert to variable string
+            let str = NSMutableString(string: aString!)
+            CFStringTransform(str, nil, kCFStringTransformMandarinLatin, false)
+            
+            // And then converted to Pinyin without tone
+            CFStringTransform(str, nil, kCFStringTransformStripDiacritics, false)
+            let res = str as NSString
+            httpCity = "city=" + res.stringByReplacingOccurrencesOfString(" ", withString: "")
+            // httpCity = "city=hangzhou"
+            userLocationButton.setTitle("当前城市：" + aString!, forState: UIControlState.Normal)
+        }
         loadWeatherData()
     }
     

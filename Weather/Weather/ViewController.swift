@@ -38,7 +38,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CityViewContr
     let aqiKey = "616e8a401061a1108d387543235f3159"
     
     func loadWeatherData() {
-        print("1")
         request(httpUrl, httpCity: httpCity)
     }
     
@@ -309,7 +308,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CityViewContr
     }
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
-        print("!!!")
         currLocation = locations.last! as CLLocation
         LonLatToCity()
     }
@@ -324,7 +322,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CityViewContr
     
     // Change the latitude and longitude into a city name
     func LonLatToCity() {
-        print("!!!!")
         let geocoder: CLGeocoder = CLGeocoder()
         geocoder.reverseGeocodeLocation(currLocation, completionHandler: { (placemark, error) -> Void in
             
@@ -346,7 +343,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CityViewContr
                     
                 }
                 self.charactorType(subLocality)
-                print(subLocality)
             }else {
                 // conversion failed
             }

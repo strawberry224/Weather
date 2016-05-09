@@ -7,6 +7,28 @@
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
+        <!--Suggestion View Controller-->
+        <scene sceneID="SCq-Bb-LG6">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fAU-Ac-qYS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="ylV-3T-3Xu" customClass="SuggestionViewController" customModule="Weather" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="3dU-UM-EeN"/>
+                        <viewControllerLayoutGuide type="bottom" id="DXa-tp-jmy"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="9hz-dZ-kJY">
+                        <rect key="frame" x="0.0" y="0.0" width="300" height="450"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="WLa-zr-nWR"/>
+                    <value key="contentSizeForViewInPopover" type="size" width="300" height="450"/>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="300" height="450"/>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="693" y="-201"/>
+        </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -20,7 +42,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="多云" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xsQ-IA-pJU">
-                                <rect key="frame" x="299.5" y="71" width="90.5" height="80"/>
+                                <rect key="frame" x="300" y="71" width="90.5" height="80"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -134,7 +156,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y0r-kh-Hgt">
                                 <rect key="frame" x="398.5" y="172.5" width="181.5" height="36"/>
                                 <state key="normal" title="AQI">
-                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
                                     <segue destination="XX3-ow-6Lf" kind="presentation" identifier="ShowAQI" id="JUA-Mt-dXJ"/>
@@ -156,7 +178,7 @@
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="999" translatesAutoresizingMaskIntoConstraints="NO" id="XpL-Gz-Enk">
-                                <rect key="frame" x="110.5" y="66" width="181.5" height="80"/>
+                                <rect key="frame" x="111" y="66" width="181.5" height="80"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="80" id="BR2-yf-X3p"/>
                                     <constraint firstAttribute="width" constant="120" id="LDI-mA-Wne"/>
@@ -168,7 +190,7 @@
                                 </variation>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LFX-2M-i0V">
-                                <rect key="frame" x="398" y="96" width="181.5" height="30"/>
+                                <rect key="frame" x="398.5" y="96" width="181.5" height="30"/>
                                 <state key="normal" title="小时预报">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -176,8 +198,18 @@
                                     <segue destination="LgB-A1-VAe" kind="presentation" identifier="HourlyForecast" id="n6J-2a-gdY"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bbi-X6-mA7">
+                                <rect key="frame" x="20" y="28" width="30" height="30"/>
+                                <state key="normal" title="＝"/>
+                                <connections>
+                                    <segue destination="ylV-3T-3Xu" kind="popoverPresentation" identifier="ShowSuggestion" popoverAnchorView="bbi-X6-mA7" id="Pi6-ED-FIJ">
+                                        <popoverArrowDirection key="popoverArrowDirection" up="YES"/>
+                                    </segue>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.63921568630000003" green="0.86666666670000003" blue="0.99215686270000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="lXm-zx-tuC" firstAttribute="top" secondItem="XpL-Gz-Enk" secondAttribute="bottom" constant="8" symbolic="YES" id="0j1-pR-zrk"/>
                             <constraint firstItem="Hnn-MC-dOB" firstAttribute="trailing" secondItem="A3C-iP-laA" secondAttribute="trailing" id="14r-TC-QVy"/>
@@ -213,6 +245,7 @@
                             <constraint firstItem="lXm-zx-tuC" firstAttribute="bottom" secondItem="ix9-OG-eFT" secondAttribute="bottom" id="Q9y-FC-0uc"/>
                             <constraint firstItem="Hnn-MC-dOB" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="QBK-IJ-VDJ"/>
                             <constraint firstItem="jS2-QU-7lq" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="QKe-w6-rPa"/>
+                            <constraint firstItem="bbi-X6-mA7" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" symbolic="YES" id="SaD-y6-nMG"/>
                             <constraint firstItem="A3C-iP-laA" firstAttribute="top" secondItem="rnu-fr-6bb" secondAttribute="bottom" constant="8" symbolic="YES" id="TN5-WZ-Zna"/>
                             <constraint firstItem="Iaj-ox-5bd" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="VQZ-Ea-0yY"/>
                             <constraint firstItem="y0r-kh-Hgt" firstAttribute="leading" secondItem="ix9-OG-eFT" secondAttribute="trailing" constant="8" symbolic="YES" id="VW1-J8-fW1"/>
@@ -233,6 +266,7 @@
                             <constraint firstAttribute="leadingMargin" secondItem="d6m-3c-jd3" secondAttribute="leading" id="iq4-rO-PnZ"/>
                             <constraint firstItem="xsQ-IA-pJU" firstAttribute="height" secondItem="XpL-Gz-Enk" secondAttribute="height" id="mIe-KR-Whj"/>
                             <constraint firstItem="dVI-Nw-qgA" firstAttribute="top" secondItem="ix9-OG-eFT" secondAttribute="bottom" constant="8" symbolic="YES" id="mN6-kt-tn0"/>
+                            <constraint firstItem="bbi-X6-mA7" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="mWW-zv-wM6"/>
                             <constraint firstItem="xsQ-IA-pJU" firstAttribute="leading" secondItem="XpL-Gz-Enk" secondAttribute="trailing" constant="8" symbolic="YES" id="mYO-pl-sqT"/>
                             <constraint firstItem="dJL-tC-gHd" firstAttribute="trailing" secondItem="OSY-5M-InH" secondAttribute="trailing" id="mcy-ri-LcI"/>
                             <constraint firstItem="y0r-kh-Hgt" firstAttribute="width" secondItem="ix9-OG-eFT" secondAttribute="width" id="oLP-15-Ptl"/>
@@ -280,7 +314,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="27" y="466"/>
+            <point key="canvasLocation" x="22" y="464"/>
         </scene>
         <!--实时天气-->
         <scene sceneID="H1n-yo-gn9">
@@ -306,7 +340,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nXv-7w-jbQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="Yn2-VN-JLm" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1545" y="489"/>
+            <point key="canvasLocation" x="1371" y="2013"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="8Lc-Pi-FDf">
@@ -324,7 +358,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s4G-TH-wR5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="763" y="1259"/>
+            <point key="canvasLocation" x="555" y="1247"/>
         </scene>
         <!--未来一周天气情况-->
         <scene sceneID="JgB-uf-Muq">
@@ -350,7 +384,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XZ0-4b-CPO" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="1fO-hr-vF2" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="27" y="2024"/>
+            <point key="canvasLocation" x="-277" y="2024"/>
         </scene>
         <!--选择所在城市-->
         <scene sceneID="HcH-EN-0nT">
@@ -448,7 +482,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qio-Rz-VDx" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="RlE-1H-Jx5" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="763" y="1990"/>
+            <point key="canvasLocation" x="555" y="2024"/>
         </scene>
         <!--空气质量情况-->
         <scene sceneID="KbC-aX-CwV">
@@ -476,7 +510,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Av1-0u-rdS" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="RL9-ep-TW2" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-713" y="2024"/>
+            <point key="canvasLocation" x="-1057" y="2024"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ZK8-Jh-Vmo">
@@ -494,7 +528,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g24-TT-omD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="27" y="1259"/>
+            <point key="canvasLocation" x="-277" y="1247"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="YRx-rk-SYf">
@@ -512,7 +546,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OPR-2G-KOV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-713" y="1259"/>
+            <point key="canvasLocation" x="-1057" y="1247"/>
         </scene>
         <!--Hourly Forecast View Controller-->
         <scene sceneID="IZc-3l-aL5">
@@ -538,7 +572,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yT0-4b-Fjq" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="04I-dh-CQI" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1545" y="-216"/>
+            <point key="canvasLocation" x="1677" y="492"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="p5v-w4-yGW">
@@ -556,7 +590,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xvk-rB-pcx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="763" y="489"/>
+            <point key="canvasLocation" x="1371" y="1247"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="aNr-I1-mlP">
@@ -574,7 +608,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l0n-IN-SpG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="763" y="-216"/>
+            <point key="canvasLocation" x="843" y="492"/>
         </scene>
     </scenes>
     <resources>

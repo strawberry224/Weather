@@ -56,7 +56,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        loadLocation()
+        //loadLocation()
 
         // Override point for customization after application launch.
         // loadLocation()
@@ -223,6 +223,8 @@ extension AppDelegate: CLLocationManagerDelegate {
             }
         }
         httpCity = "city=" + citynameStr
+        // httpCity = "city=hangzhou"
+        print(httpCity)
         self.request(httpUrl, httpCity: httpCity)
     }
     
@@ -234,12 +236,13 @@ extension AppDelegate: CLLocationManagerDelegate {
         request.addValue(aqiKey, forHTTPHeaderField: "apikey")
         
         let task = session.dataTaskWithRequest(request, completionHandler: {
-            (data, response, error) -> Void in
+            (d, response, error) -> Void in
+            
             if let _ = error{
                 print("请求失败")
             }
-            if let _ = data {
-                self.testJson(data!)
+            if let _ = d {
+                self.testJson(d!)
             }
         })
         task.resume()

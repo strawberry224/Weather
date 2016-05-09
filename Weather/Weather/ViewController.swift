@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 import CoreLocation
 
-class ViewController: UIViewController, CLLocationManagerDelegate, CityViewControllerDelegate {
+class ViewController: UIViewController, CLLocationManagerDelegate, CityViewControllerDelegate, UIPopoverPresentationControllerDelegate { 
     
     // Define control
     @IBOutlet weak var userLocationButton: UIButton!
@@ -52,6 +52,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CityViewContr
             dismissViewControllerAnimated(true, completion: nil)
         }
     }
+    
     
     // get flag of whether user input the city is legal
     var citySearchFlag = true
@@ -251,7 +252,22 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CityViewContr
             
             // set background color of hourlyForecastController
             hourlyForecastController.nightFlag = nightFlag
+        } else if segue.identifier == "ShowSuggestion" {
+            
+            // The transition to the HourlyForecastViewController
+//            let destinationController = segue.destinationViewController as! UINavigationController
+//            let suggestionViewController = destinationController.viewControllers[0] as! SuggestionViewController
+            
+            let popoverViewController = segue.destinationViewController as! SuggestionViewController
+            popoverViewController.modalPresentationStyle = UIModalPresentationStyle.Popover
+            popoverViewController.popoverPresentationController!.delegate = self
+            
+            popoverViewController.citySuggestion = citySuggestion
         }
+    }
+    
+    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
+    return UIModalPresentationStyle.None
     }
     
     var weatherData = WeatherData()
@@ -271,6 +287,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CityViewContr
     // also can monitor the equipment to enter or leave a certain area
     // but also can obtain the operation direction of equipment
     let locationManager : CLLocationManager = CLLocationManager()
+    
+    var suggestionViewController: SuggestionViewController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -295,7 +313,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CityViewContr
         // Do any additional setup after loading the view, typically from a nib.
         
     }
-    
+        
     override func viewWillAppear(animated: Bool) {
         super.viewDidAppear(animated)
         if CLLocationManager.locationServicesEnabled() && httpCity == "city=?" {

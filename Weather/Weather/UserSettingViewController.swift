@@ -26,11 +26,35 @@ class UserSettingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        timeModel.loadData()
+        
+        if (timeModel.timeList.count > 0) {
+            MorningSwitch.on = timeModel.timeList[0].morningSwitch
+            EveningSwitch.on = timeModel.timeList[0].eveningSwitch
+            RealtimeSwitch.on = timeModel.timeList[0].realtimeSwitch
+            
+            morningTime = timeModel.timeList[0].morningData
+            eveningTime = timeModel.timeList[0].eveningDate
+            
+            if (MorningSwitch.on) {
+                MorningDataPicker.hidden = false
+            } else {
+                MorningDataPicker.hidden = true
+            }
+            
+            if (EveningSwitch.on) {
+                EveningDatePicker.hidden = false
+            } else {
+                EveningDatePicker.hidden = true
+            }
+
+        }
+        
         let dateFormatter = NSDateFormatter()
         dateFormatter.timeStyle = .ShortStyle
         
         // k = Hour in 1~24, mm = Minute
-        dateFormatter.dateFormat = "k:mm"
+        dateFormatter.dateFormat = "hh:mm"
         
         let morningDate = dateFormatter.dateFromString(morningTime)
 
@@ -48,6 +72,10 @@ class UserSettingViewController: UIViewController {
                                 forControlEvents:UIControlEvents.ValueChanged)
         EveningSwitch.addTarget(self, action: #selector(UserSettingViewController.eveningSwitchDidChange),
                                 forControlEvents:UIControlEvents.ValueChanged)
+        
+        RealtimeSwitch.addTarget(self, action: #selector(UserSettingViewController.realtimeSwitchDidChange),
+                                forControlEvents:UIControlEvents.ValueChanged)
+
 
         // Do any additional setup after loading the view.
     }
@@ -65,6 +93,23 @@ class UserSettingViewController: UIViewController {
         dateFormatter.dateFormat = "k:mm"
         morningTime = dateFormatter.stringFromDate(MorningDataPicker.date)
         
+        if (timeModel.timeList.count > 0) {
+        
+            timeModel.timeList[0].morningSwitch = MorningSwitch.on
+            timeModel.timeList[0].eveningSwitch = EveningSwitch.on
+            timeModel.timeList[0].realtimeSwitch = RealtimeSwitch.on
+            
+            timeModel.timeList[0].morningData = morningTime
+            timeModel.timeList[0].eveningDate = eveningTime
+            
+            timeModel.saveData()
+            
+        } else {
+            timeModel.timeList.append(TimeDate(morningSwitch: MorningSwitch.on, eveningSwitch: EveningSwitch.on,
+                realtimeSwitch: RealtimeSwitch.on, morningData: morningTime, eveningDate: eveningTime))
+            timeModel.saveData()
+        }
+        
         print(morningTime)
     }
     
@@ -74,6 +119,24 @@ class UserSettingViewController: UIViewController {
         } else {
             MorningDataPicker.hidden = true
         }
+        
+        if (timeModel.timeList.count > 0) {
+            
+            timeModel.timeList[0].morningSwitch = MorningSwitch.on
+            timeModel.timeList[0].eveningSwitch = EveningSwitch.on
+            timeModel.timeList[0].realtimeSwitch = RealtimeSwitch.on
+            
+            timeModel.timeList[0].morningData = morningTime
+            timeModel.timeList[0].eveningDate = eveningTime
+            
+            timeModel.saveData()
+
+        } else {
+            timeModel.timeList.append(TimeDate(morningSwitch: MorningSwitch.on, eveningSwitch: EveningSwitch.on,
+                realtimeSwitch: RealtimeSwitch.on, morningData: morningTime, eveningDate: eveningTime))
+            timeModel.saveData()
+        }
+
     }
     
     func eveningDatePickerDidChange(){
@@ -84,6 +147,23 @@ class UserSettingViewController: UIViewController {
         dateFormatter.dateFormat = "k:mm"
         eveningTime = dateFormatter.stringFromDate(EveningDatePicker.date)
         
+        if (timeModel.timeList.count > 0) {
+            
+            timeModel.timeList[0].morningSwitch = MorningSwitch.on
+            timeModel.timeList[0].eveningSwitch = EveningSwitch.on
+            timeModel.timeList[0].realtimeSwitch = RealtimeSwitch.on
+            
+            timeModel.timeList[0].morningData = morningTime
+            timeModel.timeList[0].eveningDate = eveningTime
+            
+            timeModel.saveData()
+
+        } else {
+            timeModel.timeList.append(TimeDate(morningSwitch: MorningSwitch.on, eveningSwitch: EveningSwitch.on,
+                realtimeSwitch: RealtimeSwitch.on, morningData: morningTime, eveningDate: eveningTime))
+            timeModel.saveData()
+        }
+        
         print(eveningTime)
     }
     
@@ -93,9 +173,47 @@ class UserSettingViewController: UIViewController {
         } else {
             EveningDatePicker.hidden = true
         }
+        
+        if (timeModel.timeList.count > 0) {
+            
+            timeModel.timeList[0].morningSwitch = MorningSwitch.on
+            timeModel.timeList[0].eveningSwitch = EveningSwitch.on
+            timeModel.timeList[0].realtimeSwitch = RealtimeSwitch.on
+            
+            timeModel.timeList[0].morningData = morningTime
+            timeModel.timeList[0].eveningDate = eveningTime
+            
+            timeModel.saveData()
+
+        } else {
+            timeModel.timeList.append(TimeDate(morningSwitch: MorningSwitch.on, eveningSwitch: EveningSwitch.on,
+                realtimeSwitch: RealtimeSwitch.on, morningData: morningTime, eveningDate: eveningTime))
+            timeModel.saveData()
+        }
+
+    }
+    
+    func realtimeSwitchDidChange(){
+        
+        if (timeModel.timeList.count > 0) {
+            
+            timeModel.timeList[0].morningSwitch = MorningSwitch.on
+            timeModel.timeList[0].eveningSwitch = EveningSwitch.on
+            timeModel.timeList[0].realtimeSwitch = RealtimeSwitch.on
+            
+            timeModel.timeList[0].morningData = morningTime
+            timeModel.timeList[0].eveningDate = eveningTime
+            
+            timeModel.saveData()
+            
+        } else {
+            timeModel.timeList.append(TimeDate(morningSwitch: MorningSwitch.on, eveningSwitch: EveningSwitch.on,
+                realtimeSwitch: RealtimeSwitch.on, morningData: morningTime, eveningDate: eveningTime))
+            timeModel.saveData()
+        }
+        
     }
 
-    
 
     /*
     // MARK: - Navigation

@@ -65,6 +65,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CityViewContr
     
     // when one city is seleted
     func cityDidSelected(cityKey: String){
+        getSubcityFlag = true
         charactorType(cityKey)
     }
     
@@ -274,7 +275,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CityViewContr
             userSettingViewController.popoverPresentationController!.delegate = self
             
             userSettingViewController.morningTime = "7:00"
-            userSettingViewController.eveningTime = "10:00"
+            userSettingViewController.eveningTime = "22:00"
         }
     }
     
@@ -385,7 +386,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CityViewContr
         // otherwise there will be a nil error
         if (getSubcityFlag == false) {
             httpCity = "city=hangzhou"
-            self.currentCity = aString
+            self.currentCity = "杭州"
             userLocationButton.setTitle("当前城市：杭州", forState: UIControlState.Normal)
             
         } else {

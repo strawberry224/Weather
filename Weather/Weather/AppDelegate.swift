@@ -26,6 +26,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // Save access to local location
     var currLocation : CLLocation!
     
+    var timeModel = TimeModel()
+    
     func getPushTime(pushTime: Float) -> Float {
         
         let date = NSDate()
@@ -57,6 +59,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         loadLocation()
+        timeModel.loadData()
 
         // Override point for customization after application launch.
         // loadLocation()
@@ -76,6 +79,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidEnterBackground(application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        
 
         UIApplication.sharedApplication().cancelAllLocalNotifications()
         
@@ -85,9 +89,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Push local time (7 am temporarily)
         var pushTime: Float = 7*60*60
+        var morningSwitch = true
+        var eveningSwitch = true
+        var realtimeSwitch = true
+        
+        if (timeModel.timeList.count > 0) {
+            let moringTime = timeModel.timeList[0].morningData
+            var split = moringTime.rangeOfString(":")?.startIndex
+            let hour = Float(moringTime.substringToIndex(split!))
+            
+            split = moringTime.rangeOfString(":")?.endIndex
+            let minute = Float(moringTime.substringFromIndex(split!))
+            
+            pushTime = hour!*60*60 + minute!*60
+            
+            morningSwitch = timeModel.timeList[0].morningSwitch
+            eveningSwitch = timeModel.timeList[0].eveningSwitch
+            realtimeSwitch = timeModel.timeList[0].eveningSwitch
+        }
+        
         var fireDate = NSDate(timeIntervalSinceNow: NSTimeInterval(getPushTime(pushTime)))
 
-        if (noticeSetting.mergeMorningStrings() != "") {
+        if (morningSwitch && noticeSetting.mergeMorningStrings() != "") {
 
             // Setting the time Push
             notification.fireDate = fireDate
@@ -111,10 +134,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             UIApplication.sharedApplication().scheduleLocalNotification(notification)
         }
         
-        if (noticeSetting.mergeEveningStrings() != "") {
+        if (eveningSwitch && noticeSetting.mergeEveningStrings() != "") {
         
             // Push local time (10 pm temporarily)
             pushTime = 22*60*60
+            
+            if (timeModel.timeList.count > 0) {
+                let eveningTime = timeModel.timeList[0].eveningDate
+                var split = eveningTime.rangeOfString(":")?.startIndex
+                let hour = Float(eveningTime.substringToIndex(split!))
+                
+                split = eveningTime.rangeOfString(":")?.endIndex
+                let minute = Float(eveningTime.substringFromIndex(split!))
+                
+                pushTime = hour!*60*60 + minute!*60
+            }
+
             fireDate = NSDate(timeIntervalSinceNow: NSTimeInterval(getPushTime(pushTime)))
             
             // Setting the time Push
@@ -123,7 +158,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             UIApplication.sharedApplication().scheduleLocalNotification(notification)
         }
         
-        if (noticeSetting.mergeEveningStrings() != "") {
+        if (realtimeSwitch && noticeSetting.mergeEveningStrings() != "") {
 
             fireDate = NSDate(timeIntervalSinceNow: NSTimeInterval(0))
             
@@ -132,7 +167,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             notification.alertBody = noticeSetting.mergeCurrentStrings()
             UIApplication.sharedApplication().scheduleLocalNotification(notification)
         }
-        //}
     }
     
     func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {

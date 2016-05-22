@@ -10,7 +10,7 @@ import UIKit
 
 class TimeModel: NSObject {
     
-    var timeList = TimeDate()
+    var timeList = [TimeDate]()
     
     override init(){
         super.init()

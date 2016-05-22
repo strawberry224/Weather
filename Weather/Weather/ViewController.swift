@@ -37,14 +37,17 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CityViewContr
     var httpCity = "city=?"
     let aqiKey = "616e8a401061a1108d387543235f3159"
     
+    // get weather data from API
     func loadWeatherData() {
         request(httpUrl, httpCity: httpCity)
     }
     
+    // exit and do not save user's settting
     @IBAction func cancelToPlayersViewController(segue:UIStoryboardSegue) {
         dismissViewControllerAnimated(true, completion: nil)
     }
     
+    // exit and do not save user's setting
     @IBAction func savePlayerDetail(segue:UIStoryboardSegue) {
         
         // if the city is legel, then can come back
@@ -60,10 +63,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CityViewContr
         citySearchFlag = flag
     }
     
+    // when one city is seleted
     func cityDidSelected(cityKey: String){
         charactorType(cityKey)
     }
     
+    // send request to API
     func  request(httpUrl: String, httpCity: String) {
         let request = NSMutableURLRequest(URL: NSURL(string: httpUrl + "?" + httpCity)!)
         let session = NSURLSession.sharedSession()
@@ -254,15 +259,22 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CityViewContr
             hourlyForecastController.nightFlag = nightFlag
         } else if segue.identifier == "ShowSuggestion" {
             
-            // The transition to the HourlyForecastViewController
-//            let destinationController = segue.destinationViewController as! UINavigationController
-//            let suggestionViewController = destinationController.viewControllers[0] as! SuggestionViewController
-            
+            // The transition to the popoverViewController
             let popoverViewController = segue.destinationViewController as! SuggestionViewController
             popoverViewController.modalPresentationStyle = UIModalPresentationStyle.Popover
             popoverViewController.popoverPresentationController!.delegate = self
             
+            // transmit data
             popoverViewController.citySuggestion = citySuggestion
+        }  else if segue.identifier == "ShowSetting" {
+            
+            // The transition to the popoverViewController
+            let userSettingViewController = segue.destinationViewController as! UserSettingViewController
+            userSettingViewController.modalPresentationStyle = UIModalPresentationStyle.Popover
+            userSettingViewController.popoverPresentationController!.delegate = self
+            
+            userSettingViewController.morningTime = "7:00"
+            userSettingViewController.eveningTime = "10:00"
         }
     }
     
@@ -373,6 +385,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CityViewContr
         // otherwise there will be a nil error
         if (getSubcityFlag == false) {
             httpCity = "city=hangzhou"
+            self.currentCity = aString
             userLocationButton.setTitle("当前城市：杭州", forState: UIControlState.Normal)
             
         } else {
@@ -388,6 +401,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CityViewContr
             // httpCity = "city=hangzhou"
             userLocationButton.setTitle("当前城市：" + aString!, forState: UIControlState.Normal)
         }
+
         loadWeatherData()
     }
     

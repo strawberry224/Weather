@@ -226,9 +226,15 @@ class CityViewController: UIViewController, UITableViewDelegate, UITableViewData
                     let cityKey = cityArray[j] as? String
                     if (cityKey == inputCityName.text) {
                         flag = true
-                        self.delegate?.cityDidSelected(inputCityName.text!)
+                        currentCityLabel.text = "当前城市:  " + inputCityName.text!
                     }
                 }
+            }
+            
+            if (flag) {
+                let id = currentCityLabel.text?.rangeOfString("当前城市:  ")?.endIndex
+                print((currentCityLabel.text?.substringFromIndex(id!))!)
+                self.delegate?.cityDidSelected((currentCityLabel.text?.substringFromIndex(id!))!)
             }
             
             // If not in the list, prompt the error message

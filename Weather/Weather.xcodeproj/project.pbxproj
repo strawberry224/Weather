@@ -18,12 +18,12 @@
 		C6504C5C1C5DBF64008938A1 /* WeatherUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6504C5B1C5DBF64008938A1 /* WeatherUITests.swift */; };
 		C6504C6A1C5E3485008938A1 /* WeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6504C691C5E3485008938A1 /* WeatherData.swift */; };
 		C6504C6E1C5F6F3B008938A1 /* GetMemberValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6504C6D1C5F6F3B008938A1 /* GetMemberValue.swift */; };
-		C668D41D1CC7CA5A00D37A93 /* HourlyForecastViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C668D41C1CC7CA5A00D37A93 /* HourlyForecastViewController.swift */; };
 		C668D41F1CC9167E00D37A93 /* HourlyForecastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C668D41E1CC9167E00D37A93 /* HourlyForecastView.swift */; };
 		C668D4211CCA5E4000D37A93 /* TodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C668D4201CCA5E4000D37A93 /* TodayView.swift */; };
 		C668D4231CCA5FE900D37A93 /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C668D4221CCA5FE900D37A93 /* TodayViewController.swift */; };
 		C685FD031C75908500357567 /* CityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C685FD021C75908500357567 /* CityViewController.swift */; };
 		C685FD091C7AE24B00357567 /* citylist.plist in Resources */ = {isa = PBXBuildFile; fileRef = C685FD081C7AE24B00357567 /* citylist.plist */; };
+		C687A4CB1CF1EC9C004A3FFB /* HourlyForecastViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C687A4CA1CF1EC9C004A3FFB /* HourlyForecastViewController.swift */; };
 		C6B1F3471CEB5D3B00F58FB8 /* UserSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6B1F3461CEB5D3B00F58FB8 /* UserSettingViewController.swift */; };
 		C6B42F661CDDDCD600BE60DF /* NoticeSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6B42F651CDDDCD600BE60DF /* NoticeSetting.swift */; };
 		C6B42F681CE02ABA00BE60DF /* SuggestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6B42F671CE02ABA00BE60DF /* SuggestionViewController.swift */; };
@@ -71,12 +71,12 @@
 		C6504C5D1C5DBF64008938A1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C6504C691C5E3485008938A1 /* WeatherData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherData.swift; sourceTree = "<group>"; };
 		C6504C6D1C5F6F3B008938A1 /* GetMemberValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetMemberValue.swift; sourceTree = "<group>"; };
-		C668D41C1CC7CA5A00D37A93 /* HourlyForecastViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HourlyForecastViewController.swift; path = ../HourlyForecastViewController.swift; sourceTree = "<group>"; };
 		C668D41E1CC9167E00D37A93 /* HourlyForecastView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HourlyForecastView.swift; sourceTree = "<group>"; };
 		C668D4201CCA5E4000D37A93 /* TodayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodayView.swift; sourceTree = "<group>"; };
 		C668D4221CCA5FE900D37A93 /* TodayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
 		C685FD021C75908500357567 /* CityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityViewController.swift; sourceTree = "<group>"; };
 		C685FD081C7AE24B00357567 /* citylist.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = citylist.plist; sourceTree = "<group>"; };
+		C687A4CA1CF1EC9C004A3FFB /* HourlyForecastViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HourlyForecastViewController.swift; sourceTree = "<group>"; };
 		C6B1F3461CEB5D3B00F58FB8 /* UserSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSettingViewController.swift; sourceTree = "<group>"; };
 		C6B42F651CDDDCD600BE60DF /* NoticeSetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoticeSetting.swift; sourceTree = "<group>"; };
 		C6B42F671CE02ABA00BE60DF /* SuggestionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuggestionViewController.swift; sourceTree = "<group>"; };
@@ -146,7 +146,7 @@
 				C619C59F1CBA7A1A0094EBCC /* GeneralAQIView.swift */,
 				C6504C6D1C5F6F3B008938A1 /* GetMemberValue.swift */,
 				C668D41E1CC9167E00D37A93 /* HourlyForecastView.swift */,
-				C668D41C1CC7CA5A00D37A93 /* HourlyForecastViewController.swift */,
+				C687A4CA1CF1EC9C004A3FFB /* HourlyForecastViewController.swift */,
 				C6E57AF51CB2B7AE00771A1C /* HumidityView.swift */,
 				C6504C471C5DBF64008938A1 /* Info.plist */,
 				C6504C441C5DBF64008938A1 /* LaunchScreen.storyboard */,
@@ -330,6 +330,7 @@
 				C6504C3C1C5DBF64008938A1 /* AppDelegate.swift in Sources */,
 				C6B42F681CE02ABA00BE60DF /* SuggestionViewController.swift in Sources */,
 				C6E57AF81CB406A500771A1C /* WindView.swift in Sources */,
+				C687A4CB1CF1EC9C004A3FFB /* HourlyForecastViewController.swift in Sources */,
 				C6F95B3C1CF18BF20086A878 /* TimeModel.swift in Sources */,
 				C619C59E1CBA472F0094EBCC /* AQIViewController.swift in Sources */,
 				C6E57AF61CB2B7AE00771A1C /* HumidityView.swift in Sources */,
@@ -338,7 +339,6 @@
 				C6E57AFA1CB7EA1D00771A1C /* Normalization.swift in Sources */,
 				C6B1F3471CEB5D3B00F58FB8 /* UserSettingViewController.swift in Sources */,
 				C668D4211CCA5E4000D37A93 /* TodayView.swift in Sources */,
-				C668D41D1CC7CA5A00D37A93 /* HourlyForecastViewController.swift in Sources */,
 				C6F95B3A1CF188B10086A878 /* TimeDate.swift in Sources */,
 				C6B42F661CDDDCD600BE60DF /* NoticeSetting.swift in Sources */,
 			);

@@ -66,7 +66,7 @@ class TimeModel: NSObject {
     func documentsDirectory() -> String {
         
         let paths = NSSearchPathForDirectoriesInDomains(
-            NSSearchPathDirectory.DocumentationDirectory,NSSearchPathDomainMask.UserDomainMask,true)
+            NSSearchPathDirectory.DocumentationDirectory, NSSearchPathDomainMask.UserDomainMask, true)
         let documentsDirectory:String = paths.first! as String
         return documentsDirectory
     }

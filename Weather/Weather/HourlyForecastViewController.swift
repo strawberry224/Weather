@@ -19,9 +19,9 @@ class HourlyForecastViewController: UIViewController, HourlyForecastViewDelegate
 
     
     override func viewDidLoad() {
-        //if (nightFlag == true) {
+        if (nightFlag == true) {
             self.view.backgroundColor = UIColor(patternImage: UIImage(named: "hour_bg")!)
-        //}
+        }
         
         setScroll()
         self.view.addSubview(scroll)

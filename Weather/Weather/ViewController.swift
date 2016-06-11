@@ -366,6 +366,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CityViewContr
                 let provinceEndId = subLocality?.rangeOfString("省")?.endIndex
                 let cityStartId = subLocality?.rangeOfString("市")?.startIndex
                 
+                print(subLocality)
+                
                 if (provinceEndId == nil || cityStartId == nil) {
                     self.getSubcityFlag = false
                 } else {

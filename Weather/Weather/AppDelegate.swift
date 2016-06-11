@@ -65,6 +65,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // loadLocation()
         
         // Open notifications
+        // This event will be triggered when the App enters the background, the lock screen, and the phone when it comes in.
         let settings = UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound],
                                                   categories: nil)
         application.registerUserNotificationSettings(settings)
@@ -72,18 +73,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationWillResignActive(application: UIApplication) {
-        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-        // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+        // Sent when the application is about to move from active to inactive state. 
+        // This can occur for certain types of temporary interruptions 
+        // (such as an incoming phone call or SMS message) 
+        // or when the user quits the application and it begins the transition to the background state.
+        // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. 
+        // Games should use this method to pause the game.
     }
     
     func applicationDidEnterBackground(application: UIApplication) {
-        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        // Use this method to release shared resources, save user data, invalidate timers, 
+        // and store enough application state information to restore your application to its current state in case it is terminated later.
+        // If your application supports background execution, 
+        // this method is called instead of applicationWillTerminate: when the user quits.
         
-
         UIApplication.sharedApplication().cancelAllLocalNotifications()
-        
-        //if (UIApplication.sharedApplication().scheduledLocalNotifications!.count == 0) {
         
         let notification = UILocalNotification()
         
@@ -93,6 +97,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var eveningSwitch = true
         var realtimeSwitch = true
         
+        // If the user has set the time
         if (timeModel.timeList.count > 0) {
             let moringTime = timeModel.timeList[0].morningData
             var split = moringTime.rangeOfString(":")?.startIndex
@@ -139,6 +144,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // Push local time (10 pm temporarily)
             pushTime = 22*60*60
             
+            // If the user has set the time
             if (timeModel.timeList.count > 0) {
                 let eveningTime = timeModel.timeList[0].eveningDate
                 var split = eveningTime.rangeOfString(":")?.startIndex
